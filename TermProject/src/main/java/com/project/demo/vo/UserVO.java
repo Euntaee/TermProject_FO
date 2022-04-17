@@ -5,10 +5,10 @@ public class UserVO {
 	private String user_pwd;
 	private String user_name;
 	private String user_date;
-	private String user_addr1;
-	private String user_addr2;
+	private String user_addr1;	
 	private String user_email;
 	private String user_phone;
+	private String msg;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -20,6 +20,12 @@ public class UserVO {
 	}
 	public void setUser_pwd(String user_pwd) {
 		this.user_pwd = user_pwd;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	public String getUser_name() {
 		return user_name;
@@ -38,13 +44,7 @@ public class UserVO {
 	}
 	public void setUser_addr1(String user_addr1) {
 		this.user_addr1 = user_addr1;
-	}
-	public String getUser_addr2() {
-		return user_addr2;
-	}
-	public void setUser_addr2(String user_addr2) {
-		this.user_addr2 = user_addr2;
-	}
+	}	
 	public String getUser_email() {
 		return user_email;
 	}

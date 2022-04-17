@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <div class="protected" v-if="loginsuccess">
+    <!-- <div class="protected" v-if="loginsuccess">
       <v-alert
         type="success"
     >로그인 성공</v-alert>
@@ -9,7 +9,7 @@
       <v-alert
         type="success"
     >로그인 실패</v-alert>
-    </div>
+    </div> -->
     <v-main style="margin:0px auto">
       <h1 style="text-align:center;margin-top:20%">로그인</h1>
       <br>
@@ -22,13 +22,14 @@
             <v-card flat class="mx-auto" max-width="800">
               <v-row>
                 <v-col>
-                  <v-form @submit.prevent="login()" style="width: 400px; height: 300px; margin-top:20%">
+                  <v-form  style="width: 400px; height: 300px; margin-top:20%">
                     <div class="mx-3">
                       <v-icon color="black" size="30px">person</v-icon>
                       <div class="mx-1">
                         <v-text-field
+                          id:login_id
                           placeholder="userId"
-                          v-model="user"
+                          v-model="user_id"
                           required
                         ></v-text-field>
                       </div>
@@ -37,9 +38,10 @@
                       <v-icon color="black" size="30px">lock</v-icon>
                       <div class="mx-1">
                         <v-text-field
+                          id:login_pwd
                           placeholder="userPassword"
                           type="password"
-                          v-model="password"
+                          v-model="user_pwd"
                           required
                         ></v-text-field>
                       </div>
@@ -49,14 +51,14 @@
                     </div>
                     <v-card-actions>
                       <v-btn
+                       @click="login"              
                         color="#2c4f91"
                         dark
                         large
                         block
-                        type="submit"
+                        type="button"
                         >Login</v-btn
-                      >
-                      <p v-if="error" class="error">bad login information</p>
+                      >                     
                     </v-card-actions>
                   </v-form>
                 </v-col>
@@ -71,34 +73,33 @@
 
 <script>
 /* eslint-disable */
-export default {
-  name: 'login',
+export default { 
   data () {
-   return {
-          loginSuccess: true,
-          loginError: false,
-          user: '',
-          password: '',
-          error: false
+   return {          
+          user_id: '',
+          user_pwd: ''          
       }
   },
   methods: {
-      async login() {
-          try {
-              const result = await this.$axios.get('/login', {
-                  auth: {
-                      username: this.user,
-                      password: this.password
-                  }
-              });
-              if (result.status === 200) {
-                  this.loginSuccess = true
-              }
-        } catch (err) {
-              this.loginError = true;
-              throw new Error(err)
-              }
-      }
-   }
+     login:function(){       
+       const logindata ={user_id:this.user_id, user_pwd:this.user_pwd}
+       console.log(this.user_id,this.user_pwd)              
+			  this.$axios.post("http://localhost:8080/login_ok", logindata                  
+			  ).then(response=>{
+				  console.log(response.data);        
+          let result=response;
+          if(result='NOID'){
+            alert("아이디가 존재하지 않습다.")
+          }				  		
+          else if(result=='NOPWD'){
+            alert("비밀번호가 틀립니다.")
+          }		
+          else{
+            //location.href="http://localhost:8080/"
+             alert("로그인 됐습니다!.")
+          }
+			  })
+		  }
+  }
 }
 </script>
