@@ -16,6 +16,6 @@
     <insert id="userInsert">
        INSERT INTO 
         user (user_id, user_pwd, user_name, user_date, user_addr1, user_email, user_phone)
-        VALUES (#{user_id},#{user_pwd}),#{user_name},#{user_date},#{user_addr1},#{user_email},#{user_phone})
+        VALUES (#{user_id},#{user_pwd},#{user_name},#{user_date},#{user_addr1},#{user_email},#{user_phone})
     </insert>
 </mapper>      

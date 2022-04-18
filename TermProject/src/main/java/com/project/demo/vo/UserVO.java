@@ -9,6 +9,26 @@ public class UserVO {
 	private String user_email;
 	private String user_phone;
 	private String msg;
+	private String tel1,tel2,tel3;
+	
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

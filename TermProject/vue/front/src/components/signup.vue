@@ -22,6 +22,7 @@
            <v-text-field
             label="비밀번호"
             placeholder="비밀번호"
+            type="password"
             v-model="user_pwd"
           ></v-text-field>
            <!-- <v-text-field
@@ -69,17 +70,18 @@
 export default {
 methods: {
     userInsert:function() {
-      this.$axios.post('/http://localhost:8080/signup_ok',
-        { user_id: this.user_id,
-         user_pwd: this.user_pwd,
-         user_name: this.user_name,
-         user_email: this.user_email,
-         user_date: this.user_date,
-         user_addr1: this.user_addr1,
-         user_phone: this.user_phone }
-      ).then(res => {
-        console.log(res)
-        location.href="http://localhost:8080/"
+      const params = new URLSearchParams();
+      params.append('user_id',this.user_id);
+      params.append('user_pwd',this.user_pwd);
+      params.append('user_name',this.user_name);
+      params.append('user_email',this.user_email);
+      params.append('user_date',this.user_date);
+      params.append('user_addr1',this.user_addr1);
+      params.append('user_phone',this.user_phone);
+      this.$axios.post("http://localhost:8080/userInsert",params
+      ).then(response => {
+        console.log(response)
+        window.location.href="http://localhost:8080/"
         alert("회원가입이 되었습니다")
       }).catch(err => {
         console.log(err)
