@@ -51,14 +51,14 @@
                     </div>
                     <v-card-actions>
                       <v-btn
-                       @click="login"              
+                       @click="login"
                         color="#2c4f91"
                         dark
                         large
                         block
                         type="button"
                         >Login</v-btn
-                      >                     
+                      >
                     </v-card-actions>
                   </v-form>
                 </v-col>
@@ -82,23 +82,26 @@ export default {
   },
   methods: {
      login:function(){       
-       const logindata ={user_id:this.user_id, user_pwd:this.user_pwd}
-       console.log(this.user_id,this.user_pwd)              
-			  this.$axios.post("http://localhost:8080/login_ok", logindata                  
+      const params = new URLSearchParams();
+      params.append('user_id',this.user_id);
+      params.append('user_pwd',this.user_pwd);
+			  this.$axios.post("http://localhost:8080/login_ok", params               
 			  ).then(response=>{
-				  console.log(response.data);        
-          let result=response;
-          if(result='NOID'){
-            alert("아이디가 존재하지 않습다.")
+				  console.log(response)    
+          
+           let result=response.data 
+         if(result=='NOID'){
+            alert("아이디가 존재하지 않습니다.")
           }				  		
           else if(result=='NOPWD'){
             alert("비밀번호가 틀립니다.")
           }		
           else{
-            //location.href="http://localhost:8080/"
+            location.href="http://localhost:8080/"
              alert("로그인 됐습니다!.")
           }
 			  })
+        
 		  }
   }
 }
