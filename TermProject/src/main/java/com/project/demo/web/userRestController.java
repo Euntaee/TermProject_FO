@@ -3,9 +3,11 @@ package com.project.demo.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +21,7 @@ public class userRestController {
 	@Autowired
 	UserService userService;
 	@RequestMapping(value = "/login_ok")
-	public String member_login_ok( String user_id,String user_pwd, HttpSession session)
+	public String member_login_ok( String user_id,String user_pwd, HttpSession session, HttpServletRequest request)
 	{
 		   String msg = "";
 		   UserVO vo = userService.isLogin(user_id, user_pwd);
@@ -28,6 +30,7 @@ public class userRestController {
 			   session.setAttribute("user_id", vo.getUser_id());
 			   session.setAttribute("user_name", vo.getUser_name());			   
 		   }
+		   session = request.getSession();
 		   msg = vo.getMsg();
 		   System.out.println(msg);		   
 		   System.out.println((String)session.getAttribute(user_id));

@@ -29,9 +29,12 @@ export default new Router({
                     name: 'Book'
                 },
                 {
-                    path: '/detail',
+                    path: '/book/:book_no',
                     component: Detail,
-                    name: 'Detail'
+                    name: 'Detail',
+                    props: route => ({
+                        book_no: Number(route.params.book_no)
+                    })
                 },
                 {
                     path: '/pract',

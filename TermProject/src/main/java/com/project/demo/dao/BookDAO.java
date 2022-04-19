@@ -11,4 +11,5 @@ import com.project.demo.vo.BookVO;
 @Mapper	
 public interface BookDAO {
 	List<BookVO> selectBookList();
+	List<BookVO> bookFindData(String ss);
 }

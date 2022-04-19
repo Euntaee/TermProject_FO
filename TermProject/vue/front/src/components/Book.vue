@@ -5,7 +5,7 @@
         <div
          class="col-md-3 col-sm-3 col-xs-12"
         >
-          <v-card outlined style="height:965px;">
+          <v-card outlined style="height:965px; width:300px;">
             <v-card-title>카테고리</v-card-title>
             <v-divider></v-divider>
             <template>
@@ -31,34 +31,33 @@
           <v-divider></v-divider>
 
           <div class="row text-center">
-            <div class="col-md-3 col-sm-6 col-xs-12" :key="pro.id" v-for="pro in products">
+            <div class="col-md-3 col-sm-6 col-xs-12" v-bind:key="pro.id" v-for="pro in Book">
               <v-hover v-slot:default="{ hover }">
                 <v-card
-                  class="mx-auto"
+                  class="mx"
                   color="grey lighten-4"
-                  max-width="600"
+                  max-width="200"
                 >
                   <v-img
                     class="white--text align-end"
                     :aspect-ratio="16/9"
                     height="200px"
-                    :src="pro.src"
+                    :src="pro.book_img"
                   >
-                    <v-card-title>{{pro.type}} </v-card-title>
+                    <!-- <v-card-title>{{pro.type}} </v-card-title> -->
                     <v-expand-transition>
                       <div
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%;"
                       >
-                        <v-btn v-if="hover" href="/detail" class="" outlined>VIEW</v-btn>
-                      </div>
-
-                    </v-expand-transition>
+                        <v-btn v-if="hover" href="/detail"  outlined>대여하러 가기</v-btn>
+                 </div>
+                         </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div><a href="/detail" style="text-decoration: none">{{pro.name}}</a></div>
-                    <div>${{pro.price}}</div>
+                    <div class="txt_line"><router-link :to="'/book/${book_no}'" style="text-decoration: none">{{pro.book_title}}</router-link></div>
+                    <div class="txt_line">{{pro.book_author}}</div>
                   </v-card-text>
                 </v-card>
               </v-hover>
@@ -78,35 +77,33 @@
 
 <script>
 /* eslint-disable */
-export default {
-        data: () => ({
+export default {            
+        data () {
+          return {
             range: [0, 10000],
-            select:'Popularity',
+            select:'인기순',
             options: [
-                'Default',
-                'Popularity',
-                'Relevance',
-                'Price: Low to High',
-                'Price: High to Low',
+                '인기순',
+                '최신순',                
             ],
             page:1,
-            breadcrums: [
-                {
-                    text: 'Home',
-                    disabled: false,
-                    href: 'breadcrumbs_home',
-                },
-                {
-                    text: 'Clothing',
-                    disabled: false,
-                    href: 'breadcrumbs_clothing',
-                },
-                {
-                    text: 'T-Shirts',
-                    disabled: true,
-                    href: 'breadcrumbs_shirts',
-                },
-            ],
+            // breadcrums: [
+            //     {
+            //         text: 'Home',
+            //         disabled: false,
+            //         href: 'breadcrumbs_home',
+            //     },
+            //     {
+            //         text: 'Clothing',
+            //         disabled: false,
+            //         href: 'breadcrumbs_clothing',
+            //     },
+            //     {
+            //         text: 'T-Shirts',
+            //         disabled: true,
+            //         href: 'breadcrumbs_shirts',
+            //     },
+            // ],
             min:0,
             max:10000,
             items: [
@@ -136,92 +133,21 @@ export default {
                     name: '인문학',                
                 }
             ],
-            products:[
-                {
-                    id:1,
-                    name:'BLACK TEE',
-                    type:'Jackets',
-                    price:'18.00',
-                    src:require('../assets/img/shop/1.jpg')
-                },
-                {
-                    id:2,
-                    name:'WHITE TEE',
-                    type:'Polo',
-                    price:'40.00',
-                    src:require('../assets/img/shop/2.jpg')
-                },
-                {
-                    id:3,
-                    name:'Zara limited...',
-                    type:'Denim',
-                    price:'25.00',
-                    src:require('../assets/img/shop/3.jpg')
-                },
-                {
-                    id:4,
-                    name:'SKULL TEE',
-                    type:'Jackets',
-                    price:'30.00',
-                    src:require('../assets/img/shop/4.jpg')
-                },
-                {
-                    id:5,
-                    name:'MANGO WINTER',
-                    type:'Sweaters',
-                    price:'50.00',
-                    src:require('../assets/img/shop/5.jpg')
-                },
-                {
-                    id:6,
-                    name:'SHIRT',
-                    type:'Denim',
-                    price:'34.00',
-                    src:require('../assets/img/shop/6.jpg')
-                },
-                {
-                    id:7,
-                    name:'TRUCKER JACKET',
-                    type:'Jackets',
-                    price:'38.00',
-                    src:require('../assets/img/shop/7.jpg')
-                },
-                {
-                    id:8,
-                    name:'COATS',
-                    type:'Jackets',
-                    price:'25.00',
-                    src:require('../assets/img/shop/8.jpg')
-                },{
-                    id:9,
-                    name:'MANGO WINTER',
-                    type:'Sweaters',
-                    price:'50.00',
-                    src:require('../assets/img/shop/9.jpg')
-                },
-                {
-                    id:10,
-                    name:'SHIRT',
-                    type:'Denim',
-                    price:'34.00',
-                    src:require('../assets/img/shop/10.jpg')
-                },
-                {
-                    id:11,
-                    name:'TRUCKER JACKET',
-                    type:'Jackets',
-                    price:'38.00',
-                    src:require('../assets/img/shop/11.jpg')
-                },
-                {
-                    id:12,
-                    name:'COATS',
-                    type:'Jackets',
-                    price:'25.00',
-                    src:require('../assets/img/shop/12.jpg')
-                }
-            ]
-        }),
+            Book:[]
+          }
+        },
+         mounted:function(){
+            this.getData();
+        },
+        methods:{
+            getData:function(){
+            this.$axios.get("http://localhost:8080/rest_prac")      
+            .then(response =>{
+                console.log(response.data);
+                this.Book=response.data;
+            })      
+            }
+        }
     }
 </script>
 
@@ -234,4 +160,12 @@ export default {
     position: absolute;
     width: 100%;
   }
+  
+ .txt_line {
+   width: 180px;
+   padding: 0 5px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
 </style>

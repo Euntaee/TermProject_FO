@@ -8,9 +8,9 @@ import com.project.demo.vo.UserVO;
 @Repository
 @Mapper
 public interface UserDAO {
-int userIdCount(String user_id); //¾ÆÀÌµğ ¿©ºÎ È®ÀÎ
+int userIdCount(String user_id); //ì•„ì´ë”” ì¡´ì¬ í™•ì¸
  
-UserVO userGetPassword(String user_id); //ºñ¹Ğ¹øÈ£ È®ÀÎ
+UserVO userGetPassword(String user_id); //ë¹„ë°€ë²ˆí˜¸ í™•ì¸
 
-void userInsert(UserVO vo); //È¸¿ø°¡ÀÔ
+void userInsert(UserVO vo); //íšŒì›ê°€ì…
 }

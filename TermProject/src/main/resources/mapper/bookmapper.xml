@@ -3,10 +3,27 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.demo.dao.BookDAO">
-	<select id="selectBookList" resultType="com.project.demo.vo.BookVO">
-		SELECT book_title
-		     , book_author
-		     , book_img
+	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="String">
+		SELECT *
 		FROM book
     </select>
+    <sql id="">
+       SELECT book_no, book_title, book_img, book_author
+       FROM book
+       WHERE 
+       <trim prefix="(" suffix=")" prefixOverrides="OR">
+          <foreach collection="fsArr" item="fd">
+              <trim prefix="OR">
+                  <choose>
+                      <when test="fd == 'T'.toString()">
+                          book_title LIKE '%'||#{ss}||'%'
+                      </when>
+                      <when test="fd == 'C'.toString()">
+                          book_content LIKE '%'||#{ss}||'%'
+                      </when>              
+                  </choose>
+              </trim>        
+          </foreach>
+       </trim>
+    </sql>
 </mapper>

@@ -14,14 +14,27 @@
       >
         <a href="/" class="white--text" style="text-decoration: none"><v-icon>mdi-truck</v-icon>&nbsp;서울 도서대여 사이트</a>
       </v-toolbar-title>
-      <v-text-field
+                
+        <!-- <v-select
+          :items="items"
+          label="Solo field"
+          solo
+        ></v-select>       -->
+      
+        
+      <v-text-field        
         flat
         solo-inverted
         hide-details
         prepend-inner-icon="mdi-magnify"
-        label="도서검색"
-        class="hidden-sm-and-down pl-10 ml-4"
-      />
+        label="도서검색"        
+      />            
+      <v-btn>
+        검색
+      </v-btn>
+      
+      
+    
       <v-spacer />
       <v-btn href="/login" icon>
         <v-icon>mdi-account-circle</v-icon>
