@@ -6,7 +6,7 @@ import Detail from '@/components/Detail'
 import Pract from '@/components/Pract'
 import login from '@/components/login'
 import signup from '@/components/signup'
-// import Post from '@/components/Post'
+import find from '@/components/find'
 // import Cart from '@/components/Cart'
 import Layout from '@/components/Layout'
 
@@ -45,10 +45,16 @@ export default new Router({
                     path: '/login',
                     component: login,
                     name: 'login'
-                }, {
+                },
+                {
                     path: '/signup',
                     component: signup,
                     name: 'signup'
+                },
+                {
+                    path: '/find',
+                    component: find,
+                    name: 'find'
                 },
             ]
         }],

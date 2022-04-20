@@ -1,29 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.demo.dao.BookDAO">
 	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="String">
 		SELECT *
 		FROM book
     </select>
-    <sql id="">
-       SELECT book_no, book_title, book_img, book_author
-       FROM book
-       WHERE 
+   <!--  <sql id="findType2">     
        <trim prefix="(" suffix=")" prefixOverrides="OR">
-          <foreach collection="fsArr" item="fd">
+          <foreach collection="fs" item="fd">
               <trim prefix="OR">
                   <choose>
-                      <when test="fd == 'T'.toString()">
-                          book_title LIKE '%'||#{ss}||'%'
+                      <when test='fd == "T".toString()'>
+                          book_title like CONCAT('%',#{ss},'%')
                       </when>
-                      <when test="fd == 'C'.toString()">
-                          book_content LIKE '%'||#{ss}||'%'
-                      </when>              
+                      <when test='fd == "A".toString()'>
+                          book_author like CONCAT('%',#{ss},'%')
+                      </when>    
+                      <when test='fd == "TA".toString()'>
+                          book_author like CONCAT('%',#{ss},'%') OR  book_title like CONCAT('%',#{ss},'%')
+                      </when>          
                   </choose>
               </trim>        
           </foreach>
        </trim>
     </sql>
+    
+    <sql id="findType">
+      <if test="#{fs}=='T'.toString()">
+         book_title LIKE CONCAT('%',#{ss},'%')
+       </if>
+       <if test="#{fs}=='A'.toString()">
+         book_author LIKE CONCAT('%',#{ss},'%')
+       </if>  
+       <if test="#{fs}=='TA'.toString()">
+         book_author LIKE CONCAT('%',#{ss},'%') OR book_title LIKE CONCAT('%',#{ss},'%')
+       </if>     
+    </sql> -->
+    
+    <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="map">
+       SELECT book_no, book_title, book_img, book_author
+       FROM book
+     <where>
+      <if test="fs=='T'.toString()">
+         book_title LIKE CONCAT('%',#{ss},'%')
+       </if>
+       <if test="fs=='A'.toString()">
+         book_author LIKE CONCAT('%',#{ss},'%')
+       </if>  
+       <if test="fs=='TA'.toString()">
+         book_author LIKE CONCAT('%',#{ss},'%') OR book_title LIKE CONCAT('%',#{ss},'%')
+       </if>               
+      </where>
+    </select>
+    
+    
+    
 </mapper>
