@@ -34,6 +34,7 @@ public class userRestController {
 		   msg = vo.getMsg();
 		   System.out.println(msg);		   
 		   System.out.println((String)session.getAttribute(user_id));
+		   System.out.println(user_id);
 		   return msg;
 	}
 

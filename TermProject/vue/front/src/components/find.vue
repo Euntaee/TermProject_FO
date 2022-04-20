@@ -92,12 +92,7 @@ export default {
             items: [
                 {
                     id: 2,
-                    name: '만화',
-                    // children: [
-                    //     { id: 2, name: 'Casuals' },
-                    //     { id: 3, name: 'Formals' },
-                    //     { id: 4, name: 'Sneakers' },
-                    // ],
+                    name: '만화',                  
                 },                
                 {
                     id: 3,

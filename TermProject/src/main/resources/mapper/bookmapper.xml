@@ -39,20 +39,20 @@
        </if>     
     </sql> -->
     
-    <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="map">
+    <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
        SELECT book_no, book_title, book_img, book_author
        FROM book
-     <where>
-      <if test="fs=='T'.toString()">
-         book_title LIKE CONCAT('%',#{ss},'%')
+     WHERE
+      <if test='st=="T"'>
+         book_title LIKE CONCAT('%',#{searchtext},'%')
        </if>
-       <if test="fs=='A'.toString()">
-         book_author LIKE CONCAT('%',#{ss},'%')
+       <if test='st=="A"'>
+         book_author LIKE CONCAT('%',#{searchtext},'%')
        </if>  
-       <if test="fs=='TA'.toString()">
-         book_author LIKE CONCAT('%',#{ss},'%') OR book_title LIKE CONCAT('%',#{ss},'%')
+       <if test='st=="TA"'>
+         book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
        </if>               
-      </where>
+   
     </select>
     
     

@@ -16,7 +16,7 @@
       </v-toolbar-title>
         <v-form class="row" style="margin: 0px auto">       
          <v-select
-          v-model="fs"
+          v-model="st"
           style="margin-top: 30px; width:1px;"
           :items="searchType"
           item-text="name"          
@@ -28,7 +28,7 @@
         &nbsp;&nbsp;
         
       <v-text-field        
-        v-model="ss"
+        v-model="searchtext"
         flat
         style="margin-top: 30px;"
         solo-inverted
@@ -179,16 +179,16 @@ export default {
                      {name: '도서명', value:'T'} ,
                      {name: '저자', value:'A'} ,
                 ],        
-                fs:'',       
-                ss: '',
+                st:'',       
+                searchtext: '',
                 activeBtn: 1,
             }
         },
         methods:{          
           findBtn:function(){
             const params = new URLSearchParams();
-            params.append('fs',this.fs);
-            params.append('ss',this.ss);
+            params.append('st',this.st);
+            params.append('searchtext',this.searchtext);
             this.$axios.post("http://localhost:8080/find_ok", params
             ).then(response =>{
               console.log(response)

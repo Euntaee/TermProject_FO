@@ -32,7 +32,7 @@ public class UserService {
     			vo.setMsg("NOPWD");
     		}
     	}
-    	System.out.println(count);
+    	System.out.println(count); 
     	return vo;
     }
 	

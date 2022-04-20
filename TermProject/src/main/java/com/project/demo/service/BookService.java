@@ -19,8 +19,7 @@ public class BookService{
 	}
 	
 	public List<BookVO> findBookList(Map map){
-		List<BookVO> flist=bookdao.findBookList(map);
-		
+		List<BookVO> flist=bookdao.findBookList(map);	
 		return flist;
 	}
 }

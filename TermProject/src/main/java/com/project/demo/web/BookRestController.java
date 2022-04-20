@@ -28,14 +28,15 @@ public List<BookVO> selectBookList(){
 	return bookservice.selectBookList();
 }
 
-@RequestMapping("/find_ok")
-public String find_BookList(String ss, String fs){
-
+@RequestMapping(value = "/find_ok",produces="text/plain;charset=UTF-8")
+public String find_BookList(String searchtext, String st){	
 	String json="";
+	try {
 	Map map= new HashMap();
-	map.put("ss", ss);
-	map.put("fs", fs);	
-	List<BookVO> list=bookservice.findBookList(map);
+	map.put("st", st);
+	map.put("searchtext", searchtext);	
+	List<BookVO> list=bookservice.findBookList(map);	
+	
 	JSONArray arr=new JSONArray();
 	for(BookVO vo:list) {
 		JSONObject obj=new JSONObject();
@@ -44,12 +45,18 @@ public String find_BookList(String ss, String fs){
 		obj.put("book_img", vo.getBook_img());
 		obj.put("book_author", vo.getBook_author());
 		arr.add(obj);
-	}
-	json=arr.toJSONString();	
+	}	
+	json=arr.toJSONString();		
+	}catch (Exception e) {}
 
-	System.out.println("ss="+ss);
-	System.out.println("fs="+fs);
-	
+	System.out.println("st="+st);
+	System.out.println("searchtext="+searchtext);	
 	return json;
+//	Map map= new HashMap();
+//	map.put("st", st);
+//	map.put("searchtext", searchtext);
+//	System.out.println("ss="+st);
+//	System.out.println("fs="+searchtext);	
+//	return bookservice.findBookList(map);	
 }
 }
