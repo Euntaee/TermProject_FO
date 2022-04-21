@@ -181,7 +181,7 @@ export default {
                 ],        
                 st:'',       
                 searchtext: '',
-                activeBtn: 1,
+                // activeBtn: 1,
             }
         },
         methods:{          
@@ -192,7 +192,9 @@ export default {
             this.$axios.post("http://localhost:8080/find_ok", params
             ).then(response =>{
               console.log(response)
-              location.href="http://localhost:8080/find"
+              window.location.href="http://localhost:8080/find"
+            }).catch(function(ex){
+              throw new Error(ex)
             })            
           }
 

@@ -145,7 +145,9 @@ export default {
             .then(response =>{
                 console.log(response.data);
                 this.Book=response.data;
-            })      
+            }).catch(function(ex){
+              throw new Error(ex)
+            })       
             }
         }
     }

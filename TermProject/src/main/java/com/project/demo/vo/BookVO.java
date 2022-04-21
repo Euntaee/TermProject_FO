@@ -29,5 +29,33 @@ public String getBook_author() {
 public void setBook_author(String book_author) {
 	this.book_author = book_author;
 }
+//	private String bookNo;
+//	private String bookImg;
+//	private String bookTitle;
+//	private String bookAuthor;
+//	public String getBookNo() {
+//		return bookNo;
+//	}
+//	public void setBookNo(String bookNo) {
+//		this.bookNo = bookNo;
+//	}
+//	public String getBookImg() {
+//		return bookImg;
+//	}
+//	public void setBookImg(String bookImg) {
+//		this.bookImg = bookImg;
+//	}
+//	public String getBookTitle() {
+//		return bookTitle;
+//	}
+//	public void setBookTitle(String bookTitle) {
+//		this.bookTitle = bookTitle;
+//	}
+//	public String getBookAuthor() {
+//		return bookAuthor;
+//	}
+//	public void setBookAuthor(String bookAuthor) {
+//		this.bookAuthor = bookAuthor;
+//	}
 
 }

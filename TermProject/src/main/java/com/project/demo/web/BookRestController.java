@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,8 +29,8 @@ public List<BookVO> selectBookList(){
 	return bookservice.selectBookList();
 }
 
-@RequestMapping(value = "/find_ok",produces="text/plain;charset=UTF-8")
-public String find_BookList(String searchtext, String st){	
+@PostMapping("/find_ok")
+public String find_BookList(String searchtext, String[] st){	
 	String json="";
 	try {
 	Map map= new HashMap();
@@ -55,8 +56,8 @@ public String find_BookList(String searchtext, String st){
 //	Map map= new HashMap();
 //	map.put("st", st);
 //	map.put("searchtext", searchtext);
-//	System.out.println("ss="+st);
-//	System.out.println("fs="+searchtext);	
+//	System.out.println("st="+st);
+//	System.out.println("searchtext="+searchtext);
 //	return bookservice.findBookList(map);	
 }
 }
