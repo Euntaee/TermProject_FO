@@ -113,7 +113,10 @@ export default {
             ],
             Book:[]
           }
-        },        
+        }, 
+         mounted:function(){
+            this.getData();
+        },       
         methods:{
             getData:function(){
             this.$axios.get("http://localhost:8080/find_ok")      
