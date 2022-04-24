@@ -55,7 +55,7 @@
        </if>                
     </select>            
     
-    <!-- 상세보기 -->
+    <!-- 상세보기. -->
     <select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
     SELECT
      book_no, 
