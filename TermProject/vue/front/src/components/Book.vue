@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
 <div>
     <v-container>
@@ -56,7 +57,7 @@
                          </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div class="txt_line"><router-link :to="'/book/${book_no}'" style="text-decoration: none">{{pro.book_title}}</router-link></div>
+                    <div class="txt_line"><router-link :to="{name:'Detail',params:{book_no: pro.book_no}}" style="text-decoration: none">{{pro.book_title}}</router-link></div>
                     <div class="txt_line">{{pro.book_author}}</div>
                   </v-card-text>
                 </v-card>
@@ -65,9 +66,11 @@
           </div>
           <div class="text-center mt-12">
             <v-pagination
-              v-model="page"
-              :length="6"
-            ></v-pagination>
+              v-model="pagination.curpage"
+              :length="pagination.totalpage"
+              :total-visible="pagination.visible"
+              @input="getData"
+            ></v-pagination>          
           </div>
         </div>
       </div>
@@ -85,36 +88,16 @@ export default {
             options: [
                 '인기순',
                 '최신순',                
-            ],
-            page:1,
-            // breadcrums: [
-            //     {
-            //         text: 'Home',
-            //         disabled: false,
-            //         href: 'breadcrumbs_home',
-            //     },
-            //     {
-            //         text: 'Clothing',
-            //         disabled: false,
-            //         href: 'breadcrumbs_clothing',
-            //     },
-            //     {
-            //         text: 'T-Shirts',
-            //         disabled: true,
-            //         href: 'breadcrumbs_shirts',
-            //     },
-            // ],
-            min:0,
-            max:10000,
+            ], 
+            pagination: {                             
+            curpage:1,
+            totalpage:18,
+            visible:7
+            },
             items: [
                 {
                     id: 2,
-                    name: '만화',
-                    // children: [
-                    //     { id: 2, name: 'Casuals' },
-                    //     { id: 3, name: 'Formals' },
-                    //     { id: 4, name: 'Sneakers' },
-                    // ],
+                    name: '만화',                   
                 },
                 {
                     id: 3,
@@ -141,14 +124,19 @@ export default {
         },
         methods:{
             getData:function(){
-            this.$axios.get("http://localhost:8080/rest_prac")      
+            this.$axios.post("http://localhost:8080/rest_prac",null,{
+              params:{
+                  page:this.pagination.curpage
+              }
+            })      
             .then(response =>{
                 console.log(response.data);
-                this.Book=response.data;
+                this.Book=response.data;                 
+                  // this.pagination.totalpage=this.Book[0].totalpage;
             }).catch(function(ex){
               throw new Error(ex)
             })       
-            }
+            }           
         }
     }
 </script>

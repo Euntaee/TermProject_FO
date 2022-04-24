@@ -8,9 +8,9 @@ import com.project.demo.vo.UserVO;
 @Repository
 @Mapper
 public interface UserDAO {
-int userIdCount(String user_id); //아이디 존재 확인
+int userIdCount(String user_id); //아이디 확인
  
-UserVO userGetPassword(String user_id); //비밀번호 확인
+UserVO userGetPassword(String user_id); //패스워드 확인
 
-void userInsert(UserVO vo); //회원가입
+void userInsert(UserVO vo); //회원 등록
 }

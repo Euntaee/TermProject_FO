@@ -7,6 +7,7 @@ import vuetify from '@/plugins/vuetify' // path to vuetify export
 import axios from 'axios'
 import store from './store'
 
+Vue.prototype.$EventBus = new Vue()
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 

@@ -111,20 +111,22 @@ export default {
                     name: '인문학',                
                 }
             ],
-            Book:[]
+            Book:[],          
           }
-        }, 
-         mounted:function(){
-            this.getData();
-        },       
+        },
+        created() {
+          this.$EventBus.$on('sentBook', (res)=> {
+            this.Book=res;
+          })
+        } ,         
         methods:{
-            getData:function(){
-            this.$axios.get("http://localhost:8080/find_ok")      
-            .then(response =>{
-                console.log(response.data);
-                this.Book=response.data;
-            })      
-            }
+            // getData:function(){
+            // this.$axios.get("http://localhost:8080/find_ok")      
+            // .then(response =>{
+            //     console.log(response.data);
+            //     this.Book=response.data;
+            // })      
+            // }
         }
     }
 </script>

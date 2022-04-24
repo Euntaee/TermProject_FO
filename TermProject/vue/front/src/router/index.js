@@ -29,12 +29,10 @@ export default new Router({
                     name: 'Book'
                 },
                 {
-                    path: '/book/:book_no',
+                    path: '/detail',
                     component: Detail,
-                    name: 'Detail',
-                    props: route => ({
-                        book_no: Number(route.params.book_no)
-                    })
+                    name: 'Detail',   
+                    props: true     
                 },
                 {
                     path: '/pract',

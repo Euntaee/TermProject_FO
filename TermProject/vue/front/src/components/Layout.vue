@@ -12,7 +12,7 @@
       <v-toolbar-title
         style="width: 350px"
       >
-        <a href="/" class="white--text" style="text-decoration: none"><v-icon>mdi-truck</v-icon>&nbsp;서울 도서대여 사이트</a>
+         <router-link to="/" class="white--text" style="text-decoration: none"><v-icon>mdi-truck</v-icon>&nbsp;서울 도서대여 사이트</router-link>
       </v-toolbar-title>
         <v-form class="row" style="margin: 0px auto">       
          <v-select
@@ -37,16 +37,16 @@
         label="도서검색"        
       />            
       &nbsp;&nbsp;
-      <v-btn id="findBtn" 
-      @click="findBtn" 
+      <v-btn id="findBtn"               
+      router-link :to="'/find'"
+      @click="findBtn"
       style="margin-top: 35px;">
         검색
       </v-btn>
-      </v-form>
-      
-    
+      </v-form>      
       <v-spacer />
-      <v-btn href="/login" icon>
+      <v-btn 
+      router-link to="/login" icon>
         <v-icon>mdi-account-circle</v-icon>
       </v-btn>
       <v-btn icon>
@@ -76,9 +76,10 @@
         color="#2d3753"
         horizontal
       >
-        <a href="/" class="v-btn">
+       <v-btn
+         router-link to="/">
           <span>Home</span>
-        </a>
+        </v-btn>        
         <!-- <v-menu open-on-hover offset-y>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on">
@@ -102,15 +103,16 @@
 
           </v-card>
         </v-menu> -->
-        <a href="/book" class="v-btn">
+        <v-btn
+         router-link to="/book">
           <span>도서목록</span>
-        </a>
-        <a href="/detail" class="v-btn">
+        </v-btn>       
+        <!-- <a href="/detail" class="v-btn">
           <span>상세보기</span>
-        </a>
-        <v-btn href="/pract">
+        </a> -->
+        <!-- <v-btn href="/pract">
           <span>공지사항</span>
-        </v-btn>
+        </v-btn> -->
       </v-bottom-navigation>
     </v-main>
       <router-view/>
@@ -172,32 +174,34 @@
 /*eslint-disable*/
 export default {
         data () {
-            return {                
-               select:'전체',                
+            return {                                               
                 searchType: [
                      {name: '전체', value:'TA'} ,
                      {name: '도서명', value:'T'} ,
                      {name: '저자', value:'A'} ,
                 ],        
-                st:'',       
-                searchtext: '',
+                st: 'TA',       
+                searchtext: this.searchtext,
+                Book:[]
                 // activeBtn: 1,
             }
-        },
+        }, 
+                  
         methods:{          
           findBtn:function(){
-            const params = new URLSearchParams();
-            params.append('st',this.st);
-            params.append('searchtext',this.searchtext);
-            this.$axios.post("http://localhost:8080/find_ok", params
+            // const params = new URLSearchParams();
+            // params.append('st',this.st);
+            // params.append('searchtext',this.searchtext);                        
+                   
+            this.$axios.post("http://localhost:8080/find_ok", null, {params: {st:this.st, searchtext:this.searchtext}}
             ).then(response =>{
-              console.log(response)
-              window.location.href="http://localhost:8080/find"
+              console.log(response.data)
+              this.Book=response.data;
+              this.$EventBus.$emit('sentBook',this.Book)
             }).catch(function(ex){
               throw new Error(ex)
-            })            
-          }
-
+            })                  
+          }        
         }
     }
 </script>

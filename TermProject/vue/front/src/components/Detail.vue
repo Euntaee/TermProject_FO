@@ -4,12 +4,12 @@
     <v-container>
       <div class="row">      
         <div class="col-md-5 col-sm-5 col-xs-12">
-          <!-- <v-carousel>
+          <v-carousel>
             <v-carousel-item
-              :src="vo.book_img"
+              :src="Book.book_img"
             >
             </v-carousel-item>           
-          </v-carousel> -->
+          </v-carousel>
         </div>
         <div class="col-md-7 col-sm-7 col-xs-12">
           <v-breadcrumbs class="pb-0" :items="breadcrums"></v-breadcrumbs>
@@ -158,25 +158,35 @@
 //  const book_no = params.get('book_no');
     export default {      
     props:{
-         book_no:Number
-       },
+            book_no: Object
+          },
         data () {
           return {
-            Book:[],
+            Book:{},        
+            book_no:this.book_no   
           }
         }, 
-         mounted:function(){
-            this.getData();
+        // created() {
+        //   this.book_no
+        // },
+        // created() {
+        //    this.$axios.get('http://localhost:8080/detail_ok',{params:{book_no:this.book_no}})
+        //     .then(response =>{
+        //         console.log(response.data);
+        //         this.Book=response.data;
+        //     })
+        // },      
+        mounted:function(){
+          this.getData();
         },
         methods:{
-            getData:function(){           
-            this.$axios.get("http://localhost:8080/book")      
+            getData:function(props){           
+           this.$axios.get('http://localhost:8080/detail_ok',{params:{book_no:this.book_no}})
             .then(response =>{
                 console.log(response.data);
                 this.Book=response.data;
-            })      
+            })
             }
-        }             
-               
+        }                            
     }
 </script>

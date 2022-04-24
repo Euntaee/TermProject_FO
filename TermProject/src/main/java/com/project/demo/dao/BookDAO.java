@@ -14,6 +14,8 @@ import com.project.demo.vo.BookVO;
 @Repository
 @Mapper	
 public interface BookDAO {
-	List<BookVO> selectBookList();
+	List<BookVO> selectBookList(Map map);
+	int selectTotalPage(Map map);
 	List<BookVO> findBookList(Map map);
+	BookVO detailBook(String book_no);
 }

@@ -3,72 +3,70 @@
          PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.demo.dao.BookDAO">
-<!-- <resultMap type="com.project.demo.vo.BookVO" id="bookRM">
-  <result property="bookNo" column="book_no"/>
-  <result property="bookTitle" column="book_title"/>
-  <result property="bookImg" column="book_img"/>
-  <result property="bookAuthor" column="book_author"/>
-</resultMap> -->
-	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="String" >
-	SELECT book_no, 
+     
+    <!-- 책 리스트 출력 -->
+	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map" >
+	SELECT 
+	   book_no, 
        book_title, 
        book_img, 
-       book_author
+       book_author,
+       book_publish
     FROM book    
+    ORDER BY book_no ASC 
+    limit #{start}, #{end}
     </select>
-     <sql id="findType2">     
-       <trim prefix="(" suffix=")" prefixOverrides="OR">
-          <foreach collection="st" item="fd">
-              <trim prefix="OR">
-                  <choose>
-                      <when test='fd == "T".toString()'>
-                          book_title like CONCAT('%',#{searchtext},'%')
-                      </when>
-                      <when test='fd == "A".toString()'>
-                          book_author like CONCAT('%',#{searchtext},'%')
-                      </when>    
-                      <when test='fd == "TA".toString()'>
-                          book_author like CONCAT('%',#{searchtext},'%') OR book_title like CONCAT('%',#{ss},'%')
-                      </when>          
-                  </choose>
-              </trim>        
-          </foreach>
-       </trim>
-    </sql>
+       
+    <!-- 총 페이지 -->
+    <select id="selectTotalPage" resultType="int" parameterType="java.util.Map">
+    SELECT CEIL(COUNT(*)/12.0)
+    FROM book
+    </select>
     
-   <!-- <sql id="findType">
-      <if test="#{fs}=='T'.toString()">
-         book_title LIKE CONCAT('%',#{ss},'%')
-       </if>
-       <if test="#{fs}=='A'.toString()">
-         book_author LIKE CONCAT('%',#{ss},'%')
-       </if>  
-       <if test="#{fs}=='TA'.toString()">
-         book_author LIKE CONCAT('%',#{ss},'%') OR book_title LIKE CONCAT('%',#{ss},'%')
-       </if>     
-    </sql> -->
-    
-    <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.HashMap">    
-      SELECT book_no, 
-       book_title, 
-       book_img, 
-       book_author
-      FROM book
-      WHERE
-      <include refid="findType2"></include>
-      <!-- <where> 
-      <if test='st=="T".toString()'>
+    <!-- 책 검색 리스트 출력 -->
+    <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">    
+    SELECT 
+     book_no, 
+     book_title, 
+     book_img, 
+     book_author,
+     book_publish
+    FROM book              
+    WHERE
+       <!-- <choose>
+          <when test='st == "T".toString()'>
+              book_title like CONCAT('%',#{searchtext},'%')
+          </when>
+          <when test='st == "A".toString()'>
+              book_author like CONCAT('%',#{searchtext},'%')
+          </when>    
+          <when test='st == "TA".toString()'>
+              book_author like CONCAT('%',#{searchtext},'%') OR book_title like CONCAT('%',#{searchtext},'%')
+          </when>          
+      </choose>    -->
+       <if test='st=="T"'>
          book_title LIKE CONCAT('%',#{searchtext},'%')
        </if>
-       <if test='st=="A".toString()'>
+       <if test='st=="A"'>
          book_author LIKE CONCAT('%',#{searchtext},'%')
        </if>  
-       <if test='st=="TA".toString()'>
+       <if test='st=="TA"'>
          book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
-       </if>               
-      </where> -->
+       </if>                
+    </select>            
+    
+    <!-- 상세보기 -->
+    <select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
+    SELECT
+     book_no, 
+     book_title, 
+     book_img, 
+     book_author,
+     book_publish,
+     book_content,
+     book_publish,
+     book_genre
+    FROM book
+    WHERE book_no=#{book_no}
     </select>
-    
-    
-    
 </mapper>

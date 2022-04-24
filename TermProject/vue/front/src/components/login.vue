@@ -47,7 +47,7 @@
                       </div>
                     </div>
                     <div>
-                      &emsp; <a href="/signup">회원가입</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a>비밀번호 찾기</a>
+                      &emsp;  <router-link to="/signup">회원가입</router-link>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<router-link to>비밀번호 찾기</router-link>
                     </div>
                     <v-card-actions>
                       <v-btn
