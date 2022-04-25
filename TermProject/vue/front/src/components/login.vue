@@ -97,8 +97,10 @@ export default {
             alert("비밀번호가 틀립니다.")
           }		
           else{
-            location.href="http://localhost:8080/"
+            location.href="http://localhost:8080/"             
              alert("로그인 됐습니다!.")
+            //  this.$session.set('user_id', this.user_id)
+            sessionStorage.setItem('user_id', this.user_id)
           }
 			  })
         

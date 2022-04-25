@@ -53,7 +53,11 @@
             <br>
             <br>
             <br>
-            <v-btn class="primary white--text" outlined tile dense><v-icon>mdi-book</v-icon> 대여하기</v-btn>
+            <v-btn class="primary white--text" outlined tile dense
+            @click="rentData"
+            ><v-icon>mdi-book</v-icon> 
+            대여하기
+            </v-btn>
             <v-btn class="ml-4" outlined tile>책 담기 OR 목록 보러 가기(미정)</v-btn>
 
           </div>
@@ -162,8 +166,8 @@
           },
         data () {
           return {
-            Book:{},        
-            book_no:this.book_no   
+            Book:{},                    
+            user_id:sessionStorage.getItem('user_id')
           }
         }, 
         // created() {
@@ -186,7 +190,14 @@
                 console.log(response.data);
                 this.Book=response.data;
             })
-            }
+            },
+            rentData:function(){
+              this.$axios.post('http://localhost:8080/rent_info',null,{params:{book_no:this.book_no ,user_id:this.user_id, }})
+              .then(response => {
+              console.log(response)
+              window.location.href="/bookrent"              
+            })
         }                            
     }
+  }
 </script>

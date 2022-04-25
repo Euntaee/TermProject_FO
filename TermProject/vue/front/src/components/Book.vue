@@ -32,7 +32,7 @@
           <v-divider></v-divider>
 
           <div class="row text-center">
-            <div class="col-md-3 col-sm-6 col-xs-12" v-bind:key="pro.id" v-for="pro in Book">
+            <div class="col-md-3 col-sm-6 col-xs-12" v-bind:key="pro.id" v-for="pro in Book">              
               <v-hover v-slot:default="{ hover }">
                 <v-card
                   class="mx"
@@ -52,7 +52,7 @@
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%;"
                       >
-                        <v-btn v-if="hover" href="/detail"  outlined>대여하러 가기</v-btn>
+                        <v-btn v-if="hover" router-link :to="{name:'Detail',params:{book_no: pro.book_no}}"  outlined>대여하러 가기</v-btn>
                  </div>
                          </v-expand-transition>
                   </v-img>
@@ -116,7 +116,7 @@ export default {
                     name: '인문학',                
                 }
             ],
-            Book:[]
+            Book:[],            
           }
         },
          mounted:function(){

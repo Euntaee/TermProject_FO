@@ -7,8 +7,9 @@ import Pract from '@/components/Pract'
 import login from '@/components/login'
 import signup from '@/components/signup'
 import find from '@/components/find'
-// import Cart from '@/components/Cart'
+import BookRent from '@/components/BookRent'
 import Layout from '@/components/Layout'
+import MyPage from '@/components/MyPage'
 
 /* eslint-disable */
 Vue.use(Router)
@@ -31,8 +32,8 @@ export default new Router({
                 {
                     path: '/detail',
                     component: Detail,
-                    name: 'Detail',   
-                    props: true     
+                    name: 'Detail',
+                    props: true
                 },
                 {
                     path: '/pract',
@@ -53,6 +54,16 @@ export default new Router({
                     path: '/find',
                     component: find,
                     name: 'find'
+                },
+                {
+                    path: '/bookrent',
+                    component: BookRent,
+                    name: 'BookRent'
+                },
+                {
+                    path: '/mypage',
+                    component: MyPage,
+                    name: 'MyPage'
                 },
             ]
         }],

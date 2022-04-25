@@ -45,10 +45,22 @@
       </v-btn>
       </v-form>      
       <v-spacer />
-      <v-btn 
+      
+      <v-btn                 
+      v-if="user_id==null"
       router-link to="/login" icon>
         <v-icon>mdi-account-circle</v-icon>
       </v-btn>
+      <v-btn v-if="user_id!=null"
+      @click="logout"
+      >
+      <span>로그아웃</span>
+      </v-btn>
+      <v-btn v-if="user_id!=null"
+       router-link to="/mypage" icon
+      >
+      <v-icon>mdi-account-circle</v-icon>
+      </v-btn>              
       <v-btn icon>
         <v-badge
           content="2"
@@ -59,7 +71,9 @@
           <v-icon>mdi-bell</v-icon>
         </v-badge>
       </v-btn>
-      <v-btn href="/cart" icon>
+      <v-btn 
+       icon
+       router-link to="/bookrent">
         <v-badge
           content="2"
           value="2"
@@ -79,40 +93,16 @@
        <v-btn
          router-link to="/">
           <span>Home</span>
-        </v-btn>        
-        <!-- <v-menu open-on-hover offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn v-on="on">
-              <span>도서목록</span>
-            </v-btn>
-          </template>
-          <v-card
-            class="mx-auto"
-            max-width="344"
-            outlined
-          >
-
-            <v-list-item
-              v-for="(item, index) in items"
-              :key="index"
-              @click="z"
-              href="/book"
-            >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-
-          </v-card>
-        </v-menu> -->
+        </v-btn>               
         <v-btn
          router-link to="/book">
           <span>도서목록</span>
-        </v-btn>       
-        <!-- <a href="/detail" class="v-btn">
-          <span>상세보기</span>
-        </a> -->
-        <!-- <v-btn href="/pract">
-          <span>공지사항</span>
-        </v-btn> -->
+        </v-btn>
+         <v-btn 
+         v-if="user_id!=null"
+          router-link to="/bookrent">           
+          <span>대여정보</span>
+         </v-btn>   
       </v-bottom-navigation>
     </v-main>
       <router-view/>
@@ -172,8 +162,9 @@
 
 <script>
 /*eslint-disable*/
+
 export default {
-        data () {
+          data () {
             return {                                               
                 searchType: [
                      {name: '전체', value:'TA'} ,
@@ -182,7 +173,8 @@ export default {
                 ],        
                 st: 'TA',       
                 searchtext: this.searchtext,
-                Book:[]
+                Book:[],
+                user_id:sessionStorage.getItem('user_id')
                 // activeBtn: 1,
             }
         }, 
@@ -201,6 +193,11 @@ export default {
             }).catch(function(ex){
               throw new Error(ex)
             })                  
+          },
+          logout:function(){
+             sessionStorage.removeItem('user_id')
+            location.href="http://localhost:8080/"             
+             alert("로그아웃 됐습니다!.")
           }        
         }
     }

@@ -1,9 +1,11 @@
 package com.project.demo.web;
 
+import java.awt.Window;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +23,26 @@ public class userRestController {
 	@Autowired
 	UserService userService;
 	@RequestMapping(value = "/login_ok")
-	public String member_login_ok( String user_id,String user_pwd, HttpSession session, HttpServletRequest request)
+	public String member_login_ok( String user_id,String user_pwd)
 	{
 		   String msg = "";
 		   UserVO vo = userService.isLogin(user_id, user_pwd);
 		   if(vo.getMsg().equals("OK"))
 		   {
-			   session.setAttribute("user_id", vo.getUser_id());
-			   session.setAttribute("user_name", vo.getUser_name());			   
-		   }
-		   session = request.getSession();
+			
+//			  req.getSession().getAttribute(user_id());
+//			  System.out.println(req.getSession().getAttribute(user_id));
+//			   session.getAttribute(user_id);
+//			   System.out.println((String)session.getAttribute(user_id));
+		   }		   
 		   msg = vo.getMsg();
-		   System.out.println(msg);		   
-		   System.out.println((String)session.getAttribute(user_id));
-		   System.out.println(user_id);
+		   System.out.println(msg);		   		   
+		  	   
 		   return msg;
 	}
 
+	
+	
 	@RequestMapping(value="/userInsert")	  
 	   public void member_join_ok(UserVO vo)
 	   {
