@@ -185,7 +185,7 @@ export default {
             // params.append('st',this.st);
             // params.append('searchtext',this.searchtext);                        
                    
-            this.$axios.post("http://localhost:8080/find_ok", null, {params: {st:this.st, searchtext:this.searchtext}}
+            this.$axios.post("http://localhost:8080/find_ok", null, {params: {st:this.st, searchtext:this.searchtext}}              
             ).then(response =>{
               console.log(response.data)
               this.Book=response.data;

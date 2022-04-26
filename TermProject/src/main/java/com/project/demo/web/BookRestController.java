@@ -27,7 +27,7 @@ public class BookRestController {
 //
 	
 @RequestMapping("/rest_prac")
-public List<BookVO> selectBookList(String page){
+public List<BookVO> selectBookList(String page,String sort,String cate){
 //	String json="";
 //	try {
 		int curpage=Integer.parseInt(page);
@@ -35,62 +35,19 @@ public List<BookVO> selectBookList(String page){
 		int start=(rowsize*curpage)-(rowsize);
 		//int totalpage=bookservice.selectTotalPage(map);
 		//int end=(rowsize*curpage);
-		
+		System.out.println(sort);
+		System.out.println(cate);
 		Map map=new HashMap();
+		map.put("sort",sort);
 		map.put("start", start);
 		map.put("end", rowsize);
+		map.put("cate",cate);
 		
-//		List<BookVO> list=bookservice.selectBookList(map);
-//		int totalpage=bookservice.selectTotalPage(map);
-//		System.out.println("ㅇㅇ"+bookservice.selectTotalPage(map));
-//		 System.out.println("bb"+bookservice.selectBookList(map));
-//		JSONArray arr=new JSONArray();
-//		int i=0;
-//		for(BookVO vo:list) {
-//			JSONObject obj=new JSONObject();
-//			obj.put("book_no", vo.getBook_no());
-//	     	obj.put("book_title", vo.getBook_title());
-//			obj.put("book_img", vo.getBook_img());
-//			obj.put("book_author", vo.getBook_author());
-////			if(i==0) {
-////				obj.put("curpage", curpage);
-////				obj.put("totalpage", totalpage);
-////			}
-//			arr.add(obj);			
-//			i++;
-//			System.out.println(start);			
-//			System.out.println("page="+ curpage);
-//		}
-//	}catch (Exception e) {}
-//	
-//	return json;
 	return bookservice.selectBookList(map);
 }
 
 @RequestMapping("/find_ok")
 public List<BookVO> find_BookList(String searchtext, String st){	
-//	String json="";
-//	try {
-//	Map map= new HashMap();
-//	map.put("st", st);
-//	map.put("searchtext", searchtext);	
-//	List<BookVO> list=bookservice.findBookList(map);	
-//	
-//	JSONArray arr=new JSONArray();
-//	for(BookVO vo:list) {
-//		JSONObject obj=new JSONObject();
-//		obj.put("book_no", vo.getBook_no());
-//		obj.put("book_title", vo.getBook_title());
-//		obj.put("book_img", vo.getBook_img());
-//		obj.put("book_author", vo.getBook_author());	
-//		arr.add(obj);
-//	}	
-//	json=arr.toJSONString();		
-//	}catch (Exception e) {}
-//
-//	System.out.println("st="+st);
-//	System.out.println("searchtext="+searchtext);	
-//	return json;
 	Map map= new HashMap();
 	map.put("st", st);
 	map.put("searchtext", searchtext);
@@ -104,5 +61,12 @@ public BookVO detail_data(String book_no) {
 	BookVO vo=bookservice.detailBook(book_no);	
 	System.out.println("book_no="+book_no);
 	return vo;
+}
+
+@RequestMapping("/genre")
+public List<BookVO> genre_data() {
+	
+	return bookservice.genreBook();
+	
 }
 }

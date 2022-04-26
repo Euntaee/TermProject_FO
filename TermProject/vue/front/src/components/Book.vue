@@ -10,7 +10,17 @@
             <v-card-title>카테고리</v-card-title>
             <v-divider></v-divider>
             <template>
-              <v-treeview :items="items" :open="[1]" :active="[5]" :selected-color="'#fff'" activatable open-on-click dense></v-treeview>
+             
+              <div v-bind:key="vo.id" v-for="vo in genre">
+               <!-- <a class="v-list-item--default v-list-item v-list-item--link theme--light"> -->
+              <!-- <div class="v-list-item__content"> -->
+                <v-btn style="background-color=white; width:300px; height:200px; font-size:30px; border:none"               
+                v-model="cate">
+                {{vo.book_genre}}
+                </v-btn>
+              <!-- </div> -->
+              <!-- </a> -->
+              </div>
             </template>
           </v-card>
         </div>
@@ -25,7 +35,16 @@
               <small>Showing 1-12 of 200 products</small>
             </v-col>
             <v-col cols="12" sm="4">
-              <v-select class="pa-0" v-model="select" :items="options" style="margin-bottom: -20px;" outlined dense></v-select>
+              <v-select 
+              class="pa-0" 
+              v-model="sort" 
+              :items="options" 
+              item-text="name"
+              item-value="value"
+              style="margin-bottom: -20px;" 
+              @change="change"
+              outlined dense>             
+              </v-select>
             </v-col>
           </v-row>
 
@@ -84,49 +103,32 @@ export default {
         data () {
           return {
             range: [0, 10000],
-            select:'인기순',
             options: [
-                '인기순',
-                '최신순',                
-            ], 
+                     {name: '인기순', value:'1'} ,
+                     {name: '최신순', value:'2'} ,                     
+            ],                              
             pagination: {                             
             curpage:1,
             totalpage:18,
             visible:7
-            },
-            items: [
-                {
-                    id: 2,
-                    name: '만화',                   
-                },
-                {
-                    id: 3,
-                    name: '에세이',                
-                },
-                 {
-                    id: 4,
-                    name: '문제집',                
-                },
-                 {
-                    id: 5,
-                    name: '잡지',                
-                },
-                 {
-                    id: 6,
-                    name: '인문학',                
-                }
-            ],
-            Book:[],            
+            },          
+            Book:[],       
+            genre:[],
+            sort:'1',
+            cate:'문학'     
           }
         },
          mounted:function(){
             this.getData();
+            this.getGenre();
         },
         methods:{
             getData:function(){
             this.$axios.post("http://localhost:8080/rest_prac",null,{
               params:{
-                  page:this.pagination.curpage
+                  page:this.pagination.curpage,  
+                  sort:this.sort,
+                  cate:this.cate
               }
             })      
             .then(response =>{
@@ -136,7 +138,29 @@ export default {
             }).catch(function(ex){
               throw new Error(ex)
             })       
-            }           
+            },
+            getGenre:function(){
+              this.$axios.get("http://localhost:8080/genre")              
+            .then(response =>{
+                console.log(response.data);
+                this.genre=response.data;
+            })
+            },
+            change:function(sort){
+              this.$axios.get("http://localhost:8080/rest_prac",{params:{
+                sort:this.sort,
+                page:this.pagination.curpage,
+                cate:this.cate                                
+                }
+              }).then(response =>{
+                console.log(response.data);
+                this.Book=response.data;                 
+                  // this.pagination.totalpage=this.Book[0].totalpage;
+            })              
+            },
+            selcetgenre: function(event){
+               cate=event.target
+            }
         }
     }
 </script>

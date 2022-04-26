@@ -13,7 +13,13 @@
        book_author,
        book_publish
     FROM book    
-    ORDER BY book_no ASC 
+    WHERE book_genre LIKE CONCAT('%',#{cate},'%')
+       <if test='sort=="1"'>
+         ORDER BY book_hit DESC
+       </if>
+       <if test='sort=="2"'>
+         ORDER BY book_regdate
+       </if>      
     limit #{start}, #{end}
     </select>
        
@@ -26,24 +32,13 @@
     <!-- 책 검색 리스트 출력 -->
     <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">    
     SELECT 
-     book_no, 
-     book_title, 
-     book_img, 
-     book_author,
-     book_publish
+      book_no, 
+      book_title, 
+      book_img, 
+      book_author,
+      book_publish
     FROM book              
-    WHERE
-       <!-- <choose>
-          <when test='st == "T".toString()'>
-              book_title like CONCAT('%',#{searchtext},'%')
-          </when>
-          <when test='st == "A".toString()'>
-              book_author like CONCAT('%',#{searchtext},'%')
-          </when>    
-          <when test='st == "TA".toString()'>
-              book_author like CONCAT('%',#{searchtext},'%') OR book_title like CONCAT('%',#{searchtext},'%')
-          </when>          
-      </choose>    -->
+    WHERE      
        <if test='st=="T"'>
          book_title LIKE CONCAT('%',#{searchtext},'%')
        </if>
@@ -58,15 +53,24 @@
     <!-- 상세보기. -->
     <select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
     SELECT
-     book_no, 
-     book_title, 
-     book_img, 
-     book_author,
-     book_publish,
-     book_content,
-     book_publish,
-     book_genre
+      book_no, 
+      book_title, 
+      book_img, 
+      book_author,
+      book_publish,
+      book_content,
+      book_publish,
+      book_genre,
+      book_hit,
+      book_regdate
     FROM book
     WHERE book_no=#{book_no}
+    </select>
+    
+    <!-- 책 장르만 출력 -->
+    <select id="genreBook" resultType="com.project.demo.vo.BookVO">
+    SELECT
+      DISTINCT book_genre
+    FROM book
     </select>
 </mapper>

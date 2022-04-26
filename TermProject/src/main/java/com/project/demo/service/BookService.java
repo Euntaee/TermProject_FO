@@ -30,4 +30,8 @@ public class BookService{
 		BookVO vo=bookdao.detailBook(book_no);
 		return vo;
 	}
+	public List<BookVO> genreBook() {
+		List<BookVO> glist=bookdao.genreBook();
+		return glist;
+	}
 }

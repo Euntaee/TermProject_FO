@@ -16,15 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.service.UserService;
+import com.project.demo.util.SHA256Util;
 import com.project.demo.vo.UserVO;
 
 @RestController
 public class userRestController {	
 	@Autowired
 	UserService userService;
+	
+	
 	@RequestMapping(value = "/login_ok")
 	public String member_login_ok( String user_id,String user_pwd)
 	{
+		   user_pwd=SHA256Util.encryptSHA256(user_pwd);
+		   System.out.println("비밀번호 변환 확인: "+SHA256Util.encryptSHA256(user_pwd));
 		   String msg = "";
 		   UserVO vo = userService.isLogin(user_id, user_pwd);
 		   if(vo.getMsg().equals("OK"))

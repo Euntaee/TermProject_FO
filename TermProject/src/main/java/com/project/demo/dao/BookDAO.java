@@ -18,4 +18,5 @@ public interface BookDAO {
 	int selectTotalPage(Map map);
 	List<BookVO> findBookList(Map map);
 	BookVO detailBook(String book_no);
+	List<BookVO> genreBook();
 }
