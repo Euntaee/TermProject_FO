@@ -103,6 +103,19 @@
           router-link to="/bookrent">           
           <span>대여정보</span>
          </v-btn>   
+         <v-col
+        class="d-flex"
+        cols="12"
+        sm="1"
+      >
+       <v-select         
+           v-model="bt"          
+          :items="branchtype"
+          item-text="name"          
+          item-value="value"          
+          solo
+        ></v-select>
+      </v-col>
       </v-bottom-navigation>
     </v-main>
       <router-view/>
@@ -175,7 +188,7 @@ export default {
                 searchtext: this.searchtext,
                 Book:[],
                 user_id:sessionStorage.getItem('user_id')
-                // activeBtn: 1,
+                
             }
         }, 
                   

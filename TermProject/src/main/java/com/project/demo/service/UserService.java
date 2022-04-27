@@ -1,5 +1,7 @@
 package com.project.demo.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,26 @@ public class UserService {
 	public void userInsert(UserVO vo) {
 		 vo.setUser_pwd(SHA256Util.encryptSHA256(vo.getUser_pwd()));		 
 		 userdao.userInsert(vo);
+	}
+	
+	public UserVO selectUserInfo(String user_id) {
+		return userdao.selectUserInfo(user_id);
+	}
+	
+	public UserVO isPwd(String user_pwd, String user_id) {
+		UserVO vo = userdao.userGetPassword(user_id);
+		if(user_pwd.equals(vo.getUser_pwd())){
+			vo.setMsg("OK");
+			vo.setUser_id(user_id);
+			vo.setUser_name(vo.getUser_name());    			
+		}else {
+			vo.setMsg("NOPWD");
+		}
+		return vo;
+	}
+	
+	public void changPwd(Map map) {
+//		System.out.println("service에서 비밀번호 값:"+user_pwd);
+		userdao.changPwd(map);
 	}
 }

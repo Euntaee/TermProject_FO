@@ -4,20 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.slf4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.service.BookService;
 import com.project.demo.vo.BookVO;
-import com.project.demo.vo.UserVO;
 
 @RestController
 public class BookRestController {
@@ -35,7 +28,7 @@ public List<BookVO> selectBookList(String page,String sort,String cate){
 		int start=(rowsize*curpage)-(rowsize);
 		//int totalpage=bookservice.selectTotalPage(map);
 		//int end=(rowsize*curpage);
-		System.out.println(sort);
+//		System.out.println(sort);
 		System.out.println(cate);
 		Map map=new HashMap();
 		map.put("sort",sort);

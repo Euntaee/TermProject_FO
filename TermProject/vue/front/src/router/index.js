@@ -10,6 +10,7 @@ import find from '@/components/find'
 import BookRent from '@/components/BookRent'
 import Layout from '@/components/Layout'
 import MyPage from '@/components/MyPage'
+import ChangePwd from '@/components/ChangePwd'
 
 /* eslint-disable */
 Vue.use(Router)
@@ -22,7 +23,6 @@ export default new Router({
                     path: '/',
                     component: Home,
                     name: 'Home',
-
                 },
                 {
                     path: '/book',
@@ -64,6 +64,11 @@ export default new Router({
                     path: '/mypage',
                     component: MyPage,
                     name: 'MyPage'
+                },
+                {
+                    path: '/changepwd',
+                    component: ChangePwd,
+                    name: 'ChangePwd'
                 },
             ]
         }],

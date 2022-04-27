@@ -18,4 +18,22 @@
         user (user_id, user_pwd, user_name, user_date, user_addr1, user_email, user_phone)
         VALUES (#{user_id},#{user_pwd},#{user_name},#{user_date},#{user_addr1},#{user_email},#{user_phone})
     </insert>
+    <select id="selectUserInfo" resultType="com.project.demo.vo.UserVO" parameterType="String">
+       SELECT 
+        user_id,        
+        user_name,
+        user_date,
+        user_addr1,
+        user_email,
+        user_phone
+       FROM user
+       WHERE user_id=#{user_id}
+    </select>
+    <update id="changPwd" parameterType="java.util.HashMap">
+    <![CDATA[
+       UPDATE user       
+       SET user_pwd = #{user_pwd}
+       WHERE user_id = #{user_id}      
+     ]]>
+    </update>    
 </mapper>      

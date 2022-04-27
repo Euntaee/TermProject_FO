@@ -1,81 +1,65 @@
 <!-- eslint-disable -->
-<template>
-   <v-form >
-    <v-container>
-      <v-row>      
-        <v-col
-          cols="12"
-          sm="6"
-          md="3"
-           style="margin:0px auto;"
+<template v-slot:default>
+  <v-simple-table style="margin: 0px auto">
+      <thead>
+        <tr>
+          <th class="text-left">
+            아이디
+          </th>
+          <th class="text-left">
+            이름
+          </th>
+          <th class="text-left">
+            생년월일
+          </th>
+          <th class="text-left">
+            주소
+          </th> 
+          <th class="text-left">
+            이메일
+          </th>   
+          <th class="text-left">
+            전화번호
+          </th>     
+          <th class="text-left">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상태
+          </th>         
+        </tr>
+      </thead>
+      <tbody>
+        <tr
         >
-          <v-text-field
-            label="이름"
-            placeholder="이름"
-            v-model="user_name"
-          ></v-text-field>
-           <v-text-field
-            label="아이디"
-            placeholder="아이디"
-            v-model="user_id"
-          ></v-text-field>
-           <!-- <v-text-field
-            label="비밀번호"
-            placeholder="비밀번호"
-            type="password"
-            v-model="user_pwd"
-          ></v-text-field> -->
-           <!-- <v-text-field
-            label="비밀번호 확인"
-            placeholder="비밀번호 확인"
-          ></v-text-field> -->
-           <v-text-field
-            label="이메일"
-            placeholder="이메일"
-            v-model="user_email"
-          ></v-text-field>
-           <v-text-field
-            label="생년월일"
-            placeholder="생년월일"
-            v-model="user_date"
-          ></v-text-field>           
-           <v-text-field
-            label="주소"
-            placeholder="주소"
-            v-model="user_addr1"
-          ></v-text-field>
-            <v-text-field
-            label="전화번호"
-            placeholder="전화번호"
-            v-model="user_phone"
-          ></v-text-field>
-          <v-card-actions>
-            <v-btn
-              color="#2c4f91"
-              dark
-              large
-              block
-              @click="userInsert"
-              >회원정보 수정</v-btn
-            >
-             <v-btn
-              color="#2c4f91"
-              dark
-              large
-              block
-              @click="userInsert"
-              >비밀번호 변경</v-btn
-            >
-          </v-card-actions>
-        </v-col>
-      </v-row>      
-    </v-container>
-  </v-form>
+          <td>{{ User.user_id }}</td>
+          <td>{{ User.user_name }}</td>
+          <td>{{ Useruser_date }}</td>
+          <td>{{ User.user_addr1 }}</td>
+          <td>{{ User.user_email }}</td>
+          <td>{{ User.user_phone }}</td>          
+        </tr>        
+      </tbody>
+      <v-btn  router-link to="/changepwd">비밀번호 바꾸기</v-btn>  <v-btn>정보수정</v-btn>     
+  </v-simple-table>
 </template>
-
 <script>
 export default {
-
+  data () {
+    return {
+      User: {},
+      user_id: sessionStorage.getItem('user_id')
+    }
+  },
+  mounted: function () {
+    this.getData()
+  },
+  methods: {
+    getData: function () {
+      this.$axios.get('http://localhost:8080/userInfo', {params: {user_id: this.user_id}})
+        .then(response => {
+          console.log(response.data)
+          this.User = response.data
+        })
+    }
+  }
 }
 </script>
 

@@ -11,17 +11,17 @@
             <v-divider></v-divider>
             <template>
              
-              <div v-bind:key="vo.id" v-for="vo in genre">
-               <!-- <a class="v-list-item--default v-list-item v-list-item--link theme--light"> -->
-              <!-- <div class="v-list-item__content"> -->
-                <v-btn style="background-color=white; width:300px; height:200px; font-size:30px; border:none"               
-                v-model="cate">
-                {{vo.book_genre}}
-                </v-btn>
-              <!-- </div> -->
-              <!-- </a> -->
+            <div v-bind:key="vo.id" v-for="vo in genre">
+               <a class="v-list-item--default v-list-item v-list-item--link theme--light">
+              <div class="v-list-item__content" value="vo.book_genre"  @click="genredata">                 
+               {{vo.book_genre}}
               </div>
+              <div>                                
+              </div>
+               </a>
+            </div>
             </template>
+
           </v-card>
         </div>
         <div
@@ -115,12 +115,12 @@ export default {
             Book:[],       
             genre:[],
             sort:'1',
-            cate:'문학'     
+            cate:'만화'
           }
-        },
+        },        
          mounted:function(){
             this.getData();
-            this.getGenre();
+            this.getGenre();            
         },
         methods:{
             getData:function(){
@@ -158,8 +158,17 @@ export default {
                   // this.pagination.totalpage=this.Book[0].totalpage;
             })              
             },
-            selcetgenre: function(event){
-               cate=event.target
+             genredata:function(){
+              this.$axios.get("http://localhost:8080/rest_prac",{params:{
+                sort:this.sort,
+                page:this.pagination.curpage,
+                cate:this.cate                                
+                }
+              }).then(response =>{
+                console.log(response.data);                
+                this.Book=response.data;                 
+                  // this.pagination.totalpage=this.Book[0].totalpage;
+            })              
             }
         }
     }
