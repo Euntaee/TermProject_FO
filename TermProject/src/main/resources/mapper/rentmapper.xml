@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.demo.dao.RentDAO">
+
+	<resultMap type="com.project.demo.vo.BookVO" id="BookVO">
+		<result column="book_no" property="book_no"/>
+		<result column="book_img" property="book_img"/>
+		<result column="book_author" property="book_author"/>
+		<result column="book_title" property="book_title"/>
+		<result column="book_publish" property="book_publish"/>
+		<result column="book_content" property="book_content"/>
+		<result column="book_genre" property="book_genre"/>
+		<result column="book_hit" property="book_hit"/>
+		<result column="book_regdate" property="book_regdate"/>
+	</resultMap>
+	
+	<resultMap type="com.project.demo.vo.RentVO" id="RentVO">
+	    <result column="rent_no" property="rent_no"/>
+	    <result column="rent_check" property="rent_check"/>		
+		<result column="rent_startdate" property="rent_startdate"/>
+		<result column="rent_enddate" property="rent_enddate"/>
+		<result column="user_id" property="user_id"/>		
+		<result column="book_no" property="book_no"/>
+		<result column="book_no" property="book_no"/>
+		<result column="book_img" property="book_img"/>
+		<result column="book_author" property="book_author"/>
+		<result column="book_title" property="book_title"/>
+		<result column="book_publish" property="book_publish"/>
+		<result column="book_content" property="book_content"/>
+		<result column="book_genre" property="book_genre"/>
+		<result column="book_hit" property="book_hit"/>
+		<result column="book_regdate" property="book_regdate"/>		
+		  
+		<collection property="BookVO" javaType="java.util.ArrayList" resultMap="BookVO" />		
+	</resultMap>	
+
+	<insert id="rentInsert" useGeneratedKeys="true" keyProperty="rent_no">
+	<![CDATA[
+		INSERT INTO
+		rent (rent_no, rent_startdate, rent_enddate, book_no, user_id, rent_check)	
+		VALUES
+		(0,DATE(NOW()) ,date_add(date_format(now(),'%y-%m-%d'),INTERVAL 7 DAY)
+		,#{book_no},#{user_id},0)
+		]]>
+	</insert>
+	<select id="rentSelect" resultMap="RentVO" parameterType="com.project.demo.vo.RentVO">
+	<![CDATA[
+		SELECT 
+		 b.book_title,
+		 b.book_author, 
+		 a.rent_startdate, 
+		 a.rent_enddate
+	    FROM rent a
+	    LEFT OUTER JOIN book b
+	    ON b.book_no = a.book_no
+		WHERE a.user_id=#{user_id}
+		]]> 
+	</select>
+</mapper>
+
