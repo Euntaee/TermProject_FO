@@ -1,25 +1,30 @@
+<!-- eslint-disable -->
 <template>
-             <v-form style="margin: 0px auto">
-                    <div class="mx-3">
-                      <v-icon color="black" size="30px">lock</v-icon>
-                      <div class="mx-1">
+          <div>          
+           <v-container style="width:400px; margin-bottom:150px;">
+              <div style="float:right">
+                <v-btn @click="pwdok" style="margin: 100px 0px 0px 400px">
+                   비밀번호 확인
+                </v-btn>  
+              </div>                          
+             <v-form style="margin: 0px auto">               
+                    <div class="mx-3">                                           
+                      <div class>                                   
+                             <v-icon color="black" size="30px">lock</v-icon>
                         <v-text-field
+                          v-if="old_pwd!=null"
                           id:old_pwd
                           placeholder="현재 비밀번호"
                           type="password"
                           v-model="old_pwd"
                           required
-                        ></v-text-field>
-                        <v-btn @click="pwdok">
-                            비밀번호 확인
-                        </v-btn>
+                        ></v-text-field>                        
                       </div>
                     </div>
                     <div class="mx-3">
-                      <v-icon color="black" size="30px">lock</v-icon>
-                      <div class="mx-1">
-                        <v-text-field
-                          id:new_pwd
+                      <div class="mx-1">                        
+                        <v-text-field                                                
+                          id:new_pwd1
                           placeholder="새 비밀번호"
                           type="password"
                           v-model="user_pwd"
@@ -28,15 +33,15 @@
                       </div>
                       <div class="mx-1">
                         <v-text-field
-                          id:new_pwd
+                          id:new_pwd2
                           placeholder="새 비밀번호 확인"
-                          type="password"
-                          v-model="user_pwd"
+                          type="password"                          
                           required
                         ></v-text-field>
                       </div>
                       <v-btn
-                       @click="pwdchange"
+                        @click="pwdchange"
+                        style="width:250px margin-bottom:200px"
                         color="#2c4f91"
                         dark
                         large
@@ -44,12 +49,11 @@
                         type="button"
                         >변경하기</v-btn>
                     </div>
-                    <div>
-                      &emsp;  <router-link to="/signup">회원가입</router-link>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<router-link to>비밀번호 찾기</router-link>
-                    </div>
                     <v-card-actions>
                     </v-card-actions>
                 </v-form>
+           </v-container>
+         </div>
 </template>
 
 <script>

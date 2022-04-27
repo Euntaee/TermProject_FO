@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
 import com.project.demo.vo.RentVO;
-import com.project.demo.vo.joinVO;
+
 @Repository
 @Mapper
 public interface RentDAO {
 	void rentInsert(Map map);
+
 	List<RentVO> rentSelect(Map map);
 }

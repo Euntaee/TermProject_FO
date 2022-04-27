@@ -16,7 +16,7 @@
                     class="white--text align-end"
                     :aspect-ratio="16/9"
                     height="200px"
-                    :src="a.book_img"
+                    :src="a.bookImg"
                   >
                     <!-- <v-card-title>{{pro.type}} </v-card-title> -->
                     <v-expand-transition>
@@ -31,8 +31,8 @@
                     </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div><a href="/detail" style="text-decoration: none">{{a.book_title}}</a></div>
-                    <div>{{a.book_author}}</div>
+                    <div><a href="/detail" style="text-decoration: none">{{a.bookTitle}}</a></div>
+                    <div>{{a.bookAuthor}}</div>
                   </v-card-text>
                 </v-card>
               </v-hover>

@@ -1,6 +1,7 @@
 <!-- eslint-disable -->
-<template v-slot:default>
-  <v-simple-table style="margin: 0px auto">
+<template>
+<div class="container" style="">
+  <v-simple-table style="margin-bottom:500px">
       <thead>
         <tr>
           <th class="text-left">
@@ -36,9 +37,14 @@
           <td>{{ User.user_email }}</td>
           <td>{{ User.user_phone }}</td>          
         </tr>        
-      </tbody>
-      <v-btn  router-link to="/changepwd">비밀번호 바꾸기</v-btn>  <v-btn>정보수정</v-btn>     
+      </tbody>      
   </v-simple-table>
+     <div class="container" style="text-align:center">     
+         <v-btn  router-link to="/changepwd" style="width:130px;">비밀번호 바꾸기</v-btn>  
+         &nbsp;&nbsp;&nbsp;&nbsp;
+         <v-btn style="width:130px;">정보수정</v-btn>          
+     </div>
+  </div>
 </template>
 <script>
 export default {

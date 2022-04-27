@@ -14,7 +14,7 @@ public class BookService{
 	@Autowired
 	BookDAO bookdao;
 	public List<BookVO> selectBookList(Map map){
-		List<BookVO> blist = bookdao.selectBookList(map);
+	    List<BookVO> blist = bookdao.selectBookList(map);
 		return blist;
 	}
 	

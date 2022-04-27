@@ -32,37 +32,37 @@
     <!-- 책 검색 리스트 출력 -->
     <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">    
     SELECT 
-      book_no, 
-      book_title, 
-      book_img, 
-      book_author,
-      book_publish
+        book_no, 
+        book_title, 
+        book_img, 
+        book_author,
+        book_publish
     FROM book              
     WHERE      
        <if test='st=="T"'>
-         book_title LIKE CONCAT('%',#{searchtext},'%')
+        book_title LIKE CONCAT('%',#{searchtext},'%')
        </if>
        <if test='st=="A"'>
-         book_author LIKE CONCAT('%',#{searchtext},'%')
+        book_author LIKE CONCAT('%',#{searchtext},'%')
        </if>  
        <if test='st=="TA"'>
-         book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
+        book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
        </if>                
     </select>            
     
     <!-- 상세보기. -->
     <select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
     SELECT
-      book_no, 
-      book_title, 
-      book_img, 
-      book_author,
-      book_publish,
-      book_content,
-      book_publish,
-      book_genre,
-      book_hit,
-      book_regdate
+        book_no, 
+        book_title, 
+        book_img, 
+        book_author,
+        book_publish,
+        book_content,
+        book_publish,
+        book_genre,
+        book_hit,
+        book_regdate
     FROM book
     WHERE book_no=#{book_no}
     </select>
@@ -70,7 +70,7 @@
     <!-- 책 장르만 출력 -->
     <select id="genreBook" resultType="com.project.demo.vo.BookVO">
     SELECT
-      DISTINCT book_genre
+        DISTINCT book_genre
     FROM book
     </select>
 </mapper>

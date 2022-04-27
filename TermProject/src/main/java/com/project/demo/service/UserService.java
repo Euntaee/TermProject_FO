@@ -14,25 +14,20 @@ import com.project.demo.vo.UserVO;
 public class UserService {
 	@Autowired
 	UserDAO userdao;
-	public UserVO isLogin(String user_id, String user_pwd)
-    {		
+	public UserVO isLogin(String user_id, String user_pwd){		
     	UserVO vo = new UserVO();
     	int count = userdao.userIdCount(user_id);
-    	if(count == 0) 
-    	{
+    	if(count == 0) {
     		vo.setMsg("NOID");
     	}
-    	else
-    	{
+    	else{
     		UserVO dbVO = userdao.userGetPassword(user_id);
-    		if(user_pwd.equals(dbVO.getUser_pwd()))
-    		{
+    		if(user_pwd.equals(dbVO.getUserPwd())){
     			vo.setMsg("OK");
-    			vo.setUser_id(user_id);
-    			vo.setUser_name(dbVO.getUser_name());    			
+    			vo.setUserId(user_id);
+    			vo.setUserName(dbVO.getUserName());    			
     		}
-    		else 
-    		{
+    		else {
     			vo.setMsg("NOPWD");
     		}
     	}
@@ -41,7 +36,7 @@ public class UserService {
     }
 	
 	public void userInsert(UserVO vo) {
-		 vo.setUser_pwd(SHA256Util.encryptSHA256(vo.getUser_pwd()));		 
+		 vo.setUserPwd(SHA256Util.encryptSHA256(vo.getUserPwd()));		 
 		 userdao.userInsert(vo);
 	}
 	
@@ -49,12 +44,12 @@ public class UserService {
 		return userdao.selectUserInfo(user_id);
 	}
 	
-	public UserVO isPwd(String user_pwd, String user_id) {
-		UserVO vo = userdao.userGetPassword(user_id);
-		if(user_pwd.equals(vo.getUser_pwd())){
-			vo.setMsg("OK");
-			vo.setUser_id(user_id);
-			vo.setUser_name(vo.getUser_name());    			
+    public UserVO isPwd(String user_pwd, String user_id) {
+	    UserVO vo = userdao.userGetPassword(user_id);
+	    if(user_pwd.equals(vo.getUserPwd())){
+		    vo.setMsg("OK");
+			vo.setUserId(user_id);
+			vo.setUserName(vo.getUserName());    			
 		}else {
 			vo.setMsg("NOPWD");
 		}

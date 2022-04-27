@@ -21,14 +21,10 @@ public class BookRestController {
 	
 @RequestMapping("/rest_prac")
 public List<BookVO> selectBookList(String page,String sort,String cate){
-//	String json="";
-//	try {
+
 		int curpage=Integer.parseInt(page);
 		int rowsize=12;
-		int start=(rowsize*curpage)-(rowsize);
-		//int totalpage=bookservice.selectTotalPage(map);
-		//int end=(rowsize*curpage);
-//		System.out.println(sort);
+		int start=(rowsize*curpage)-(rowsize);		
 		System.out.println(cate);
 		Map map=new HashMap();
 		map.put("sort",sort);

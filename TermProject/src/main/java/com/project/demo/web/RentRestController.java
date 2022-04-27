@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.service.RentService;
 import com.project.demo.vo.RentVO;
-import com.project.demo.vo.joinVO;
 
 @RestController
 public class RentRestController {

@@ -10,15 +10,15 @@ import com.project.demo.vo.UserVO;
 @Repository
 @Mapper
 public interface UserDAO {
-int userIdCount(String user_id); //아이디 확인
- 
-UserVO userGetPassword(String user_id); //패스워드 확인
+	int userIdCount(String user_id); // 아이디 확인
 
-void userInsert(UserVO vo); //회원 등록
+	UserVO userGetPassword(String user_id); // 패스워드 확인
 
-UserVO selectUserInfo(String user_id);
+	void userInsert(UserVO vo); // 회원 등록
 
-UserVO isPwd(String user_pwd, String user_id);
+	UserVO selectUserInfo(String user_id);
 
-void changPwd(Map map);
+	UserVO isPwd(String user_pwd, String user_id);
+
+	void changPwd(Map map);
 }

@@ -11,16 +11,20 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan(value = {"com.project.demo.dao"} )
+
+@MapperScan(value = { "com.project.demo.dao" })
 public class MybatisConfig {
 	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		
+
 		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml");
 		sessionFactory.setMapperLocations(res);
+
+		Resource res1  = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
+		sessionFactory.setConfigLocation(res1);
 		
 		sessionFactory.setDataSource(dataSource);
-		return sessionFactory.getObject();
-	}
+		return sessionFactory.getObject();					
+	}	
 }

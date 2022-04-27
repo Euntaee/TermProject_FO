@@ -5,33 +5,33 @@
 <mapper namespace="com.project.demo.dao.RentDAO">
 
 	<resultMap type="com.project.demo.vo.BookVO" id="BookVO">
-		<result column="book_no" property="book_no"/>
-		<result column="book_img" property="book_img"/>
-		<result column="book_author" property="book_author"/>
-		<result column="book_title" property="book_title"/>
-		<result column="book_publish" property="book_publish"/>
-		<result column="book_content" property="book_content"/>
-		<result column="book_genre" property="book_genre"/>
-		<result column="book_hit" property="book_hit"/>
-		<result column="book_regdate" property="book_regdate"/>
+		<result column="book_no" property="bookNo"/>
+		<result column="book_img" property="bookImg"/>
+		<result column="book_author" property="bookAuthor"/>
+		<result column="book_title" property="bookTitle"/>
+		<result column="book_publish" property="bookPublish"/>
+		<result column="book_content" property="bookContent"/>
+		<result column="book_genre" property="bookGenre"/>
+		<result column="book_hit" property="bookHit"/>
+		<result column="book_regdate" property="bookRegdate"/>
 	</resultMap>
 	
 	<resultMap type="com.project.demo.vo.RentVO" id="RentVO">
-	    <result column="rent_no" property="rent_no"/>
-	    <result column="rent_check" property="rent_check"/>		
-		<result column="rent_startdate" property="rent_startdate"/>
-		<result column="rent_enddate" property="rent_enddate"/>
-		<result column="user_id" property="user_id"/>		
-		<result column="book_no" property="book_no"/>
-		<result column="book_no" property="book_no"/>
-		<result column="book_img" property="book_img"/>
-		<result column="book_author" property="book_author"/>
-		<result column="book_title" property="book_title"/>
-		<result column="book_publish" property="book_publish"/>
-		<result column="book_content" property="book_content"/>
-		<result column="book_genre" property="book_genre"/>
-		<result column="book_hit" property="book_hit"/>
-		<result column="book_regdate" property="book_regdate"/>		
+	    <result column="rent_no" property="rentNo"/>
+	    <result column="rent_check" property="rentVheck"/>		
+		<result column="rent_startdate" property="rentStartdate"/>
+		<result column="rent_enddate" property="rentEnddate"/>
+		<result column="user_id" property="userId"/>		
+		<result column="book_no" property="bookNo"/>
+		
+		<result column="book_img" property="bookImg"/>
+		<result column="book_author" property="bookAuthor"/>
+		<result column="book_title" property="bookTitle"/>
+		<result column="book_publish" property="bookPublish"/>
+		<result column="book_content" property="bookContent"/>
+		<result column="book_genre" property="bookGenre"/>
+		<result column="book_hit" property="bookHit"/>
+		<result column="book_regdate" property="bookRegdate"/>		
 		  
 		<collection property="BookVO" javaType="java.util.ArrayList" resultMap="BookVO" />		
 	</resultMap>	
@@ -48,10 +48,10 @@
 	<select id="rentSelect" resultMap="RentVO" parameterType="com.project.demo.vo.RentVO">
 	<![CDATA[
 		SELECT 
-		 b.book_title,
-		 b.book_author, 
-		 a.rent_startdate, 
-		 a.rent_enddate
+		    b.book_title,
+		    b.book_author, 
+		    a.rent_startdate, 
+		    a.rent_enddate
 	    FROM rent a
 	    LEFT OUTER JOIN book b
 	    ON b.book_no = a.book_no

@@ -1,9 +1,6 @@
 package com.project.demo.util;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-
 
 public class SHA256Util {
 
