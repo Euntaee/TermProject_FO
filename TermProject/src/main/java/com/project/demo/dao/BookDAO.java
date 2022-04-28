@@ -10,11 +10,11 @@ import com.project.demo.vo.BookVO;
 @Repository
 @Mapper
 public interface BookDAO {
-	List<BookVO> selectBookList(Map map);
+	List<BookVO> selectBookList(Map<String, Object> map);
 
-	int selectTotalPage(Map map);
+	int selectTotalPage(Map<String, Object> map);
 
-	List<BookVO> findBookList(Map map);
+	List<BookVO> findBookList(Map<String, String> map);
 
 	BookVO detailBook(String book_no);
 

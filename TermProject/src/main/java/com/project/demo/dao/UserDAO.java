@@ -20,7 +20,7 @@ public interface UserDAO {
 
 	UserVO isPwd(String user_pwd, String user_id);
 
-	void changPwd(Map map);
+	void changPwd(Map<String, String> map);
 	
 	UserVO idCheck(String user_id);
 }

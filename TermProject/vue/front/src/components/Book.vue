@@ -147,7 +147,7 @@ export default {
             })
             },
             change:function(sort){
-              this.$axios.get("http://localhost:8080/rest_prac",{params:{
+              this.$axios.post("http://localhost:8080/rest_prac",null,{params:{
                 sort:this.sort,
                 page:this.pagination.curpage,
                 cate:this.cate                                
@@ -159,7 +159,7 @@ export default {
             })              
             },
              genredata:function(){
-              this.$axios.get("http://localhost:8080/rest_prac",{
+              this.$axios.post("http://localhost:8080/rest_prac",null,{
                 params:{
                 sort:this.sort,
                 page:this.pagination.curpage,

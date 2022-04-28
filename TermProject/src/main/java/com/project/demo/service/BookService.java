@@ -2,36 +2,39 @@ package com.project.demo.service;
 
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.project.demo.dao.BookDAO;
 import com.project.demo.vo.BookVO;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class BookService{
-	@Autowired
-	BookDAO bookdao;
-	public List<BookVO> selectBookList(Map map){
-	    List<BookVO> blist = bookdao.selectBookList(map);
+@RequiredArgsConstructor
+public class BookService {
+
+	private final BookDAO bookdao;
+
+	public List<BookVO> selectBookList(Map<String, Object> map) {
+		List<BookVO> blist = bookdao.selectBookList(map);
 		return blist;
 	}
-	
-	public int selectTotalPage(Map map) {
+
+	public int selectTotalPage(Map<String, Object> map) {
 		return bookdao.selectTotalPage(map);
 	}
-	public List<BookVO> findBookList(Map map){
-		List<BookVO> flist=bookdao.findBookList(map);
-		
+
+	public List<BookVO> findBookList(Map<String, String> map) {
+		List<BookVO> flist = bookdao.findBookList(map);
+
 		return flist;
 	}
+
 	public BookVO detailBook(String book_no) {
-		BookVO vo=bookdao.detailBook(book_no);
+		BookVO vo = bookdao.detailBook(book_no);
 		return vo;
 	}
+
 	public List<BookVO> genreBook() {
-		List<BookVO> glist=bookdao.genreBook();
+		List<BookVO> glist = bookdao.genreBook();
 		return glist;
 	}
 }

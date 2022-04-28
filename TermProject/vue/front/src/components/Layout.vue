@@ -127,35 +127,7 @@
         tile
         width="100%"
         class="secondary white--text text-center"
-      >
-        <!-- <v-card-text>
-          <v-btn
-            class="mx-4 white--text"
-            icon
-          >
-            <v-icon size="24px">mdi-home</v-icon>
-          </v-btn>
-          <v-btn
-            class="mx-4 white--text"
-            icon
-          >
-            <v-icon size="24px">mdi-email</v-icon>
-          </v-btn>
-          <v-btn
-            class="mx-4 white--text"
-            icon
-          >
-            <v-icon size="24px">mdi-calendar</v-icon>
-          </v-btn>
-           <v-btn
-            class="mx-4 white--text"
-            icon
-          >
-            <v-icon size="24px">mdi-delete</v-icon>
-          </v-btn>
-
-        </v-card-text> -->
-
+      >  
         <v-card-text class="white--text pt-0">
          <p>NAME: 김은태</p>
          <p>PHONE:000-6685-9812</p>
@@ -193,11 +165,7 @@ export default {
         }, 
                   
         methods:{          
-          findBtn:function(){
-            // const params = new URLSearchParams();
-            // params.append('st',this.st);
-            // params.append('searchtext',this.searchtext);                        
-                   
+          findBtn:function(){                                      
             this.$axios.post("http://localhost:8080/find_ok", null, {params: {st:this.st, searchtext:this.searchtext}}              
             ).then(response =>{
               console.log(response.data)

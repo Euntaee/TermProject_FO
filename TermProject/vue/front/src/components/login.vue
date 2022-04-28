@@ -1,15 +1,5 @@
 <template>
-  <v-app id="app">
-    <!-- <div class="protected" v-if="loginsuccess">
-      <v-alert
-        type="success"
-    >로그인 성공</v-alert>
-    </div>
-     <div class="unprotected" v-else-if="loginError">
-      <v-alert
-        type="success"
-    >로그인 실패</v-alert>
-    </div> -->
+  <v-app id="app">   
     <v-main style="margin:0px auto">
       <h1 style="text-align:center;margin-top:20%">로그인</h1>
       <br>
@@ -100,8 +90,7 @@ export default {
           }		
           else{
             location.href="http://localhost:8080/"             
-             alert("로그인 됐습니다!.")
-            //  this.$session.set('user_id', this.user_id)
+             alert("로그인 됐습니다!.")            
             sessionStorage.setItem('user_id', this.user_id)
           }
 			  })

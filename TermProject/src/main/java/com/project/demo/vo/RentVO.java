@@ -2,6 +2,7 @@ package com.project.demo.vo;
 
 import org.springframework.stereotype.Component;
 import lombok.Data;
+
 @Data
 @Component
 public class RentVO extends BookVO {
@@ -10,7 +11,7 @@ public class RentVO extends BookVO {
 	private int bookNo;
 	private String rentStartdate;
 	private String rentEnddate;
-	private String userId;	
+	private String userId;
 	private BookVO BookVO;
 
 	public RentVO() {
@@ -24,7 +25,5 @@ public class RentVO extends BookVO {
 	public void setRentVO(BookVO BookVO) {
 		this.BookVO = BookVO;
 	}
-
-
 
 }

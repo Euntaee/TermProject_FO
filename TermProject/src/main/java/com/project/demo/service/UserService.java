@@ -1,22 +1,19 @@
 package com.project.demo.service;
 
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mysql.cj.protocol.a.authentication.Sha256PasswordPlugin;
 import com.project.demo.dao.UserDAO;
 import com.project.demo.util.SHA256Util;
 import com.project.demo.vo.UserVO;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 	private static final String DUPLICATE_ID = "NO";
 	private static final String WRONG_PASSWORD = "NOPWD";
-	private static final String MSG_OK = "OK";
-	@Autowired
-	UserDAO userdao; // 필드인젝션을 권장하지 않음
+	private static final String MSG_OK = "OK";		//	
+	private final UserDAO userdao;
 
 	public UserVO isLogin(String userId, String userPwd) {
 		UserVO vo = new UserVO();
@@ -57,8 +54,7 @@ public class UserService {
 		return vo;
 	}
 
-	public void changPwd(Map map) {
-//		System.out.println("service에서 비밀번호 값:"+user_pwd);
+	public void changPwd(Map<String, String> map) {
 		userdao.changPwd(map);
 	}
 

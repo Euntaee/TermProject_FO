@@ -10,7 +10,7 @@ import com.project.demo.vo.RentVO;
 @Repository
 @Mapper
 public interface RentDAO {
-	void rentInsert(Map map);
+	void rentInsert(Map<String, String> map);
 
-	List<RentVO> rentSelect(Map map);
+	List<RentVO> rentSelect(Map<String, String> map);
 }

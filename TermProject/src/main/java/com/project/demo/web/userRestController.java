@@ -3,23 +3,24 @@ package com.project.demo.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.service.UserService;
 import com.project.demo.util.SHA256Util;
 import com.project.demo.vo.UserVO;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
-public class userRestController {
-	@Autowired
-	UserService userService;
+@RequiredArgsConstructor
+public class userRestController {	
+	private final UserService userService;
 
 	// 로그인
 	@PostMapping(value = "/login_ok")
-	public String member_login_ok(String user_id, String user_pwd) {
+	public String memberLoginOk(String user_id, String user_pwd) {
 		user_pwd = SHA256Util.encryptSHA256(user_pwd);
 		System.out.println("비밀번호 변환 확인: " + SHA256Util.encryptSHA256(user_pwd));
 		String msg = "";
@@ -29,38 +30,39 @@ public class userRestController {
 	}
 
 	// 회원가입
-	@RequestMapping(value = "/userInsert")
-	public void member_join_ok(UserVO vo) {
+	@PostMapping(value = "/userInsert")
+	public void memberJoinOk(UserVO vo) {
 		userService.userInsert(vo);
 	}
 
 	// 회원정보
-	@RequestMapping("/userInfo")
-	public UserVO member_info(String user_id) {
+	@GetMapping("/userInfo")
+	public UserVO memberInfo(String user_id) {
 		UserVO vo = userService.selectUserInfo(user_id);
 		return vo;
 	}
 
-	@RequestMapping("/pwd_ok")
-	public String pwd_ok(String user_id, String user_pwd) {
+	@PostMapping("/pwd_ok")
+	public String pwdOk(String user_id, String user_pwd) {
 		user_pwd = SHA256Util.encryptSHA256(user_pwd);
 		String msg = "";
 		UserVO vo = userService.isPwd(user_pwd, user_id);
+		msg=vo.getMsg();
 		return msg;
 	}
 
-	@RequestMapping("/pwd_change")
-	public void pwd_change(String user_pwd, String user_id) {
+	@PostMapping("/pwd_change")
+	public void pwdChange(String user_pwd, String user_id) {
 		user_pwd = SHA256Util.encryptSHA256(user_pwd);
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
-		map.put("user_pwd", user_pwd);
+		map.put("user_pwd", user_pwd);		
 		System.out.println("비밀번호변경 값:" + user_pwd);
 		userService.changPwd(map);
 	}
 
-	@RequestMapping("/id_check")
-	public String id_check(String userId) {
+	@PostMapping("/id_check")
+	public String idCheck(String userId) {
 		String user_id = userId;
 		String msg = "";
 		UserVO vo = userService.idDuplicationCheck(user_id);

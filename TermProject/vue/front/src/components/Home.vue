@@ -12,40 +12,7 @@
         >
           <div class="display-2 white--text pl-5 pr-5 hidden-sm-only"><strong>Upto 60% + Extra 10%</strong></div><br/>
         </v-row>
-      </v-carousel-item>
-      <!-- <v-carousel-item
-        :src="require('@/assets/img/home/slider2.jpg')"
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="display-2 white--text pl-5 pr-5 hidden-sm-only"><strong>Upto 60% + Extra 10%</strong></div><br/>
-        </v-row>
-      </v-carousel-item>
-      <v-carousel-item
-        :src="require('@/assets/img/home/slider3.jpg')"
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="display-2 white--text pl-5 pr-5 hidden-sm-only"><strong>Upto 60% + Extra 10%</strong></div><br/>
-        </v-row>
-      </v-carousel-item>
-      <v-carousel-item
-        :src="require('@/assets/img/home/slider1.jpg')"
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="display-2 white--text pl-5 pr-5 hidden-sm-only"><strong>Upto 60% + Extra 10%</strong></div><br/>
-        </v-row>
-      </v-carousel-item> -->
+      </v-carousel-item>     
     </v-carousel>
     
     <br>
@@ -66,22 +33,8 @@
             <div class="text-center">
               <v-btn  href="/book" class="white--text " outlined>book NOW</v-btn>
             </div>
-
-
-<!--            <v-expand-transition>-->
-<!--              <div-->
-<!--                v-if="hover"-->
-<!--                class="d-flex transition-fast-in-fast-out orange darken-2 v-card&#45;&#45;reveal display-3 white&#45;&#45;text"-->
-<!--                style="height: 100%;"-->
-<!--              >-->
-
-<!--                <h3>Top Picks</h3><br/>-->
-<!--                <h3>sdfs</h3>-->
-<!--              </div>-->
-<!--            </v-expand-transition>-->
           </v-img>
         </v-card>
-<!--        </v-hover>-->
       </div>
       <div
         class="col-md-6 col-sm-6 col-xs-12"
