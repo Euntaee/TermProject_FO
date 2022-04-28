@@ -30,6 +30,7 @@
                           id:login_id
                           placeholder="userId"
                           v-model="user_id"
+                          :rules="user_id_rule"
                           required
                         ></v-text-field>
                       </div>
@@ -42,6 +43,7 @@
                           placeholder="userPassword"
                           type="password"
                           v-model="user_pwd"
+                          :rules="user_pwd_rule"
                           required
                         ></v-text-field>
                       </div>

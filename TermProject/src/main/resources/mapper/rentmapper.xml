@@ -45,17 +45,18 @@
 		,#{book_no},#{user_id},0)
 		]]>
 	</insert>
+	
 	<select id="rentSelect" resultMap="RentVO" parameterType="com.project.demo.vo.RentVO">
 	<![CDATA[
-		SELECT 
-		    b.book_title,
-		    b.book_author, 
-		    a.rent_startdate, 
-		    a.rent_enddate
-	    FROM rent a
-	    LEFT OUTER JOIN book b
-	    ON b.book_no = a.book_no
-		WHERE a.user_id=#{user_id}
+		SELECT /*RentDAO.rentSelect(예약내역 조회)*/
+		       b.book_title
+		     , b.book_author 
+		     , a.rent_startdate 
+		     , a.rent_enddate
+	      FROM rent a
+	      LEFT OUTER JOIN book b
+	        ON b.book_no = a.book_no
+	     WHERE a.user_id=#{user_id}
 		]]> 
 	</select>
 </mapper>

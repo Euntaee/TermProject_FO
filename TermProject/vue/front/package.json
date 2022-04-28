@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "axios": "^0.26.1",
+        "lazy-validator": "^2.0.1",
         "node-pre-gyp": "^0.17.0",
         "path": "^0.12.7",
         "request": "^2.88.2",

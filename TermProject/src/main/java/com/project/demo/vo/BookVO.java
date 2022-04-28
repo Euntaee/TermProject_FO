@@ -1,7 +1,5 @@
 package com.project.demo.vo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Data;
 
 @Data
@@ -15,4 +13,5 @@ public class BookVO {
 	private String bookContent;	
 	private String bookGenre;	
 	private String bookRegdate;
+	private int totalPage;
 }

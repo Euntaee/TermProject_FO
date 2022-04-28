@@ -84,10 +84,10 @@
             </div>
           </div>
           <div class="text-center mt-12">
-            <v-pagination
+            <v-pagination 
               v-model="pagination.curpage"
-              :length="pagination.totalpage"
-              :total-visible="pagination.visible"
+              :length="Book[0].totalpage"
+              :total-visible="pagination.totalpage"
               @input="getData"
             ></v-pagination>          
           </div>
@@ -109,7 +109,7 @@ export default {
             ],                              
             pagination: {                             
             curpage:1,
-            totalpage:18,
+            // totalpage:
             visible:7
             },          
             Book:[],       
@@ -159,7 +159,8 @@ export default {
             })              
             },
              genredata:function(){
-              this.$axios.get("http://localhost:8080/rest_prac",{params:{
+              this.$axios.get("http://localhost:8080/rest_prac",{
+                params:{
                 sort:this.sort,
                 page:this.pagination.curpage,
                 cate:this.cate                                

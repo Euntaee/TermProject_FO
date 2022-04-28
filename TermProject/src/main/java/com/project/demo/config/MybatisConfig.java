@@ -21,10 +21,10 @@ public class MybatisConfig {
 		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml");
 		sessionFactory.setMapperLocations(res);
 
-		Resource res1  = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
+		Resource res1 = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
 		sessionFactory.setConfigLocation(res1);
-		
+
 		sessionFactory.setDataSource(dataSource);
-		return sessionFactory.getObject();					
-	}	
+		return sessionFactory.getObject();
+	}
 }

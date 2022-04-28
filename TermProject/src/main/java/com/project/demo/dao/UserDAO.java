@@ -21,4 +21,6 @@ public interface UserDAO {
 	UserVO isPwd(String user_pwd, String user_id);
 
 	void changPwd(Map map);
+	
+	UserVO idCheck(String user_id);
 }
