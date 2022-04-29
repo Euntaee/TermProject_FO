@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-<div class="container" style="">
+<!-- <div class="container" style="">
   <v-simple-table style="margin-bottom:500px">
       <thead>
         <tr>
@@ -40,11 +40,75 @@
       </tbody>      
   </v-simple-table>
      <div class="container" style="text-align:center">     
-         <v-btn  router-link to="/changepwd" style="width:130px;">비밀번호 바꾸기</v-btn>  
-         &nbsp;&nbsp;&nbsp;&nbsp;
-         <v-btn style="width:130px;">정보수정</v-btn>          
+         <v-btn  router-link to="/changepwd" style="width:130px;">정보수정</v-btn>              
      </div>
-  </div>
+  </div> -->
+   <v-card
+    max-width="500"
+    style="margin-bottom:230px"
+    class="mx-auto"
+  > 
+      <v-row class="fill-height">      
+
+        <v-spacer></v-spacer>   
+       <v-input 
+       type="text">
+        {{User.user_id}}
+       </v-input>
+    <v-list two-line>
+      <v-list-item>
+       <v-list-item-action></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ User.user_id }}</v-list-item-title>
+          <v-list-item-subtitle>아이디</v-list-item-subtitle>
+        </v-list-item-content>      
+      </v-list-item>
+        <v-divider inset></v-divider>
+      <v-list-item>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ User.user_name }}</v-list-item-title>
+          <v-list-item-subtitle>이름</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>    
+        <v-divider inset></v-divider>
+      <v-list-item>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title><td>{{ Useruser_date }}</td></v-list-item-title>
+          <v-list-item-subtitle>생년월일</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>  
+        <v-divider inset></v-divider>
+      <v-list-item>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ User.user_addr1 }}</v-list-item-title>
+          <v-list-item-subtitle>주소</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>  
+        <v-divider inset></v-divider>
+      <v-list-item>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ User.user_email }}</v-list-item-title>
+          <v-list-item-subtitle>이메일</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>  
+        <v-divider inset></v-divider>
+      <v-list-item>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ User.user_phone }}</v-list-item-title>
+          <v-list-item-subtitle>전화번호</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>   
+    </v-list>
+     <div class="container" style="text-align:center">     
+         <v-btn  router-link to="/changepwd" style="width:130px;">정보수정</v-btn>              
+     </div>
+      </v-row>
+  </v-card>
 </template>
 <script>
 export default {

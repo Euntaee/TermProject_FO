@@ -193,7 +193,7 @@
         },
         methods:{
           getData:function(){
-            this.$axios.post("http://localhost:8080/bookmain",null,{
+            this.$axios.post("http://localhost:8080/bookmain1",null,{
               params:{
                 sort:this.sort
               }
@@ -203,8 +203,11 @@
             })
           },
            getData2:function(){
-            this.$axios.post("http://localhost:8080/bookmain",null
-            ).then(response =>{
+            this.$axios.post("http://localhost:8080/bookmain2",null,{
+               params:{
+                sort:this.sort2
+              }
+            }).then(response =>{
               console.log(response.data);
               this.hitBook=response.data;
             })

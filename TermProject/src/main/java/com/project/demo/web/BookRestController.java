@@ -49,8 +49,13 @@ public class BookRestController {
 		return bookservice.genreBook();
 	}
 	
-	@PostMapping("/bookmain")
-	public List<BookVO> bookMain(String sort){
+	@PostMapping("/bookmain1")
+	public List<BookVO> bookMain1(String sort){
+		Map<String, String> map = new HashMap<>();				
+		return bookservice.selectBookLimit(map);
+	}
+	@PostMapping("/bookmain2")
+	public List<BookVO> bookMain2(String sort){
 		Map<String, String> map = new HashMap<>();				
 		return bookservice.selectBookLimit(map);
 	}

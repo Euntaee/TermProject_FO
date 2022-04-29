@@ -9,19 +9,40 @@
               </div>                          
              <v-form style="margin: 0px auto">               
                     <div class="mx-3">                                           
-                      <div class>                                   
+                      <div class>                      
+                        <textbox>
+                          </textbox>             
                              <v-icon color="black" size="30px">lock</v-icon>
+
                         <v-text-field
                           v-if="old_pwd!=null"
                           id:old_pwd
-                          placeholder="현재 비밀번호"
-                          type="password"
+                          placeholder="주소"
+                          type="textbox"
                           v-model="old_pwd"
                           required
                         ></v-text-field>                        
                       </div>
                     </div>
                     <div class="mx-3">
+                       <div class="mx-1">                        
+                        <v-text-field                                                
+                          id:new_pwd1
+                          placeholder="전화번호"
+                          type="textbox"
+                          v-model="user_pwd"
+                          required
+                        ></v-text-field>
+                      </div>
+                       <div class="mx-1">                        
+                        <v-text-field                                                
+                          id:new_pwd1
+                          placeholder="새 비밀번호"
+                          type="password"
+                          v-model="user_pwd"
+                          required
+                        ></v-text-field>
+                      </div>
                       <div class="mx-1">                        
                         <v-text-field                                                
                           id:new_pwd1

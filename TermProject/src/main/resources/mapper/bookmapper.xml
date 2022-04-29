@@ -17,9 +17,9 @@
     <if test='sort=="1"'>
          ORDER BY book_hit DESC
     </if>
-        <if test='sort=="2"'>
+    <if test='sort=="2"'>
          ORDER BY book_regdate
-        </if>      
+    </if>      
     limit #{start}, #{end}
     </select>
     <!-- 메인페이지 도서 출력 -->   
@@ -31,11 +31,11 @@
        book_author,
        book_publish
     FROM book    
-    <if test='sort==1'>
+    <if test='sort=="1"'>
         ORDER BY book_regdate ASC
     </if>
-    <if test='sort==2'>
-    	ORDER BY book_hit
+    <if test='sort=="2"'>
+    	ORDER BY book_hit DESC
     </if>
     Limit 4
     </select>
