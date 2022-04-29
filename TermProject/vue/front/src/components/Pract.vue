@@ -3,7 +3,7 @@
           <v-form ref="form" lazy-validation>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="user_id" label="아이디*" :rules="user_id_rule" required></v-text-field>                
+                <v-text-field v-model="user_id" label="아이디*" :rules="user_id_rule" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field v-model="user_nm" label="이름*" :rules="user_nm_rule" required></v-text-field>

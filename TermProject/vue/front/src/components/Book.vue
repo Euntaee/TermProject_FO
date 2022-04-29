@@ -99,7 +99,10 @@
 
 <script>
 /* eslint-disable */
-export default {            
+export default {         
+        props:{
+            sort: Object
+          },   
         data () {
           return {
             range: [0, 10000],
@@ -114,16 +117,16 @@ export default {
             },          
             Book:[],       
             genre:[],
-            sort:'1',
+            sort: '1',
             cate:'만화'
           }
         },        
          mounted:function(){
             this.getData();
-            this.getGenre();            
+            this.getGenre();                         
         },
         methods:{
-            getData:function(){
+            getData:function(sort){
             this.$axios.post("http://localhost:8080/rest_prac",null,{
               params:{
                   page:this.pagination.curpage,  
@@ -174,7 +177,6 @@ export default {
         }
     }
 </script>
-
 <style>
  .v-card--reveal {
     align-items: center;

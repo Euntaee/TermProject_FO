@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">   
+  <v-app id="app">
     <v-main style="margin:0px auto">
       <h1 style="text-align:center;margin-top:20%">로그인</h1>
       <br>

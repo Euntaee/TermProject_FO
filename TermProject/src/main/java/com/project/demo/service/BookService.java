@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BookService {
-
 	private final BookDAO bookdao;
 
 	public List<BookVO> selectBookList(Map<String, Object> map) {
@@ -36,5 +35,9 @@ public class BookService {
 	public List<BookVO> genreBook() {
 		List<BookVO> glist = bookdao.genreBook();
 		return glist;
+	}
+	public List<BookVO> selectBookLimit(Map<String, String> map) {
+		List<BookVO> list = bookdao.selectBookLimit(map);
+		return list;
 	}
 }

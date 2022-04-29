@@ -14,15 +14,31 @@
        book_publish
     FROM book    
     WHERE book_genre LIKE CONCAT('%',#{cate},'%')
-       <if test='sort=="1"'>
+    <if test='sort=="1"'>
          ORDER BY book_hit DESC
-       </if>
-       <if test='sort=="2"'>
+    </if>
+        <if test='sort=="2"'>
          ORDER BY book_regdate
-       </if>      
+        </if>      
     limit #{start}, #{end}
     </select>
-       
+    <!-- 메인페이지 도서 출력 -->   
+    <select id="selectBookLimit" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
+    SELECT 
+	   book_no, 
+       book_title, 
+       book_img, 
+       book_author,
+       book_publish
+    FROM book    
+    <if test='sort==1'>
+        ORDER BY book_regdate ASC
+    </if>
+    <if test='sort==2'>
+    	ORDER BY book_hit
+    </if>
+    Limit 4
+    </select>
     <!-- 총 페이지 -->
     <select id="selectTotalPage" resultType="int" parameterType="java.util.Map">
     SELECT CEIL(COUNT(*)/12.0)

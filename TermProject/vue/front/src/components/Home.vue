@@ -3,14 +3,14 @@
   <div>
     <v-carousel hide-delimiters>
       <v-carousel-item
-        :src="require('@/assets/book3.jpg')"
+        :src="require('@/assets/bookmain.jpg')"
       >
         <v-row
           class="fill-height"
           align="center"
           justify="center"
         >
-          <div class="display-2 white--text pl-5 pr-5 hidden-sm-only"><strong>Upto 60% + Extra 10%</strong></div><br/>
+          <div class="display-2 white--text pl-5 pr-5 hidden-sm-only"><strong></strong></div><br/>
         </v-row>
       </v-carousel-item>     
     </v-carousel>
@@ -31,7 +31,11 @@
           >
            <h1 class="text-center font-size">Top Picks</h1>
             <div class="text-center">
-              <v-btn  href="/book" class="white--text " outlined>book NOW</v-btn>
+              <v-btn 
+               router-link :to="{name:'Book',params:{sort: sort2}}"
+              class="white--text " 
+              outlined>book NOW
+              </v-btn>              
             </div>
           </v-img>
         </v-card>
@@ -44,11 +48,15 @@
             :src="require('@/assets/book3.jpg')"
             class="white--text align-center"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="400px"
+            height="400px"    
           >
             <h1 class="text-center font-size">New Arrivals</h1>
             <div class="text-center">
-              <v-btn  href="/book" class="white--text" outlined>book NOW</v-btn>
+              <v-btn
+                router-link :to="{name:'Book',params:{sort: sort}}"
+                class="white--text" outlined
+                >book NOW
+                </v-btn>
             </div>
           </v-img>
         </v-card>
@@ -66,140 +74,43 @@
             <v-card-title class="subheading ">인기도서</v-card-title>
             <v-divider></v-divider>
             <div class="row">
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center">
+              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center"
+               v-bind:key="pro.id" v-for="pro in hitBook"
+              >
                 <v-hover
                   v-slot:default="{ hover }"
                   open-delay="200"
                 >
-                  <v-card
+                  <v-card class="text-center"
                     :elevation="hover ? 16 : 2"
+                     max-width="250"
                 >
                   <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>Bags & Purses </v-card-title>
+                    class="white--text align-center"
+                    height="300px"
+                    width="250px"
+                    :src="pro.book_img"
+                  >                    
                   </v-img>
 
                   <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
+                    <div class="txt_line">{{pro.book_title}}</div>
+                    <div class="txt_line">{{pro.book_author}}</div>
                   </v-card-text>
 
                   <div class="text-center">
                     <v-btn
-                      href="/book"
+                      router-link :to="{name:'Detail',params:{book_no: pro.book_no}}"
                       class="ma-2"
                       outlined
                       color="info"
                     >
-                      Explore
+                      Book NOW
                     </v-btn>
                   </div>
                 </v-card>
                 </v-hover>
-              </div>
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center" >
-                <v-hover
-                  v-slot:default="{ hover }"
-                  open-delay="200"
-                >
-                  <v-card
-                    :elevation="hover ? 16 : 2"
-                  >
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>T-Shirt </v-card-title>
-                  </v-img>
-
-                  <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
-                  </v-card-text>
-
-                  <div class="text-center">
-                    <v-btn href="/book"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Explore
-                    </v-btn>
-                  </div>
-                </v-card>
-                </v-hover>
-              </div>
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center" >
-                <v-hover
-                  v-slot:default="{ hover }"
-                  open-delay="200"
-                >
-                  <v-card
-                    :elevation="hover ? 16 : 2"
-                  >
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>Jeans </v-card-title>
-                  </v-img>
-
-                  <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
-                  </v-card-text>
-
-                  <div class="text-center">
-                    <v-btn href="/book"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Explore
-                    </v-btn>
-                  </div>
-                </v-card>
-                </v-hover>
-              </div>
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center" >
-                <v-hover
-                  v-slot:default="{ hover }"
-                  open-delay="200"
-                >
-                  <v-card
-                    :elevation="hover ? 16 : 2"
-                  >
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>Shoes </v-card-title>
-                  </v-img>
-
-                  <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
-                  </v-card-text>
-
-                  <div class="text-center">
-                    <v-btn href="/book"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Explore
-                    </v-btn>
-                  </div>
-                  
-                </v-card>
-                </v-hover>
-              </div>
+              </div>                          
             </div>
           </v-card-text>
         </v-col>
@@ -217,140 +128,44 @@
             <v-card-title class="subheading ">신간도서</v-card-title>
             <v-divider></v-divider>
             <div class="row">
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center">
+              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center"
+              v-bind:key="pro.id" v-for="pro in newBook"
+              >
                 <v-hover
                   v-slot:default="{ hover }"
                   open-delay="200"
                 >
-                  <v-card
+                  <v-card class="text-center"
                     :elevation="hover ? 16 : 2"
+                     max-width="250"
                 >
                   <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>Bags & Purses </v-card-title>
+                    class="white--text align-end margin:0px auto"
+                    height="300px"
+                    width="250px"
+                    object-fit: cover
+                    :src="pro.book_img"
+                  >                    
                   </v-img>
 
                   <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
+                    <div class="txt_line">{{pro.book_title}}</div>
+                    <div class="txt_line">{{pro.book_author}}</div>
                   </v-card-text>
 
                   <div class="text-center">
-                    <v-btn
-                      href="/book"
+                    <v-btn              
+                      router-link :to="{name:'Detail',params:{book_no: pro.book_no}}"        
                       class="ma-2"
                       outlined
                       color="info"
                     >
-                      Explore
+                      Book NOW
                     </v-btn>
                   </div>
                 </v-card>
                 </v-hover>
-              </div>
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center" >
-                <v-hover
-                  v-slot:default="{ hover }"
-                  open-delay="200"
-                >
-                  <v-card
-                    :elevation="hover ? 16 : 2"
-                  >
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>T-Shirt </v-card-title>
-                  </v-img>
-
-                  <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
-                  </v-card-text>
-
-                  <div class="text-center">
-                    <v-btn href="/book"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Explore
-                    </v-btn>
-                  </div>
-                </v-card>
-                </v-hover>
-              </div>
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center" >
-                <v-hover
-                  v-slot:default="{ hover }"
-                  open-delay="200"
-                >
-                  <v-card
-                    :elevation="hover ? 16 : 2"
-                  >
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>Jeans </v-card-title>
-                  </v-img>
-
-                  <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
-                  </v-card-text>
-
-                  <div class="text-center">
-                    <v-btn href="/book"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Explore
-                    </v-btn>
-                  </div>
-                </v-card>
-                </v-hover>
-              </div>
-              <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center" >
-                <v-hover
-                  v-slot:default="{ hover }"
-                  open-delay="200"
-                >
-                  <v-card
-                    :elevation="hover ? 16 : 2"
-                  >
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    :src="require('@/assets/book1.jpg')"
-                  >
-                    <v-card-title>Shoes </v-card-title>
-                  </v-img>
-
-                  <v-card-text class="text--primary text-center">
-                    <div>도서제목</div>
-                    <div>저자</div>
-                  </v-card-text>
-
-                  <div class="text-center">
-                    <v-btn href="/book"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Explore
-                    </v-btn>
-                  </div>
-                  
-                </v-card>
-                </v-hover>
-              </div>
+              </div>              
             </div>
           </v-card-text>
         </v-col>
@@ -364,33 +179,46 @@
 /*eslint-disable*/
    export default {
         data () {
-            return {
-                items: [
-                    { title: 'Click Me' },
-                    { title: 'Click Me' },
-                    { title: 'Click Me' },
-                    { title: 'Click Me 2' },
-                ],
-                activeBtn: 1,
-                colors: [
-                    'indigo',
-                    'warning',
-                    'pink darken-2',
-                    'red lighten-1',
-                    'deep-purple accent-4',
-                ],
-                slides: [
-                    'First',
-                    'Second',
-                    'Third',
-                    'Fourth',
-                    'Fifth',
-                ],
+            return {             
+                activeBtn: 1,             
+                sort: '2',
+                sort2:'1',
+                newBook:[],
+                hitBook:[]                
             }
         },
+        mounted:function(){
+          this.getData();
+          this.getData2();
+        },
+        methods:{
+          getData:function(){
+            this.$axios.post("http://localhost:8080/bookmain",null,{
+              params:{
+                sort:this.sort
+              }
+            }).then(response =>{
+              console.log(response.data);
+              this.newBook=response.data;
+            })
+          },
+           getData2:function(){
+            this.$axios.post("http://localhost:8080/bookmain",null
+            ).then(response =>{
+              console.log(response.data);
+              this.hitBook=response.data;
+            })
+          }
+        }
     }
 </script>
 
 <style scoped>
-
+.txt_line {
+   width: 180px;
+   padding: 0 5px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
 </style>

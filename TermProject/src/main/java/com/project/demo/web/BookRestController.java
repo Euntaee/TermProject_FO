@@ -21,14 +21,12 @@ public class BookRestController {
 	public List<BookVO> selectBookList(String page, String sort, String cate) {
 		int curpage = Integer.parseInt(page);
 		int rowsize = 12;
-		int start = (rowsize * curpage) - (rowsize);
-		System.out.println(cate);
+		int start = (rowsize * curpage) - (rowsize);		
 		Map<String, Object> map = new HashMap<>();
 		map.put("sort", sort);
 		map.put("start", start);
 		map.put("end", rowsize);
-		map.put("cate", cate);
-
+		map.put("cate", cate);		
 		return bookservice.selectBookList(map);
 	}
 
@@ -36,24 +34,25 @@ public class BookRestController {
 	public List<BookVO> findBookList(String searchtext, String st) {
 		Map<String, String> map = new HashMap<>();
 		map.put("st", st);
-		map.put("searchtext", searchtext);
-		System.out.println("st=" + st);
-		System.out.println("searchtext=" + searchtext);
+		map.put("searchtext", searchtext);	
 		return bookservice.findBookList(map);
 	}
 
 	@GetMapping("/detail_ok")
 	public BookVO detailData(String book_no) {
-		BookVO vo = bookservice.detailBook(book_no);
-		System.out.println("book_no=" + book_no);
+		BookVO vo = bookservice.detailBook(book_no);		
 		return vo;
 	}
 
 	@GetMapping("/genre")
-	public List<BookVO> genre_data() {
-
+	public List<BookVO> genreData() {
 		return bookservice.genreBook();
-
+	}
+	
+	@PostMapping("/bookmain")
+	public List<BookVO> bookMain(String sort){
+		Map<String, String> map = new HashMap<>();				
+		return bookservice.selectBookLimit(map);
 	}
 
 }
