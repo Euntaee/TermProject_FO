@@ -26,7 +26,7 @@ public class BookRestController {
 		map.put("sort", sort);
 		map.put("start", start);
 		map.put("end", rowsize);
-		map.put("cate", cate);
+		map.put("cate", cate);		
 		return bookservice.selectBookList(map);
 	}
 
@@ -64,7 +64,7 @@ public class BookRestController {
 	@PostMapping("/totalpage")
 	public int selectTotalPage(String cate) {
 		Map<String, Object> map = new HashMap<>();		
-		map.put("cate", cate);				
+		map.put("cate", cate);
 		int totalpage=bookservice.selectTotalPage(map);		
 		System.out.println("totalpage:"+totalpage);
 		return totalpage;

@@ -13,8 +13,15 @@
              
             <div v-bind:key="vo.id" v-for="vo in genre">
                <a class="v-list-item--default v-list-item v-list-item--link theme--light">
-              <div class="v-list-item__content" value="vo.book_genre"  @click="genredata">                 
-               {{vo.book_genre}}
+              <div class="v-list-item__content">                               
+                <!-- <v-btn
+                 id="genre"                  
+                 v-model="cate"
+                 @click="genredata"
+                 >
+                  {{vo.book_genre}}
+                </v-btn>                  -->
+                <div @click="genredata">{{vo.book_genre}}</div>
               </div>
               <div>                                
               </div>
@@ -118,7 +125,7 @@ export default {
             Book:[],       
             genre:[],
             sort: '1',             
-            cate:'만화'
+            cate: '문학'
           }
         },        
          mounted:function(){
@@ -143,6 +150,17 @@ export default {
               throw new Error(ex)
             })       
             },
+            getTotalPage:function(){
+              this.$axios.post("http://localhost:8080/totalpage",null,{
+                params: {
+                  sort:this.sort,
+                  cate:this.cate 
+                }
+              }).then(response =>{
+                console.log(response.data);
+                this.pagination.totalpage=response.data;
+              })
+            },
             getGenre:function(){
               this.$axios.get("http://localhost:8080/genre")              
             .then(response =>{
@@ -158,34 +176,24 @@ export default {
                 }
               }).then(response =>{
                 console.log(response.data);
-                this.Book=response.data;                 
-                  // this.pagination.totalpage=this.Book[0].totalpage;
+                this.Book=response.data;                                   
             })              
             },
-             genredata:function(){
+             genredata:function(event){    
+              const cate2= event.currentTarget.textContent                        
               this.$axios.post("http://localhost:8080/rest_prac",null,{
                 params:{
                 sort:this.sort,
                 page:this.pagination.curpage,
-                cate:this.cate                                
+                cate: cate2                                   
                 }
               }).then(response =>{
                 console.log(response.data);                
-                this.Book=response.data;                 
-                  // this.pagination.totalpage=this.Book[0].totalpage;
+                this.Book=response.data;
+                this.cate=cate2
+                                                        
             })              
-            },
-             getTotalPage:function(){
-              this.$axios.post("http://localhost:8080/totalpage",null,{
-                params: {
-                  sort:this.sort,
-                  cate:this.cate 
-                }
-              }).then(response =>{
-                console.log(response.data);
-                this.pagination.totalpage=response.data;
-              })
-            }
+            }             
         }
     }
 </script>

@@ -59,5 +59,13 @@
 	     WHERE a.user_id=#{user_id}
 		]]> 
 	</select>
+	
+	<update id="bookIncreaseHit">
+	<![CDATA[
+	    UPDATE book
+	    SET book_hit=book_hit+1
+	    WHERE book_no = #{book_no}	
+	]]>      
+	</update>	
 </mapper>
 
