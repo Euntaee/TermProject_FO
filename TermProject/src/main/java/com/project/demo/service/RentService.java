@@ -13,6 +13,7 @@ public class RentService {
 	private final RentDAO rentdao;
 
 	public void rentInsert(Map<String, String> map) {
+		rentdao.bookIncreaseHit(map);
 		rentdao.rentInsert(map);
 	}
 

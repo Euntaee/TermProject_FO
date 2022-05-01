@@ -11,6 +11,8 @@ import com.project.demo.vo.RentVO;
 @Mapper
 public interface RentDAO {
 	void rentInsert(Map<String, String> map);
-
+	
 	List<RentVO> rentSelect(Map<String, String> map);
+	
+	void bookIncreaseHit(Map<String, String> map);
 }
