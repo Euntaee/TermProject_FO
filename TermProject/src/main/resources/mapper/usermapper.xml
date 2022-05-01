@@ -49,4 +49,9 @@
        WHERE user_id = #{user_id}      
      ]]>
     </update>    
+    
+    <delete id="deleteUser" parameterType="java.util.Map">
+    DELETE FROM user
+    WHERE user_id = #{user_id}
+    </delete>
 </mapper>      

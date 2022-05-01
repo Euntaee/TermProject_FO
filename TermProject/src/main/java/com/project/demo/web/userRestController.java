@@ -72,4 +72,12 @@ public class userRestController {
 		msg = vo.getMsg();
 		return msg;
 	}
+	
+	@PostMapping("/user_delete")
+	public void userDelete(String user_id) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("user_id", user_id);
+		System.out.println(user_id);
+		userService.deleteUser(map);
+	}
 }

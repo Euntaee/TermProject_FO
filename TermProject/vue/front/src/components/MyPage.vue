@@ -50,6 +50,7 @@
   </v-simple-table>
      <div class="container" style="text-align:center">     
          <v-btn  router-link to="/changepwd" style="width:130px;">정보수정</v-btn>
+         <v-btn @click="userDelete" style="width:130px;">회원탈퇴</v-btn>
      </div>
   </div>  
 </template>
@@ -71,6 +72,18 @@ export default {
           console.log(response.data)
           this.User = response.data
         })
+    },
+    userDelete: function () {
+      this.$axios.post('http://localhost:8080/user_delete', null, {
+        params: {
+          user_id: this.user_id
+        }
+      }).then(response => {
+        console.log(response.data)
+        alert('정말 회원 탈퇴를 하시겠습니까?')
+        sessionStorage.removeItem('user_id')
+        window.location.href='/';
+      })
     }
   }
 }

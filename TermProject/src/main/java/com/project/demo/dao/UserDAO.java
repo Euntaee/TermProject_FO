@@ -23,4 +23,6 @@ public interface UserDAO {
 	void changPwd(Map<String, String> map);
 	
 	UserVO idCheck(String user_id);
+	
+	void deleteUser(Map<String, String> map);
 }

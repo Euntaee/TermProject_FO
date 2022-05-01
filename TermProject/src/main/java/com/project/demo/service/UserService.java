@@ -68,4 +68,8 @@ public class UserService {
 		}
 		return vo;
 	}
+	
+	public void deleteUser(Map<String, String> map) {
+		userdao.deleteUser(map);
+	}
 }
