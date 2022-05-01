@@ -21,4 +21,5 @@ public interface BookDAO {
 	List<BookVO> genreBook();
 	
 	List<BookVO> selectBookLimit(Map<String, String> map);
+		
 }

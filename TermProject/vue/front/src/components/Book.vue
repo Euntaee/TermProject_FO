@@ -86,7 +86,7 @@
           <div class="text-center mt-12">
             <v-pagination 
               v-model="pagination.curpage"
-              :length="Book[0].totalpage"
+              :length="pagination.totalpage"
               :total-visible="pagination.totalpage"
               @input="getData"
             ></v-pagination>          
@@ -112,18 +112,19 @@ export default {
             ],                              
             pagination: {                             
             curpage:1,
-            // totalpage:
+            totalpage: '',     
             visible:7
             },          
             Book:[],       
             genre:[],
-            sort: '1',
+            sort: '1',             
             cate:'만화'
           }
         },        
          mounted:function(){
             this.getData();
-            this.getGenre();                         
+            this.getGenre();
+            this.getTotalPage();
         },
         methods:{
             getData:function(sort){
@@ -131,12 +132,12 @@ export default {
               params:{
                   page:this.pagination.curpage,  
                   sort:this.sort,
-                  cate:this.cate
+                  cate:this.cate                  
               }
             })      
             .then(response =>{
                 console.log(response.data);
-                this.Book=response.data;                 
+                this.Book=response.data;                               
                   // this.pagination.totalpage=this.Book[0].totalpage;
             }).catch(function(ex){
               throw new Error(ex)
@@ -173,6 +174,17 @@ export default {
                 this.Book=response.data;                 
                   // this.pagination.totalpage=this.Book[0].totalpage;
             })              
+            },
+             getTotalPage:function(){
+              this.$axios.post("http://localhost:8080/totalpage",null,{
+                params: {
+                  sort:this.sort,
+                  cate:this.cate 
+                }
+              }).then(response =>{
+                console.log(response.data);
+                this.pagination.totalpage=response.data;
+              })
             }
         }
     }

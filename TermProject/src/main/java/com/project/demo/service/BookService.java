@@ -17,10 +17,6 @@ public class BookService {
 		return blist;
 	}
 
-	public int selectTotalPage(Map<String, Object> map) {
-		return bookdao.selectTotalPage(map);
-	}
-
 	public List<BookVO> findBookList(Map<String, String> map) {
 		List<BookVO> flist = bookdao.findBookList(map);
 
@@ -36,8 +32,14 @@ public class BookService {
 		List<BookVO> glist = bookdao.genreBook();
 		return glist;
 	}
+
 	public List<BookVO> selectBookLimit(Map<String, String> map) {
 		List<BookVO> list = bookdao.selectBookLimit(map);
 		return list;
+	}
+	
+	public int selectTotalPage(Map<String, Object> map) {
+		int totalpage = bookdao.selectTotalPage(map);
+		return totalpage;
 	}
 }
