@@ -38,10 +38,14 @@
     </select>
     
     <!-- 비밀번호 변경 -->
-    <update id="changPwd" parameterType="java.util.HashMap">
+    <update id="changPwd" parameterType="java.util.Map">
     <![CDATA[
        UPDATE user       
-       SET user_pwd = #{user_pwd}
+       SET 
+       user_pwd = #{user_pwd},
+       user_email= #{user_email},
+       user_phone= #{user_phone},
+       user_addr1= #{user_addr1}
        WHERE user_id = #{user_id}      
      ]]>
     </update>    

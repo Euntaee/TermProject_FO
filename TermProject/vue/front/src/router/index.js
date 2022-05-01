@@ -71,7 +71,8 @@ export default new Router({
                 {
                     path: '/changepwd',
                     component: ChangePwd,
-                    name: 'ChangePwd'
+                    name: 'ChangePwd',
+                    props: true
                 },
             ]
         }],

@@ -109,6 +109,7 @@
         sm="1"
       >
        <v-select         
+          depressed
            v-model="bt"          
           :items="branchtype"
           item-text="name"          

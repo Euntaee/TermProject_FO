@@ -52,11 +52,14 @@ public class userRestController {
 	}
 
 	@PostMapping("/pwd_change")
-	public void pwdChange(String user_pwd, String user_id) {
+	public void pwdChange(String user_pwd, String user_id, String user_email, String user_phone, String user_addr1) {
 		user_pwd = SHA256Util.encryptSHA256(user_pwd);
 		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
-		map.put("user_pwd", user_pwd);		
+		map.put("user_pwd", user_pwd);
+		map.put("user_email", user_email);
+		map.put("user_phone", user_phone);
+		map.put("user_addr1", user_addr1);
 		System.out.println("비밀번호변경 값:" + user_pwd);
 		userService.changPwd(map);
 	}

@@ -1,9 +1,10 @@
 <!-- eslint-disable -->
 <template>
   <div>
+    <!--  :src="require('@/assets/bookmain.jpg')" -->
     <v-carousel hide-delimiters>
       <v-carousel-item
-        :src="require('@/assets/bookmain.jpg')"
+       
       >
         <v-row
           class="fill-height"
