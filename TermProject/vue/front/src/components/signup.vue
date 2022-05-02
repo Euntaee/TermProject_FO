@@ -15,6 +15,7 @@
             required
           ></v-text-field>
            <v-text-field
+            id='user_id'
             v-model="userId"
             label="아이디"
             :rules="user_id_rule"
@@ -131,6 +132,11 @@ methods: {
     userInsert:function() {
       const validate =this.$refs.form.validate();      
         if (confirm ('회원가입 하시겠습니까?')){
+          if(document.getElementById("user_id").readOnly == false){
+				      alert("아이디 중복검사를 해주세요");
+				      document.getElementById("user_id").focus();
+				      return false;
+          }
            this.$axios.post("http://localhost:8080/userInsert",null,{
              params:{
               userId:this.userId, userPwd:this.userPwd, userName:this.userName,
@@ -161,6 +167,7 @@ methods: {
             this.userId=""
           }else{
             alert("아이디 사용이 가능합니다!!")
+            document.getElementById("user_id").readOnly = true;
           }
         })
       }
