@@ -28,12 +28,22 @@
             <br>
             <br>
             <br>
+            <!-- :disabled="!result" -->
             <br>
             <v-btn class="primary white--text" outlined tile dense
-            @click="rentData"
-            ><v-icon>mdi-book</v-icon> 
+            @click="rentData" v-if="result"
+            >            
+            <v-icon>mdi-book</v-icon> 
             대여하기
             </v-btn>
+
+            <v-btn class="primary white--text" outlined tile dense
+            @click="rentData2" v-if="!result"
+            >            
+            <v-icon>mdi-book</v-icon> 
+            대여하기
+            </v-btn>
+            
             <v-btn class="ml-4" outlined tile>책 담기 OR 목록 보러 가기(미정)</v-btn>
 
           </div>
@@ -111,8 +121,7 @@
 </template>
 <script>
 /* eslint-disable */
-//  const params = (new URL(document.location)).searchParams;
-//  const book_no = params.get('book_no');
+
     export default {      
     props:{
             book_no: Object
@@ -120,21 +129,13 @@
         data () {
           return {
             Book:{},                    
-            user_id:sessionStorage.getItem('user_id')
+            user_id:sessionStorage.getItem('user_id'),
+            result:''
           }
-        }, 
-        // created() {
-        //   this.book_no
-        // },
-        // created() {
-        //    this.$axios.get('http://localhost:8080/detail_ok',{params:{book_no:this.book_no}})
-        //     .then(response =>{
-        //         console.log(response.data);
-        //         this.Book=response.data;
-        //     })
-        // },      
+        },         
         mounted:function(){
           this.getData();
+          this.rentRule();         
         },
         methods:{
             getData:function(props){           
@@ -147,10 +148,21 @@
             rentData:function(){
               this.$axios.post('http://localhost:8080/rent_info',null,{params:{book_no:this.book_no ,user_id:this.user_id, }})
               .then(response => {
-              console.log(response)
-              window.location.href="/bookrent"              
-            })
-        }                            
+              console.log(response)              
+                alert('대여가 완료 되었습니다!!') 
+                window.location.href="/bookrent"             
+            })            
+        },
+        rentData2:function(){             
+                alert('도서는 총 3권만 대여할 수 있습니다!!')                
+        },
+        rentRule:function(){
+              this.$axios.post('http://localhost:8080/rent_rule',null,{params:{user_id:this.user_id }})
+              .then(response =>{
+                console.log(response)
+                this.result=response.data
+              })
+            }
     }
   }
 </script>

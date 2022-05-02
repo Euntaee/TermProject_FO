@@ -48,7 +48,8 @@
        user_addr1= #{user_addr1}
        WHERE user_id = #{user_id}      
      ]]>
-    </update>        
+    </update>    
+    
     <delete id="deleteUser" parameterType="java.util.Map">
     DELETE FROM user
     WHERE user_id = #{user_id}

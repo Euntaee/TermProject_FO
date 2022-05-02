@@ -54,7 +54,6 @@ export default {
   },
    mounted:function(){
             this.getData();
-            this.returnBook();
         },
         methods:{
             getData:function(){

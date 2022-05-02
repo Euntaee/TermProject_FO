@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.service.RentService;
 import com.project.demo.vo.RentVO;
+import com.project.demo.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +28,19 @@ public class RentRestController {
 		System.out.println();
 		rentService.rentInsert(map);		
 	}
-
+	
+	@PostMapping("/rent_rule")
+	public String rentRule(String user_id) {
+		Map<String, String> map= new HashMap<>();
+		map.put("user_id", user_id);
+		System.out.println("user:"+user_id);
+		String msg="";
+		UserVO vo=new UserVO();
+		vo=rentService.rentRestrict(map);
+		msg=vo.getMsg();
+		return msg;
+	}
+	
 	@PostMapping("/rent_select")
 	public List<RentVO> rentSelect(String user_id) {
 		Map<String, String> map = new HashMap<>();
