@@ -26,7 +26,9 @@ public class BookRestController {
 		map.put("sort", sort);
 		map.put("start", start);
 		map.put("end", rowsize);
-		map.put("cate", cate);		
+		map.put("cate", cate);	
+		System.out.println("sort:"+sort);
+		System.out.println("cate22:"+cate);
 		return bookservice.selectBookList(map);
 	}
 

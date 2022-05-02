@@ -15,9 +15,14 @@ public class RentService {
 	public void rentInsert(Map<String, String> map) {
 		rentdao.bookIncreaseHit(map);
 		rentdao.rentInsert(map);
+		rentdao.rentState(map);
 	}
 
 	public List<RentVO> rentSelect(Map<String, String> map) {
 		return rentdao.rentSelect(map);
+	}
+
+	public void rentState(Map<String, String> map) {
+		rentdao.rentState(map);
 	}
 }

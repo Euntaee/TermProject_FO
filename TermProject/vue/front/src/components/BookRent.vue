@@ -1,8 +1,8 @@
 <!-- eslint-disable -->
 <template>
-<div>
-  <v-simple-table>
-    <template v-slot:default>
+<div>  
+  <v-simple-table>    
+    <template v-slot:default>      
       <thead>
         <tr>
           <th class="text-left">
@@ -22,20 +22,21 @@
           </th>         
         </tr>
       </thead>
-      <tbody>
+      <tbody>        
         <tr
-          v-for="item in rentdata"
+          v-for="(item, index) in rentdata"
           :key="item.name"
         >
+          <td style="display:none" id="a">{{item.book_no}}</td>
           <td>{{ item.book_title }}</td>
           <td>{{ item.book_author }}</td>
           <td>{{ item.rent_startdate }}</td>
-          <td>{{ item.rent_enddate }}</td>
-          <td><v-btn color="success">대여하기</v-btn></td>
-        </tr>
-      </tbody>
+          <td>{{ item.rent_enddate }}</td>          
+          <td><v-btn color="danger" @click="returnBook" :index="index">반납하기</v-btn></td>
+        </tr>      
+      </tbody>     
     </template>         
-  </v-simple-table>    
+  </v-simple-table>      
   <br><br><br><br><br>
   </div>
 </template>
@@ -44,71 +45,46 @@
 /* eslint-disable */
 export default {
   data () {
-    return {
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237
-        },
-        {
-          name: 'Eclair',
-          calories: 262
-        },
-        {
-          name: 'Cupcake',
-          calories: 305
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375
-        },
-        {
-          name: 'Lollipop',
-          calories: 392
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408
-        },
-        {
-          name: 'Donut',
-          calories: 452
-        },
-        {
-          name: 'KitKat',
-          calories: 518
-        }
-      ],
+    return {     
       rentdata: [],
-       user_id:sessionStorage.getItem('user_id')
+       user_id:sessionStorage.getItem('user_id'),
+       show: false,     
+       book_no: ''
     }
   },
    mounted:function(){
             this.getData();
+            this.returnBook();
         },
         methods:{
             getData:function(){
             this.$axios.post("http://localhost:8080/rent_select",null,{
               params:{
-                  user_id:this.user_id
+                  user_id:this.user_id,
               }
             })      
             .then(response =>{
-                console.log(response.data);
-                this.rentdata=response.data;                 
+                console.log(response.data);                
+                this.rentdata=response.data;                         
                   // this.pagination.totalpage=this.Book[0].totalpage;
             }).catch(function(ex){
               throw new Error(ex)
             })       
-            }           
+            },
+            returnBook:function(event) {
+              const ss=document.getElementById('a');              
+              const no=ss.innerText
+              this.book_no=no
+              this.$axios.post("http://localhost:8080/rent_return",null,{
+                params:{
+                  user_id: this.user_id,
+                  book_no: this.book_no
+                }
+              }).then(response => {
+                console.log(response.data)    
+                window.location.href="/bookrent"            
+              })
+            }        
         }
 }
 </script>

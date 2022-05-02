@@ -35,4 +35,14 @@ public class RentRestController {
 		System.out.println("아이디" + user_id);
 		return rentService.rentSelect(map);
 	}
+	
+	@PostMapping("/rent_return")
+	public void rentReturn(String user_id, String book_no) {
+		Map<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("book_no", book_no);
+		System.out.println("user_id return:"+ user_id);
+		System.out.println("book_no return:"+ book_no);
+		rentService.rentState(map);
+	}
 }

@@ -15,4 +15,6 @@ public interface RentDAO {
 	List<RentVO> rentSelect(Map<String, String> map);
 	
 	void bookIncreaseHit(Map<String, String> map);
+	
+	void rentState(Map<String, String> map);
 }

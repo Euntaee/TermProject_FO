@@ -13,14 +13,7 @@
              
             <div v-bind:key="vo.id" v-for="vo in genre">
                <a class="v-list-item--default v-list-item v-list-item--link theme--light">
-              <div class="v-list-item__content">                               
-                <!-- <v-btn
-                 id="genre"                  
-                 v-model="cate"
-                 @click="genredata"
-                 >
-                  {{vo.book_genre}}
-                </v-btn>                  -->
+              <div class="v-list-item__content">                                          
                 <div @click="genredata">{{vo.book_genre}}</div>
               </div>
               <div>                                
@@ -176,7 +169,8 @@ export default {
                 }
               }).then(response =>{
                 console.log(response.data);
-                this.Book=response.data;                                   
+                this.Book=response.data;
+                sort=this.sort                          
             })              
             },
              genredata:function(event){    
@@ -188,7 +182,7 @@ export default {
                 cate: cate2                                   
                 }
               }).then(response =>{
-                console.log(response.data);                
+                console.log(response.data);
                 this.Book=response.data;
                 this.cate=cate2
                                                         

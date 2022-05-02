@@ -50,15 +50,24 @@
 	<![CDATA[
 		SELECT /*RentDAO.rentSelect(예약내역 조회)*/
 		       b.book_title
-		     , b.book_author 
+		     , b.book_author
+		     , b.book_no 
 		     , a.rent_startdate 
 		     , a.rent_enddate
 	      FROM rent a
 	      LEFT OUTER JOIN book b
 	        ON b.book_no = a.book_no
-	     WHERE a.user_id=#{user_id}
+	     WHERE a.user_id=#{user_id} AND a.rent_check=1
 		]]> 
 	</select>
+	
+	<update id="rentState" parameterType="java.util.Map">
+	<![CDATA[
+	    UPDATE rent
+	    SET rent_check = NOT rent_check
+	    WHERE user_id = #{user_id} AND book_no = #{book_no}
+	]]>      
+	</update>	
 	
 	<update id="bookIncreaseHit">
 	<![CDATA[
