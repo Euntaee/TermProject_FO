@@ -29,14 +29,14 @@
         <tr
           v-for="(item, index) in rentdata"
           :key="item.name"
-        > 
-          <td style="display:none" id="b">{{item.rent_no}}</td>
+        >           
           <td style="display:none" id="a">{{item.book_no}}</td>
+          <td style="display:none" id="b">{{item.branch_code}}</td>
           <td>{{ item.book_title }}</td>
           <td>{{ item.book_author }}</td>
           <td>{{ item.rent_startdate }}</td>
           <td>{{ item.rent_enddate }}</td> 
-          <td>{{ item.branch_code }}</td>         
+          <td>{{ item.branch_name }}</td>         
           <td><v-btn color="danger" @click="returnBook" :index="index">반납하기</v-btn></td>
         </tr>      
       </tbody>     
@@ -49,56 +49,48 @@
 <script>
 /* eslint-disable */
 export default {
-  props:{
-            book_no: Object,
-            branch_code: Object
-          },
   data () {    
     return {     
       rentdata: [],
        user_id:sessionStorage.getItem('user_id'),
-       show: false,     
+       show: false,            
+       rent_no: '',
        book_no: '',
-       rent_no: ''
+       branch_code: ''
     }
   },
    mounted:function(){
             this.getData();
         },
         methods:{
-            getData:function(){
-            const rn=document.getElementById('b'); 
-            const rno=rn.innerText
-            this.rent_no=rno
+            getData:function(){                              
             this.$axios.post("http://localhost:8080/rent_select",null,{
               params:{
-                  user_id:this.user_id,
-                  rent_no: this.rent_no
+                  user_id:this.user_id,                                                   
               }
             })      
             .then(response =>{
                 console.log(response.data);                
-                this.rentdata=response.data;                                         
-                  // this.pagination.totalpage=this.Book[0].totalpage;
+                this.rentdata=response.data;                                                           
             }).catch(function(ex){
               throw new Error(ex)
             })       
             },
-            returnBook:function(event) {
-              const ss=document.getElementById('a');              
+            returnBook:function(event) {                           
+              const ss=document.getElementById('a')             
               const no=ss.innerText
-              const rn=document.getElementById('b'); 
-              const rno=rn.innerText
               this.book_no=no
-              this.rent_no=rno
+              const bb=document.getElementById('b')              
+              const bran=bb.innerText
+              this.branch_code=bran
               this.$axios.post("http://localhost:8080/rent_return",null,{
                 params:{
                   user_id: this.user_id,
-                  book_no: this.book_no,                 
-                  rent_no: this.rent_no
+                  book_no: this.book_no,
+                  branch_code: this.branch_code
                 }
               }).then(response => {
-                console.log(response.data)    
+                console.log(response.data)                
                 window.location.href="/rent"            
               })
             }        

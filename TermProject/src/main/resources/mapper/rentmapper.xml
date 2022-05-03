@@ -4,87 +4,68 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.demo.dao.RentDAO">
 
-	<!-- <resultMap type="com.project.demo.vo.BookVO" id="BookVO">
-		<result column="book_no" property="bookNo"/>
-		<result column="book_img" property="bookImg"/>
-		<result column="book_author" property="bookAuthor"/>
-		<result column="book_title" property="bookTitle"/>
-		<result column="book_publish" property="bookPublish"/>
-		<result column="book_content" property="bookContent"/>
-		<result column="book_genre" property="bookGenre"/>
-		<result column="book_hit" property="bookHit"/>
-		<result column="book_regdate" property="bookRegdate"/>
-	</resultMap>
-	
-	<resultMap type="com.project.demo.vo.RentVO" id="RentVO">
-	    <result column="rent_no" property="rentNo"/>
-	    <result column="rent_check" property="rentVheck"/>		
-		<result column="rent_startdate" property="rentStartdate"/>
-		<result column="rent_enddate" property="rentEnddate"/>
-		<result column="user_id" property="userId"/>		
-		<result column="book_no" property="bookNo"/>
-		
-		<result column="book_img" property="bookImg"/>
-		<result column="book_author" property="bookAuthor"/>
-		<result column="book_title" property="bookTitle"/>
-		<result column="book_publish" property="bookPublish"/>
-		<result column="book_content" property="bookContent"/>
-		<result column="book_genre" property="bookGenre"/>
-		<result column="book_hit" property="bookHit"/>
-		<result column="book_regdate" property="bookRegdate"/>		
-		  
-		<collection property="BookVO" javaType="java.util.ArrayList" resultMap="BookVO" />		
-	</resultMap>	 -->
-	
 	<!-- 대여하기 -->
 	<insert id="rentInsert" useGeneratedKeys="true" keyProperty="rent_no">
-	<![CDATA[
-		INSERT INTO
-		rent (rent_no, rent_startdate, rent_enddate, book_no, user_id, rent_check, branch_code)	
-		VALUES
-		(0,DATE(NOW()) ,date_add(date_format(now(),'%y-%m-%d'),INTERVAL 7 DAY)
-		,#{book_no},#{user_id},0, #{branch_code})
+	    <![CDATA[
+		INSERT INTO rent (
+		      rent_no
+            , rent_startdate
+            , rent_enddate
+            , book_no
+            , user_id
+            , rent_check
+            , branch_code
+        )	
+		VALUES (
+		      0
+            , DATE(NOW()) 
+            , date_add(date_format(now(),'%y-%m-%d'),INTERVAL 7 DAY)
+		    , #{book_no}
+		    , #{user_id}
+		    , 0
+		    , #{branch_code})
 		]]>
 	</insert>
 	
 	<!-- 대여내역 조회 -->
-	<select id="rentSelect" resultType="com.project.demo.vo.BookVO" parameterType="com.project.demo.vo.BookVO">
+	<select id="rentSelect" resultType="com.project.demo.vo.RentVO" parameterType="java.util.Map">
 	<![CDATA[
-		SELECT /*RentDAO.rentSelect(예약내역 조회)*/
+		SELECT 
 		       b.book_title
 		     , b.book_author
 		     , b.book_no 
 		     , a.rent_startdate 
 		     , a.rent_enddate
-		     , a.branch_code
-	      FROM rent a
-	      LEFT OUTER JOIN book b
-	        ON b.book_no = a.book_no
-	     WHERE a.user_id=#{user_id} AND a.rent_check=1
-		]]> 
+		     , a.branch_code	     
+		     , c.branch_name		     
+	    FROM rent a, book b, branch c
+	    WHERE b.book_no = a.book_no
+	    AND   a.branch_code= c.branch_code
+	    AND   a.user_id = #{user_id} AND a.rent_check=1
+    ]]> 
 	</select>
 	
 	<!-- 대여 상태 업데이트 -->
-	<update id="rentState" parameterType="java.util.Map">
-			
-	    UPDATE rent
-	    SET rent_check = NOT rent_check,	        
-	        <set>
-	            <if test='rent_check="0"'>
-	            rent_returnday = curdate()
-	            </if>
-	        </set>
-	          
-	    WHERE user_id = #{user_id} AND book_no = #{book_no}	     
+	<update id="rentState" parameterType="java.util.Map">			
+	    UPDATE rent	    
+	    SET    rent_check = NOT rent_check	       
+	    WHERE  user_id = #{user_id} AND book_no = #{book_no}	     
+	</update>	
+	
+	<update id="returnDay" parameterType="java.util.Map">			
+	    UPDATE rent	    
+	    SET    rent_returnday = curdate(),
+	           rent_check = null     
+	    WHERE  user_id = #{user_id} AND book_no = #{book_no}	     
 	</update>	
 	
 	<!-- 도서의 대여 횟수 -->
 	<update id="bookIncreaseHit">
-	<![CDATA[
+	    <![CDATA[
 	    UPDATE book
-	    SET book_hit=book_hit+1
+	    SET    book_hit=book_hit+1
 	    WHERE book_no = #{book_no}	
-	]]>      
+	    ]]>      
 	</update>	
 	
 	<!-- 유저의 대여권수 -->
@@ -96,29 +77,47 @@
 	
 	<!-- 유저의 대여권수 (대여) -->
 	<update id="IncreaseUserRent">
-	<![CDATA[
+	    <![CDATA[
 	    UPDATE user
 	    SET user_rentcount=user_rentcount+1
 	    WHERE user_id = #{user_id}	
-	]]>      
+	    ]]>      
 	</update>
 	
 	<!-- 유저의 대여권수 (반납) -->	
 	<update id="decreaseUserRent">
-	<![CDATA[
+	    <![CDATA[
 	    UPDATE user
-	    SET user_rentcount=user_rentcount-1
+	    SET user_rentcount = user_rentcount-1
 	    WHERE user_id = #{user_id}	
-	]]>      
+	    ]]>      
 	</update>	
 	
 	<update id="decreaseBookStock" parameterType="java.util.HashMap">
-	<![CDATA[
+	    <![CDATA[
 	    UPDATE stock
 	    SET stock_count = stock_count-1
 	    WHERE book_no = #{book_no}
 	    AND branch_code = #{branch_code}
-    ]]> 
+        ]]> 
 	</update> 
+
+	<update id="increaseBookStock" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    UPDATE stock
+	    SET stock_count = stock_count+1
+	    WHERE book_no = #{book_no}
+	    AND branch_code = #{branch_code}
+        ]]> 
+	</update>
+
+	<select id="bookStockCount" resultType="com.project.demo.vo.StockVO" parameterType="java.util.Map">
+	    SELECT 
+	        stock_count
+	    FROM stock
+	    WHERE stock_count = 0
+	    AND   book_no = #{book_no}
+	    AND   branch_code = #{branch_code}
+	</select>
 </mapper>
 

@@ -12,27 +12,44 @@
     
     <!-- 해당 아이디의 비밀번호 확인 -->
     <select id="userGetPassword" resultType="com.project.demo.vo.UserVO" parameterType="String">
-		SELECT user_pwd, user_name		     
+		SELECT 
+		    user_pwd
+		  , user_name		     
 		FROM user
 		WHERE user_id= #{user_id}
     </select>
     
     <!-- 회원가입 -->
     <insert id="userInsert" parameterType="com.project.demo.vo.UserVO">
-       INSERT INTO 
-        user (user_id, user_pwd, user_name, user_date, user_addr1, user_email, user_phone)
-       VALUES (#{userId},#{userPwd},#{userName},#{userDate},#{userAddr1},#{userEmail},#{userPhone})
+       INSERT INTO user (
+           user_id
+         , user_pwd
+         , user_name
+         , user_date
+         , user_addr1
+         , user_email
+         , user_phone
+         )
+       VALUES (
+           #{userId}
+         , #{userPwd}
+         , #{userName}
+         , #{userDate}
+         , #{userAddr1}
+         , #{userEmail}
+         , #{userPhone}
+         )
     </insert>
     
     <!-- 회원정보 -->
     <select id="selectUserInfo" resultType="com.project.demo.vo.UserVO" parameterType="String">
        SELECT 
-        user_id,        
-        user_name,
-        user_date,
-        user_addr1,
-        user_email,
-        user_phone
+           user_id        
+         , user_name
+         , user_date
+         , user_addr1
+         , user_email
+         , user_phone
        FROM user
        WHERE user_id=#{user_id}
     </select>
@@ -40,13 +57,13 @@
     <!-- 비밀번호 변경 -->
     <update id="changPwd" parameterType="java.util.Map">
         <![CDATA[
-            UPDATE user       
-            SET 
-            user_pwd = #{user_pwd},
-            user_email= #{user_email},
-            user_phone= #{user_phone},
-            user_addr1= #{user_addr1}
-            WHERE user_id = #{user_id}
+        UPDATE user       
+        SET 
+            user_pwd = #{user_pwd}
+          , user_email= #{user_email}
+          , user_phone= #{user_phone}
+          , user_addr1= #{user_addr1}
+        WHERE user_id = #{user_id}
         ]]>
     </update>    
     

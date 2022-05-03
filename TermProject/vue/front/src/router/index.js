@@ -59,7 +59,7 @@ export default new Router({
                     name: 'find'
                 },
                 {
-                    path: '/rent',
+                    path: '/rent:branch_code?',
                     component: BookRent,
                     name: 'BookRent',
                     props: true

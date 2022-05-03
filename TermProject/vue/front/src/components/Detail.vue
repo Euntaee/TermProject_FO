@@ -31,7 +31,7 @@
             <!-- :disabled="!result" -->
             <br>
             <v-btn class="primary white--text" outlined tile dense
-            @click="rentData" v-if="result"
+            @click.="rentData" v-if="result"
             >            
             <v-icon>mdi-book</v-icon> 
             대여하기
@@ -39,6 +39,13 @@
 
             <v-btn class="primary white--text" outlined tile dense
             @click="rentData2" v-if="!result"
+            >            
+            <v-icon>mdi-book</v-icon> 
+            대여하기
+            </v-btn>
+
+             <v-btn class="primary white--text" outlined tile dense
+            @click="rentData3" v-if="!stock"
             >            
             <v-icon>mdi-book</v-icon> 
             대여하기
@@ -131,12 +138,14 @@
           return {
             Book:{},                    
             user_id:sessionStorage.getItem('user_id'),
-            result:''
+            result:'',
+            stock: ''
           }
         },         
         mounted:function(){
           this.getData();
-          this.rentRule();         
+          this.rentRule(); 
+          this.rentRule2();        
         },
         methods:{
             getData:function(props){           
@@ -151,7 +160,7 @@
               .then(response => {
               console.log(response)              
                 alert('대여가 완료 되었습니다!!') 
-                window.location.href="/rent"             
+                window.location.href="/rent"                
             })            
         },
         rentData2:function(){
@@ -162,13 +171,31 @@
                 alert('도서는 총 3권만 대여할 수 있습니다!!')                
           } 
         },
+        rentData3:function(){
+          if(this.user_id==null){
+            alert('로그인 이후 이용이 가능합니다!')
+            window.location.href="/login"
+          }else{
+                alert('도서 재고가 없습니다!!')                
+          } 
+        },
         rentRule:function(){
               this.$axios.post('http://localhost:8080/rent_rule',null,{params:{user_id:this.user_id }})
               .then(response =>{
                 console.log(response)
                 this.result=response.data
               })
-            }
+            },
+        rentRule2:function (props) {
+            this.$axios.post('http://localhost:8080/bookStock', null, {
+              params: {
+                  book_no:this.book_no, branch_code: this.branch_code
+              }
+            }).then(response => {
+              console.log(response.data)
+              this.stock=response.data
+            })
+        }
     }
   }
 </script>

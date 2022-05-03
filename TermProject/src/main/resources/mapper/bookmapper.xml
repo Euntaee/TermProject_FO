@@ -33,11 +33,11 @@
 	<!-- 메인페이지 도서 출력 -->
 	<select id="selectBookLimit" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
 		SELECT
-		    book_no,
-		    book_title,
-		    book_img,
-		    book_author,
-		    book_publish
+		   book_no
+		 , book_title
+		 , book_img
+		 , book_author
+		 , book_publish
 		FROM book
 		<if test='sort=="1"'>
 			ORDER BY book_regdate ASC
@@ -58,11 +58,11 @@
 	<!-- 책 검색 리스트 출력 -->
 	<select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
 		SELECT
-		    book_no,
-		    book_title,
-		    book_img,
-		    book_author,
-		    book_publish
+		    book_no
+		  , book_title
+		  , book_img
+		  , book_author
+		  , book_publish
 		FROM book
 		WHERE
 		<if test='st=="T"'>
@@ -79,16 +79,16 @@
 	<!-- 상세보기. -->
 	<select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
 		SELECT
-		    book_no,
-		    book_title,
-		    book_img,
-		    book_author,
-		    book_publish,
-		    book_content,
-		    book_publish,
-		    book_genre,
-		    book_hit,
-		    book_regdate
+		    book_no
+		  , book_title
+		  , book_img
+		  , book_author
+		  , book_publish
+		  , book_content
+		  , book_publish
+		  , book_genre
+		  , book_hit
+		  ,  book_regdate
 		FROM book
 		WHERE book_no=#{book_no}
 	</select>
