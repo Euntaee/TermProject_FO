@@ -59,8 +59,7 @@ public class userRestController {
 		map.put("user_pwd", user_pwd);
 		map.put("user_email", user_email);
 		map.put("user_phone", user_phone);
-		map.put("user_addr1", user_addr1);
-		System.out.println("비밀번호변경 값:" + user_pwd);
+		map.put("user_addr1", user_addr1);		
 		userService.changPwd(map);
 	}
 
@@ -76,8 +75,7 @@ public class userRestController {
 	@PostMapping("/user_delete")
 	public void userDelete(String user_id) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("user_id", user_id);
-		System.out.println(user_id);
+		map.put("user_id", user_id);		
 		userService.deleteUser(map);
 	}
 }

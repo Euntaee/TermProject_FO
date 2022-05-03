@@ -5,6 +5,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import com.project.demo.dao.BookDAO;
 import com.project.demo.vo.BookVO;
+import com.project.demo.vo.BranchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -41,5 +43,10 @@ public class BookService {
 	public int selectTotalPage(Map<String, Object> map) {
 		int totalpage = bookdao.selectTotalPage(map);
 		return totalpage;
+	}
+	
+	public List<BranchVO> selectBranchData(){
+		List<BranchVO> list= bookdao.selectBranchData();
+		return list;
 	}
 }

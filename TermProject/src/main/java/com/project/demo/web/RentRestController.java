@@ -32,8 +32,7 @@ public class RentRestController {
 	@PostMapping("/rent_rule")
 	public String rentRule(String user_id) {
 		Map<String, String> map= new HashMap<>();
-		map.put("user_id", user_id);
-		System.out.println("user:"+user_id);
+		map.put("user_id", user_id);		
 		String msg="";
 		UserVO vo=new UserVO();
 		vo=rentService.rentRestrict(map);
@@ -53,9 +52,7 @@ public class RentRestController {
 	public void rentReturn(String user_id, String book_no) {
 		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
-		map.put("book_no", book_no);
-		System.out.println("user_id return:"+ user_id);
-		System.out.println("book_no return:"+ book_no);
+		map.put("book_no", book_no);			
 		rentService.rentState(map);
 	}
 }

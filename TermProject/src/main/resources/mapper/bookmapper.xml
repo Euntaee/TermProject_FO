@@ -2,92 +2,108 @@
 <!DOCTYPE mapper
          PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
 <mapper namespace="com.project.demo.dao.BookDAO">
-     
-    <!-- 책 리스트 출력 -->
-	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map" >
-	SELECT 
-	   book_no, 
-       book_title, 
-       book_img, 
-       book_author,
-       book_publish
-    FROM book    
-    WHERE book_genre LIKE CONCAT('%',#{cate},'%')
-    <if test='sort=="1"'>
-         ORDER BY book_hit DESC
-    </if>
-    <if test='sort=="2"'>
-         ORDER BY book_regdate
-    </if>      
-    limit #{start}, #{end}
-    </select>
-    <!-- 메인페이지 도서 출력 -->   
-    <select id="selectBookLimit" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
-    SELECT 
-	   book_no, 
-       book_title, 
-       book_img, 
-       book_author,
-       book_publish
-    FROM book    
-    <if test='sort=="1"'>
-        ORDER BY book_regdate ASC
-    </if>
-    <if test='sort=="2"'>
-    	ORDER BY book_hit DESC
-    </if>
-    Limit 4
-    </select>
-    <!-- 총 페이지 -->
-    <select id="selectTotalPage" resultType="int" parameterType="java.util.Map">
-    SELECT CEIL(COUNT(*)/12.0)
-    FROM book
-    WHERE book_genre LIKE CONCAT('%',#{cate},'%')
-    </select>
-    
-    <!-- 책 검색 리스트 출력 -->
-    <select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">    
-    SELECT 
-        book_no, 
-        book_title, 
-        book_img, 
-        book_author,
-        book_publish
-    FROM book              
-    WHERE      
-       <if test='st=="T"'>
-        book_title LIKE CONCAT('%',#{searchtext},'%')
-       </if>
-       <if test='st=="A"'>
-        book_author LIKE CONCAT('%',#{searchtext},'%')
-       </if>  
-       <if test='st=="TA"'>
-        book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
-       </if>                
-    </select>            
-    
-    <!-- 상세보기. -->
-    <select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
-    SELECT
-        book_no, 
-        book_title, 
-        book_img, 
-        book_author,
-        book_publish,
-        book_content,
-        book_publish,
-        book_genre,
-        book_hit,
-        book_regdate
-    FROM book
-    WHERE book_no=#{book_no}
-    </select>
-    
-    <!-- 책 장르만 출력 -->
-    <select id="genreBook" resultType="com.project.demo.vo.BookVO">
-    SELECT
-        DISTINCT book_genre
-    FROM book
-    </select>
+
+	<!-- 책 리스트 출력 -->
+	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
+		SELECT
+		    b.book_no
+		  , b.book_title
+		  , b.book_img
+		  , b.book_author
+		  , b.book_publish
+		FROM stock stk
+		   , branch brch
+		   , book b
+		WHERE b.book_genre LIKE CONCAT('%',#{cate},'%')
+		AND b.book_no = stk.book_no
+		AND brch.branch_code = stk.branch_code
+		AND stk.branch_code = #{branchCode}
+		<if test='sort=="1"'>
+			ORDER BY b.book_hit DESC
+		</if>
+		<if test='sort=="2"'>
+			ORDER BY b.book_regdate
+		</if>
+		limit #{start}, #{end}
+	</select>
+	
+	<!-- 메인페이지 도서 출력 -->
+	<select id="selectBookLimit" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
+		SELECT
+		    book_no,
+		    book_title,
+		    book_img,
+		    book_author,
+		    book_publish
+		FROM book
+		<if test='sort=="1"'>
+			ORDER BY book_regdate ASC
+		</if>
+		<if test='sort=="2"'>
+			ORDER BY book_hit DESC
+		</if>
+		Limit 4
+	</select>
+
+	<!-- 총 페이지 -->
+	<select id="selectTotalPage" resultType="int" parameterType="java.util.Map">
+		SELECT CEIL(COUNT(*)/12.0)
+		FROM book
+		WHERE book_genre LIKE CONCAT('%',#{cate},'%')
+	</select>
+
+	<!-- 책 검색 리스트 출력 -->
+	<select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
+		SELECT
+		    book_no,
+		    book_title,
+		    book_img,
+		    book_author,
+		    book_publish
+		FROM book
+		WHERE
+		<if test='st=="T"'>
+			book_title LIKE CONCAT('%',#{searchtext},'%')
+		</if>
+		<if test='st=="A"'>
+			book_author LIKE CONCAT('%',#{searchtext},'%')
+		</if>
+		<if test='st=="TA"'>
+			book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
+		</if>
+	</select>
+
+	<!-- 상세보기. -->
+	<select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
+		SELECT
+		    book_no,
+		    book_title,
+		    book_img,
+		    book_author,
+		    book_publish,
+		    book_content,
+		    book_publish,
+		    book_genre,
+		    book_hit,
+		    book_regdate
+		FROM book
+		WHERE book_no=#{book_no}
+	</select>
+
+	<!-- 책 장르만 출력 -->
+	<select id="genreBook" resultType="com.project.demo.vo.BookVO">
+		SELECT
+		DISTINCT book_genre
+		FROM book
+	</select>
+
+	<select id="selectBranchData" resultType="com.project.demo.vo.BranchVO">
+		SELECT 
+		    branch_name
+		  , branch_code
+		  , branch_addr
+		FROM branch
+	</select>	
 </mapper>

@@ -32,7 +32,7 @@
            <h1 class="text-center font-size">Top Picks</h1>
             <div class="text-center">
               <v-btn 
-               router-link :to="{name:'Book',params:{sort: sort2}}"
+               router-link :to="{name:'Book',params:{mainsort: sort2}}"
               class="white--text " 
               outlined>book NOW
               </v-btn>              
@@ -53,7 +53,7 @@
             <h1 class="text-center font-size">New Arrivals</h1>
             <div class="text-center">
               <v-btn
-                router-link :to="{name:'Book',params:{sort: sort}}"
+                router-link :to="{name:'Book',params:{mainsort: sort}}"
                 class="white--text" outlined
                 >book NOW
                 </v-btn>
@@ -75,7 +75,7 @@
             <v-divider></v-divider>
             <div class="row">
               <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center"
-               v-bind:key="pro.id" v-for="pro in hitBook"
+               v-bind:key="h.id" v-for="h in hitBook"
               >
                 <v-hover
                   v-slot:default="{ hover }"
@@ -89,18 +89,18 @@
                     class="white--text align-center"
                     height="300px"
                     width="250px"
-                    :src="pro.book_img"
+                    :src="h.book_img"
                   >                    
                   </v-img>
 
                   <v-card-text class="text--primary text-center">
-                    <div class="txt_line">{{pro.book_title}}</div>
-                    <div class="txt_line">{{pro.book_author}}</div>
+                    <div class="txt_line">{{h.book_title}}</div>
+                    <div class="txt_line">{{h.book_author}}</div>
                   </v-card-text>
 
                   <div class="text-center">
                     <v-btn
-                      router-link :to="{name:'Detail',params:{book_no: pro.book_no}}"
+                      router-link :to="{name:'Detail',params:{book_no: h.book_no}}"
                       class="ma-2"
                       outlined
                       color="info"
@@ -129,7 +129,7 @@
             <v-divider></v-divider>
             <div class="row">
               <div class="col-12 col-md-3 col-sm-6 col-xs-6 text-center"
-              v-bind:key="pro.id" v-for="pro in newBook"
+              v-bind:key="n.id" v-for="n in newBook"
               >
                 <v-hover
                   v-slot:default="{ hover }"
@@ -144,18 +144,18 @@
                     height="300px"
                     width="250px"
                     object-fit: cover
-                    :src="pro.book_img"
+                    :src="n.book_img"
                   >                    
                   </v-img>
 
                   <v-card-text class="text--primary text-center">
-                    <div class="txt_line">{{pro.book_title}}</div>
-                    <div class="txt_line">{{pro.book_author}}</div>
+                    <div class="txt_line">{{n.book_title}}</div>
+                    <div class="txt_line">{{n.book_author}}</div>
                   </v-card-text>
 
                   <div class="text-center">
                     <v-btn              
-                      router-link :to="{name:'Detail',params:{book_no: pro.book_no}}"        
+                      router-link :to="{name:'Detail',params:{book_no: n.book_no}}"        
                       class="ma-2"
                       outlined
                       color="info"
@@ -199,7 +199,7 @@
               }
             }).then(response =>{
               console.log(response.data);
-              this.newBook=response.data;
+              this.hitBook=response.data;
             })
           },
            getData2:function(){
@@ -209,7 +209,7 @@
               }
             }).then(response =>{
               console.log(response.data);
-              this.hitBook=response.data;
+              this.newBook=response.data;
             })
           }
         }

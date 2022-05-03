@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.service.BookService;
 import com.project.demo.vo.BookVO;
+import com.project.demo.vo.BranchVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,17 +19,17 @@ public class BookRestController {
 	private final BookService bookservice;
 
 	@PostMapping("/rest_prac")
-	public List<BookVO> selectBookList(String page, String sort, String cate) {
+	public List<BookVO> selectBookList(String page, String sort, String cate, String branchCode) {
 		int curpage = Integer.parseInt(page);
 		int rowsize = 12;
 		int start = (rowsize * curpage) - (rowsize);
+		System.out.println("branchcode:" + branchCode);
 		Map<String, Object> map = new HashMap<>();
 		map.put("sort", sort);
 		map.put("start", start);
 		map.put("end", rowsize);
-		map.put("cate", cate);	
-		System.out.println("sort:"+sort);
-		System.out.println("cate22:"+cate);
+		map.put("cate", cate);
+		map.put("branchCode", branchCode);
 		return bookservice.selectBookList(map);
 	}
 
@@ -54,22 +55,29 @@ public class BookRestController {
 	@PostMapping("/bookmain1")
 	public List<BookVO> bookMain1(String sort) {
 		Map<String, String> map = new HashMap<>();
+		map.put("sort", sort);
 		return bookservice.selectBookLimit(map);
 	}
 
 	@PostMapping("/bookmain2")
 	public List<BookVO> bookMain2(String sort) {
 		Map<String, String> map = new HashMap<>();
+		map.put("sort", sort);
 		return bookservice.selectBookLimit(map);
 	}
 
 	@PostMapping("/totalpage")
 	public int selectTotalPage(String cate) {
-		Map<String, Object> map = new HashMap<>();		
+		Map<String, Object> map = new HashMap<>();
 		map.put("cate", cate);
-		int totalpage=bookservice.selectTotalPage(map);		
-		System.out.println("totalpage:"+totalpage);
+		int totalpage = bookservice.selectTotalPage(map);
 		return totalpage;
+	}
+
+	@GetMapping("/branchData")
+	public List<BranchVO> selectBranchData() {
+
+		return bookservice.selectBranchData();
 	}
 
 }

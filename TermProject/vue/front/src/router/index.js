@@ -25,13 +25,13 @@ export default new Router({
                     name: 'Home',
                 },
                 {
-                    path: '/book',
+                    path: '/book:branch_code',
                     component: Book,
                     name: 'Book',
                     props: true
                 },
                 {
-                    path: '/detail',
+                    path: '/detail:book_no',
                     component: Detail,
                     name: 'Detail',
                     props: true

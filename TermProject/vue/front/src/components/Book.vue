@@ -101,7 +101,8 @@
 /* eslint-disable */
 export default {         
         props:{
-            sort: Object
+            mainsort: Object,
+            branch_code: Object
           },   
         data () {
           return {
@@ -120,19 +121,20 @@ export default {
             sort: '1',             
             cate: '문학'
           }
-        },        
+        },                         
          mounted:function(){
             this.getData();
             this.getGenre();
             this.getTotalPage();
         },
         methods:{
-            getData:function(sort){
+            getData:function(branch_code){
             this.$axios.post("http://localhost:8080/rest_prac",null,{
               params:{
                   page:this.pagination.curpage,  
                   sort:this.sort,
-                  cate:this.cate                  
+                  cate:this.cate,
+                  branchCode:this.branch_code           
               }
             })      
             .then(response =>{
@@ -161,11 +163,12 @@ export default {
                 this.genre=response.data;
             })
             },
-            change:function(sort){
+            change:function(branch_code){
               this.$axios.post("http://localhost:8080/rest_prac",null,{params:{
                 sort:this.sort,
                 page:this.pagination.curpage,
-                cate:this.cate                                
+                cate:this.cate,
+                branchCode:this.branch_code                  
                 }
               }).then(response =>{
                 console.log(response.data);
@@ -179,7 +182,8 @@ export default {
                 params:{
                 sort:this.sort,
                 page:this.pagination.curpage,
-                cate: cate2                                   
+                cate: cate2,
+                branchCode:this.branch_code                
                 }
               }).then(response =>{
                 console.log(response.data);

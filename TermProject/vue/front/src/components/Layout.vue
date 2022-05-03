@@ -93,30 +93,33 @@
        <v-btn
          router-link to="/">
           <span>Home</span>
-        </v-btn>               
-        <v-btn
-         router-link to="/book">
-          <span>도서목록</span>
-        </v-btn>
-         <v-btn 
-         v-if="user_id!=null"
+        </v-btn>                           
+          <v-menu open-on-hover offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on">
+                <span>도서목록</span>
+              </v-btn>
+            </template>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              outlined
+            >  
+              <v-list-item
+                v-for="(item, index) in branchData"
+                :key="index"
+               
+                router-link :to="{name:'Book', params:{branch_code: item.branch_code}}"               
+              >
+                <v-list-item-title>{{ item.branch_name }}</v-list-item-title>                       
+              </v-list-item>  
+            </v-card>
+        </v-menu>
+        <v-btn 
+          v-if="user_id!=null"
           router-link to="/bookrent">           
           <span>대여정보</span>
-         </v-btn>   
-         <v-col
-        class="d-flex"
-        cols="12"
-        sm="1"
-      >
-       <v-select         
-          depressed
-           v-model="bt"          
-          :items="branchtype"
-          item-text="name"          
-          item-value="value"          
-          solo
-        ></v-select>
-      </v-col>
+        </v-btn>   
       </v-bottom-navigation>
     </v-main>
       <router-view/>
@@ -160,11 +163,14 @@ export default {
                 st: 'TA',       
                 searchtext: this.searchtext,
                 Book:[],
-                user_id:sessionStorage.getItem('user_id')
-                
+                user_id:sessionStorage.getItem('user_id'),
+                branchData: [],
+                branch: ''                    
             }
-        }, 
-                  
+        },
+        mounted: function(){
+          this.getBranchData();
+        },
         methods:{          
           findBtn:function(){                                      
             this.$axios.post("http://localhost:8080/find_ok", null, {params: {st:this.st, searchtext:this.searchtext}}              
@@ -180,11 +186,20 @@ export default {
              sessionStorage.removeItem('user_id')
             location.href="http://localhost:8080/"             
              alert("로그아웃 됐습니다!.")
-          }        
+          },
+          getBranchData:function(){
+            this.$axios.get("http://localhost:8080/branchData")
+            .then(response =>{
+                console.log(response.data);
+                this.branchData=response.data;                 
+              })            
+          },
+          refresh: function() {
+            this.$router.go();
+          }
         }
     }
 </script>
-
 <style  scoped>
 
 </style>

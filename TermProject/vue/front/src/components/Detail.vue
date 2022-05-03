@@ -153,8 +153,13 @@
                 window.location.href="/bookrent"             
             })            
         },
-        rentData2:function(){             
+        rentData2:function(){
+          if(this.user_id==null){
+            alert('로그인 이후 이용이 가능합니다!')
+            window.location.href="/login"
+          }else{
                 alert('도서는 총 3권만 대여할 수 있습니다!!')                
+          } 
         },
         rentRule:function(){
               this.$axios.post('http://localhost:8080/rent_rule',null,{params:{user_id:this.user_id }})
