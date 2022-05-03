@@ -35,7 +35,8 @@
 		  
 		<collection property="BookVO" javaType="java.util.ArrayList" resultMap="BookVO" />		
 	</resultMap>	
-
+	
+	<!-- 대여하기 -->
 	<insert id="rentInsert" useGeneratedKeys="true" keyProperty="rent_no">
 	<![CDATA[
 		INSERT INTO
@@ -46,6 +47,7 @@
 		]]>
 	</insert>
 	
+	<!-- 대여내역 조회 -->
 	<select id="rentSelect" resultMap="RentVO" parameterType="com.project.demo.vo.RentVO">
 	<![CDATA[
 		SELECT /*RentDAO.rentSelect(예약내역 조회)*/
@@ -61,6 +63,7 @@
 		]]> 
 	</select>
 	
+	<!-- 대여 상태 업데이트 -->
 	<update id="rentState" parameterType="java.util.Map">
 	<![CDATA[
 	    UPDATE rent
@@ -69,6 +72,7 @@
 	]]>      
 	</update>	
 	
+	<!-- 도서의 대여 횟수 -->
 	<update id="bookIncreaseHit">
 	<![CDATA[
 	    UPDATE book
@@ -77,12 +81,14 @@
 	]]>      
 	</update>	
 	
+	<!-- 유저의 대여권수 -->
 	<select id="userRentCount" parameterType="java.util.Map" resultType="int">
         SELECT user_rentcount
         FROM user
         WHERE user_id= #{user_id}
 	</select>
 	
+	<!-- 유저의 대여권수 (대여) -->
 	<update id="IncreaseUserRent">
 	<![CDATA[
 	    UPDATE user
@@ -90,13 +96,23 @@
 	    WHERE user_id = #{user_id}	
 	]]>      
 	</update>
-		
+	
+	<!-- 유저의 대여권수 (반납) -->	
 	<update id="decreaseUserRent">
 	<![CDATA[
 	    UPDATE user
 	    SET user_rentcount=user_rentcount-1
 	    WHERE user_id = #{user_id}	
 	]]>      
-	</update>
+	</update>	
+	
+	<update id="decreaseBookStock" parameterType="java.util.HashMap">
+	<![CDATA[
+	    UPDATE stock
+	    SET stock_count = stock_count-1
+	    WHERE book_no = #{book_no}
+	    AND branch_code = #{branch_code}
+    ]]> 
+	</update> 
 </mapper>
 

@@ -23,4 +23,6 @@ public interface RentDAO {
 	void IncreaseUserRent(Map<String, String> map);
 	
 	void decreaseUserRent(Map<String, String> map);
+	
+	void decreaseBookStock(Map<String, String> map);
 }

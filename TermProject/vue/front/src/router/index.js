@@ -31,7 +31,7 @@ export default new Router({
                     props: true
                 },
                 {
-                    path: '/detail:book_no',
+                    path: '/detail:book_no?:branch_code?',
                     component: Detail,
                     name: 'Detail',
                     props: true

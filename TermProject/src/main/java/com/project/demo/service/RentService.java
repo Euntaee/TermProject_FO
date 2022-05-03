@@ -20,6 +20,7 @@ public class RentService {
 		rentdao.bookIncreaseHit(map);
 		rentdao.rentInsert(map);
 		rentdao.rentState(map);
+		rentdao.decreaseBookStock(map);
 	}
 
 	public UserVO rentRestrict(Map<String, String> map) {		
@@ -27,7 +28,7 @@ public class RentService {
 		int count = rentdao.userRentCount(map);
 		if (count < 3) {
 			vo.setMsg(MSG_OK);
-			rentdao.IncreaseUserRent(map);
+			rentdao.IncreaseUserRent(map);			
 		} else if(count > 2) {
 			vo.setMsg(MSG_NO);
 		}
@@ -40,6 +41,6 @@ public class RentService {
 
 	public void rentState(Map<String, String> map) {
 		rentdao.rentState(map);
-		rentdao.decreaseUserRent(map);
-	}
+		rentdao.decreaseUserRent(map);		
+	}		
 }

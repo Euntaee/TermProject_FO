@@ -71,12 +71,12 @@
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%;"
                       >
-                        <v-btn v-if="hover" router-link :to="{name:'Detail',params:{book_no: pro.book_no}}"  outlined>대여하러 가기</v-btn>
+                        <v-btn v-if="hover" router-link :to="{name:'Detail',params:{book_no: pro.book_no, branch_code: pro.branch_code}}"  outlined>대여하러 가기</v-btn>
                  </div>
                          </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div class="txt_line"><router-link :to="{name:'Detail',params:{book_no: pro.book_no}}" style="text-decoration: none">{{pro.book_title}}</router-link></div>
+                    <div class="txt_line"><router-link :to="{name:'Detail',params:{book_no: pro.book_no, branch_code: pro.branch_code}}" style="text-decoration: none">{{pro.book_title}}</router-link></div>
                     <div class="txt_line">{{pro.book_author}}</div>
                   </v-card-text>
                 </v-card>

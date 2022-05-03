@@ -13,6 +13,7 @@
 		  , b.book_img
 		  , b.book_author
 		  , b.book_publish
+		  , brch.branch_code
 		FROM stock stk
 		   , branch brch
 		   , book b
@@ -105,5 +106,5 @@
 		  , branch_code
 		  , branch_addr
 		FROM branch
-	</select>	
+	</select>			
 </mapper>

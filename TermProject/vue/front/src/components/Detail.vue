@@ -124,7 +124,8 @@
 
     export default {      
     props:{
-            book_no: Object
+            book_no: Object,
+            branch_code: Object
           },
         data () {
           return {
@@ -145,8 +146,8 @@
                 this.Book=response.data;
             })
             },
-            rentData:function(){
-              this.$axios.post('http://localhost:8080/rent_info',null,{params:{book_no:this.book_no ,user_id:this.user_id, }})
+            rentData:function(props){
+              this.$axios.post('http://localhost:8080/rent_info',null,{params:{book_no:this.book_no ,user_id:this.user_id, branch_code: this.branch_code }})
               .then(response => {
               console.log(response)              
                 alert('대여가 완료 되었습니다!!') 
