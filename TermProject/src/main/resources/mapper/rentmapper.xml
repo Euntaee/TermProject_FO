@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.demo.dao.RentDAO">
 
-	<resultMap type="com.project.demo.vo.BookVO" id="BookVO">
+	<!-- <resultMap type="com.project.demo.vo.BookVO" id="BookVO">
 		<result column="book_no" property="bookNo"/>
 		<result column="book_img" property="bookImg"/>
 		<result column="book_author" property="bookAuthor"/>
@@ -34,21 +34,21 @@
 		<result column="book_regdate" property="bookRegdate"/>		
 		  
 		<collection property="BookVO" javaType="java.util.ArrayList" resultMap="BookVO" />		
-	</resultMap>	
+	</resultMap>	 -->
 	
 	<!-- 대여하기 -->
 	<insert id="rentInsert" useGeneratedKeys="true" keyProperty="rent_no">
 	<![CDATA[
 		INSERT INTO
-		rent (rent_no, rent_startdate, rent_enddate, book_no, user_id, rent_check)	
+		rent (rent_no, rent_startdate, rent_enddate, book_no, user_id, rent_check, branch_code)	
 		VALUES
 		(0,DATE(NOW()) ,date_add(date_format(now(),'%y-%m-%d'),INTERVAL 7 DAY)
-		,#{book_no},#{user_id},0)
+		,#{book_no},#{user_id},0, #{branch_code})
 		]]>
 	</insert>
 	
 	<!-- 대여내역 조회 -->
-	<select id="rentSelect" resultMap="RentVO" parameterType="com.project.demo.vo.RentVO">
+	<select id="rentSelect" resultType="com.project.demo.vo.BookVO" parameterType="com.project.demo.vo.BookVO">
 	<![CDATA[
 		SELECT /*RentDAO.rentSelect(예약내역 조회)*/
 		       b.book_title
@@ -56,6 +56,7 @@
 		     , b.book_no 
 		     , a.rent_startdate 
 		     , a.rent_enddate
+		     , a.branch_code
 	      FROM rent a
 	      LEFT OUTER JOIN book b
 	        ON b.book_no = a.book_no
@@ -65,11 +66,16 @@
 	
 	<!-- 대여 상태 업데이트 -->
 	<update id="rentState" parameterType="java.util.Map">
-	<![CDATA[
+			
 	    UPDATE rent
-	    SET rent_check = NOT rent_check
-	    WHERE user_id = #{user_id} AND book_no = #{book_no}
-	]]>      
+	    SET rent_check = NOT rent_check,	        
+	        <set>
+	            <if test='rent_check="0"'>
+	            rent_returnday = curdate()
+	            </if>
+	        </set>
+	          
+	    WHERE user_id = #{user_id} AND book_no = #{book_no}	     
 	</update>	
 	
 	<!-- 도서의 대여 횟수 -->

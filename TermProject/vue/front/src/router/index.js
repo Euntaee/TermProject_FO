@@ -61,7 +61,8 @@ export default new Router({
                 {
                     path: '/rent',
                     component: BookRent,
-                    name: 'BookRent'
+                    name: 'BookRent',
+                    props: true
                 },
                 {
                     path: '/mypage',

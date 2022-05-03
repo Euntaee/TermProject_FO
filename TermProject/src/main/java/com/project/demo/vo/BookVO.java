@@ -21,5 +21,5 @@ public class BookVO {
 	private String branchAddr;
 
 	// Stock 테이블 조인
-	private int stock_count; 
+	private int stock_count;
 }

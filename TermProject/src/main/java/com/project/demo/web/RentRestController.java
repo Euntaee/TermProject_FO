@@ -19,12 +19,14 @@ public class RentRestController {
 	private final RentService rentService;
 
 	@PostMapping("/rent_info")
-	public void rentInsert(String book_no, String user_id, String branch_code) {	
+	public void rentInsert(String book_no, String user_id, String branch_code, String rent_no) {	
 		Map<String, String> map = new HashMap<>();
 		map.put("book_no", book_no);
 		map.put("user_id", user_id);
 		map.put("branch_code", branch_code);
+		map.put("rent_no", rent_no);
 		System.out.println(user_id);
+		System.out.println("rent!!!"+ rent_no);
 		System.out.println(book_no);
 		System.out.println();
 		rentService.rentInsert(map);		
@@ -50,10 +52,12 @@ public class RentRestController {
 	}
 	
 	@PostMapping("/rent_return")
-	public void rentReturn(String user_id, String book_no) {
+	public void rentReturn(String user_id, String book_no, String branch_code, String rent_no) {
+		System.out.println("지점"+ branch_code);
 		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
-		map.put("book_no", book_no);			
+		map.put("book_no", book_no);
+		map.put("rent_no", rent_no);
 		rentService.rentState(map);
 	}
 }

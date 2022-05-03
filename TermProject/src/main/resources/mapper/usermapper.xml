@@ -46,7 +46,7 @@
             user_email= #{user_email},
             user_phone= #{user_phone},
             user_addr1= #{user_addr1}
-            WHERE user_id = #{user_id}      
+            WHERE user_id = #{user_id}
         ]]>
     </update>    
     
