@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 	private static final String DUPLICATE_ID = "NO";
 	private static final String WRONG_PASSWORD = "NOPWD";
-	private static final String MSG_OK = "OK";		//	
+	private static final String MSG_OK = "OK";
+	private static final String MSG_TRUE = "true";
+	private static final String MSG_FALSE = "false";
 	private final UserDAO userdao;
 
 	public UserVO isLogin(String userId, String userPwd) {
@@ -71,5 +73,17 @@ public class UserService {
 	
 	public void deleteUser(Map<String, String> map) {
 		userdao.deleteUser(map);
+	}
+	
+
+	public UserVO UserDeleteRule(Map<String, String> map) {
+		int count = userdao.rentCount(map);
+		UserVO vo = new UserVO();
+		if(count==0) {			
+			vo.setMsg(MSG_TRUE);			
+		}else {
+			vo.setMsg(MSG_FALSE);
+		}
+		return vo;
 	}
 }

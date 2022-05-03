@@ -16,7 +16,7 @@ public interface UserDAO {
 
 	void userInsert(UserVO vo); // 회원 등록
 
-	UserVO selectUserInfo(String user_id);
+	UserVO selectUserInfo(String user_id); 
 
 	UserVO isPwd(String user_pwd, String user_id);
 
@@ -25,4 +25,6 @@ public interface UserDAO {
 	UserVO idCheck(String user_id);
 	
 	void deleteUser(Map<String, String> map);
+	
+	int rentCount(Map<String, String> map);
 }

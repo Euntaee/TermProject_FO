@@ -78,4 +78,15 @@ public class userRestController {
 		map.put("user_id", user_id);		
 		userService.deleteUser(map);
 	}
+	
+	@PostMapping("/userDeleteRule")
+	public String userDeleteRule(String user_id) {		
+		Map<String, String> map= new HashMap<>();
+		map.put("user_id", user_id);		
+		String msg="";
+		UserVO vo=new UserVO();
+		vo=userService.UserDeleteRule(map);
+		msg=vo.getMsg();
+		return msg;
+	}
 }

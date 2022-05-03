@@ -150,7 +150,7 @@
               .then(response => {
               console.log(response)              
                 alert('대여가 완료 되었습니다!!') 
-                window.location.href="/bookrent"             
+                window.location.href="/rent"             
             })            
         },
         rentData2:function(){

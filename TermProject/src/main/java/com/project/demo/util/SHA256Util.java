@@ -24,6 +24,5 @@ public class SHA256Util {
 	        } catch (Exception e) {
 	            return s;
 	        }
-	    }
-	
+	    }	
 }

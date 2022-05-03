@@ -50,7 +50,8 @@
   </v-simple-table>
      <div class="container" style="text-align:center">     
          <v-btn  router-link to="/changepwd" style="width:130px;">정보수정</v-btn>
-         <v-btn @click="userDelete" style="width:130px;">회원탈퇴</v-btn>
+         <v-btn @click="userDelete" style="width:130px;" v-if="result">회원탈퇴</v-btn>
+         <v-btn @click="userDelete2" style="width:130px;" v-if="!result">회원탈퇴</v-btn>
      </div>
   </div>  
 </template>
@@ -59,11 +60,13 @@ export default {
   data () {
     return {
       User: {},
-      user_id: sessionStorage.getItem('user_id')
+      user_id: sessionStorage.getItem('user_id'),
+      result: ''
     }
   },
   mounted: function () {
     this.getData()
+    this.userDeleteRule()
   },
   methods: {
     getData: function () {
@@ -83,6 +86,20 @@ export default {
         alert('정말 회원 탈퇴를 하시겠습니까?')
         sessionStorage.removeItem('user_id')
         window.location.href = '/'
+      })
+    },
+    userDelete2: function () {
+      alert('도서를 대여중이면 회원탈퇴가 불가능합니다.')
+      window.location.href = '/rent'
+    },
+    userDeleteRule: function () {
+      this.$axios.post('http://localhost:8080/userDeleteRule', null, {
+        params: {
+          user_id: this.user_id
+        }
+      }).then(response => {
+        console.log(response.data)
+        this.result = response.data
       })
     }
   }

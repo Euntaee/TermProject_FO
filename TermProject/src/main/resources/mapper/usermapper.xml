@@ -39,19 +39,25 @@
     
     <!-- 비밀번호 변경 -->
     <update id="changPwd" parameterType="java.util.Map">
-    <![CDATA[
-       UPDATE user       
-       SET 
-       user_pwd = #{user_pwd},
-       user_email= #{user_email},
-       user_phone= #{user_phone},
-       user_addr1= #{user_addr1}
-       WHERE user_id = #{user_id}      
-     ]]>
+        <![CDATA[
+            UPDATE user       
+            SET 
+            user_pwd = #{user_pwd},
+            user_email= #{user_email},
+            user_phone= #{user_phone},
+            user_addr1= #{user_addr1}
+            WHERE user_id = #{user_id}      
+        ]]>
     </update>    
     
     <delete id="deleteUser" parameterType="java.util.Map">
-    DELETE FROM user
-    WHERE user_id = #{user_id}
+        DELETE FROM user
+        WHERE user_id = #{user_id}
     </delete>
+    
+    <select id="rentCount" resultType="int" parameterType="java.util.Map">
+        SELECT DISTINCT rent_check
+        FROM rent
+        WHERE user_id = #{user_id}
+    </select>
 </mapper>      

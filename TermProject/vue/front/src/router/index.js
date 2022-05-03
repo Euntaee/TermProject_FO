@@ -59,7 +59,7 @@ export default new Router({
                     name: 'find'
                 },
                 {
-                    path: '/bookrent',
+                    path: '/rent',
                     component: BookRent,
                     name: 'BookRent'
                 },

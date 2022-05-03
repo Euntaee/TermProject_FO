@@ -73,7 +73,7 @@
       </v-btn>
       <v-btn 
        icon
-       router-link to="/bookrent">
+       router-link to="/rent">
         <v-badge
           content="2"
           value="2"
@@ -107,8 +107,7 @@
             >  
               <v-list-item
                 v-for="(item, index) in branchData"
-                :key="index"
-               
+                :key="index"               
                 router-link :to="{name:'Book', params:{branch_code: item.branch_code}}"               
               >
                 <v-list-item-title>{{ item.branch_name }}</v-list-item-title>                       
@@ -117,7 +116,7 @@
         </v-menu>
         <v-btn 
           v-if="user_id!=null"
-          router-link to="/bookrent">           
+          router-link to="/rent">           
           <span>대여정보</span>
         </v-btn>   
       </v-bottom-navigation>
@@ -183,7 +182,7 @@ export default {
             })                  
           },
           logout:function(){
-             sessionStorage.removeItem('user_id')
+            sessionStorage.removeItem('user_id')
             location.href="http://localhost:8080/"             
              alert("로그아웃 됐습니다!.")
           },
