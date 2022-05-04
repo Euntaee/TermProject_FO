@@ -90,7 +90,7 @@ export default {
           }		
           else{
             location.href="http://localhost:8080/"             
-             alert("로그인 됐습니다!.")            
+             alert("로그인 됐습니다!.")
             sessionStorage.setItem('user_id', this.user_id)
           }
 			  })

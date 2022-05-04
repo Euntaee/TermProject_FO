@@ -115,8 +115,7 @@
 	    SELECT 
 	        stock_count
 	    FROM stock
-	    WHERE stock_count = 0
-	    AND   book_no = #{book_no}
+	    WHERE book_no = #{book_no}
 	    AND   branch_code = #{branch_code}
 	</select>
 </mapper>

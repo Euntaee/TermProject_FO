@@ -31,5 +31,5 @@ public interface RentDAO {
 	
 	void returnDay(Map<String, String> map);
 	
-	List<StockVO> bookStockCount(Map<String, String> map);
+	StockVO bookStockCount(Map<String, String> map);
 }

@@ -22,14 +22,14 @@ public class RentService {
 		rentdao.rentInsert(map);
 		rentdao.rentState(map);
 		rentdao.decreaseBookStock(map);
+		rentdao.IncreaseUserRent(map);
 	}
 
 	public UserVO rentRestrict(Map<String, String> map) {		
 		UserVO vo = new UserVO();
 		int count = rentdao.userRentCount(map);
 		if (count < 3) {
-			vo.setMsg(MSG_OK);
-			rentdao.IncreaseUserRent(map);			
+			vo.setMsg(MSG_OK);			
 		} else if(count > 2) {
 			vo.setMsg(MSG_NO);
 		}
@@ -47,10 +47,12 @@ public class RentService {
 		rentdao.increaseBookStock(map);
 	}
 	
-	public StockVO bookStockCount() {
-		StockVO vo = new StockVO();
-		String count = vo.getStockCount();
-		if(count == "0") {
+	public StockVO bookStockCount(Map<String, String> map) {
+		StockVO vo = rentdao.bookStockCount(map);		
+		String stock = vo.getStockCount();
+		int count = Integer.parseInt(stock);
+		System.out.println("카운트"+count);
+		if(count == 0) {
 			vo.setMsg(MSG_NO);
 		} else {
 			vo.setMsg(MSG_OK);

@@ -63,8 +63,9 @@ public class RentRestController {
 		map.put("book_no", book_no);
 		map.put("branch_code", branch_code);
 		String result = "";
-		StockVO vo = rentService.bookStockCount();
+		StockVO vo = rentService.bookStockCount(map);
 		result = vo.getMsg();
+		System.out.println("결과값"+result);
 		return result;
 	}
 }

@@ -31,14 +31,14 @@
             <!-- :disabled="!result" -->
             <br>
             <v-btn class="primary white--text" outlined tile dense
-            @click.="rentData" v-if="result"
+            @click="rentData" v-if="result && stock"
             >            
             <v-icon>mdi-book</v-icon> 
             대여하기
             </v-btn>
 
             <v-btn class="primary white--text" outlined tile dense
-            @click="rentData2" v-if="!result"
+            @click="rentData2" v-if="!result && stock"
             >            
             <v-icon>mdi-book</v-icon> 
             대여하기
@@ -189,7 +189,7 @@
         rentRule2:function (props) {
             this.$axios.post('http://localhost:8080/bookStock', null, {
               params: {
-                  book_no:this.book_no, branch_code: this.branch_code
+                  book_no: this.book_no, branch_code: this.branch_code
               }
             }).then(response => {
               console.log(response.data)
