@@ -3,55 +3,57 @@
   <div>
     <v-container>
       <div class="row">      
-        <div class="col-md-5 col-sm-5 col-xs-12">
-          <v-carousel>
-            <v-carousel-item
+        <div class="col-md-3 col-sm-3 col-xs-12" style="width:400px; height:780px;">
+          <v-img
               :src="Book.book_img"
+              style="width:400px"
             >
-            </v-carousel-item>           
-          </v-carousel>
+          </v-img>
         </div>
-        <div class="col-md-7 col-sm-7 col-xs-12">
+        <div class="col-md-9 col-sm-9 col-xs-12">
           <v-breadcrumbs class="pb-0" :items="breadcrums"></v-breadcrumbs>
           <div class="pl-6">
-            <p class="display-1 mb-0">제목:{{Book.book_title}}</p> 
-            <br>
-            <br>
+            <p class="display-1 mb-0">제목:{{Book.book_title}}</p>             
              <h3>책 소개</h3>
              <br>             
              <p class="subtitle-1 font-weight-thin">
-              {{Book.book_content}}
+             {{Book.book_content}}
             </p>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            <br><br><br>
+            <br><br><br>
+            <br><br><br>
+            <br><br>
+            <br><br>            
             <!-- :disabled="!result" -->
             <br>
-            <v-btn class="primary white--text" outlined tile dense
-            @click="rentData" v-if="result && stock"
+            <v-btn class="primary white--text" outlined tile dense 
+            @click="rentData" v-if="result && stock && rented"
             >            
             <v-icon>mdi-book</v-icon> 
-            대여하기
+            대여예약
             </v-btn>
 
             <v-btn class="primary white--text" outlined tile dense
-            @click="rentData2" v-if="!result && stock"
+            @click="rentData2" v-else-if="!result && stock && rented"
             >            
             <v-icon>mdi-book</v-icon> 
-            대여하기
+            대여예약
             </v-btn>
 
              <v-btn class="primary white--text" outlined tile dense
-            @click="rentData3" v-if="!stock"
-            >            
-            <v-icon>mdi-book</v-icon> 
-            대여하기
+            @click="rentData3" v-else-if="!stock && result && rented"
+            >   
+             <v-icon>mdi-book</v-icon> 
+            대여예약
             </v-btn>
             
-            <v-btn class="ml-4" outlined tile>책 담기 OR 목록 보러 가기(미정)</v-btn>
+            <v-btn class="primary white--text" outlined tile dense
+            @click="rentData4" v-else-if="!rented && stock && result"
+            >         
+            <v-icon>mdi-book</v-icon> 
+            대여예약
+            </v-btn>                         
+            <v-btn class="ml-4" outlined tile @click="$router.go(-1)">뒤로가기</v-btn>
 
           </div>
       </div>
@@ -85,8 +87,8 @@
           >
             <p class="subtitle-1 font-weight-light pt-3 text-center">비슷한 책 추천</p>
             <v-divider></v-divider>
-            <div class="row text-center">
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
+            <div class="row text-center" >
+              <div class="col-md-2 col-sm-4 col-xs-12 text-center" v-for="vo in randData" v-bind:key="vo.id">
                 <v-hover
                   v-slot:default="{ hover }"
                   open-delay="200"
@@ -97,14 +99,13 @@
                     <v-img
                       class="white--text align-end"
                       height="200px"
-                      :src="require('../assets/img/home/deal1.jpg')"
+                      v-bind:src="vo.book_img"
                     >
-                      <v-card-title>Bags & Purses </v-card-title>
                     </v-img>
 
                     <v-card-text class="text--primary text-center">
-                      <div>Upto 60% + Extra 10%</div>
-                      <div>Baggit, Zara, Fossil</div>
+                      <div class="txt_line" style="font-weight:bold">{{vo.book_title}}</div>
+                      <div class="txt_line">{{vo.book_author}}</div>
                     </v-card-text>
 
                     <div class="text-center">
@@ -112,14 +113,14 @@
                         class="ma-2"
                         outlined
                         color="info"
-                      >
-                        Explore
+                        router-link :to="{name:'Detail',query:{book_no: vo.book_no, branch_code: vo.branch_code, book_genre: vo.book_genre}}"
+                      >대여하러 가기
                       </v-btn>
                     </div>
                   </v-card>
                 </v-hover>
               </div>                                        
-            </div>
+           </div>
           </v-card-text>          
         </div>        
       </div>
@@ -129,34 +130,42 @@
 <script>
 /* eslint-disable */
 
-    export default {      
+    export default {         
     props:{
             book_no: Object,
-            branch_code: Object
+            branch_code: Object,
+            book_genre: Object
           },
         data () {
           return {
             Book:{},                    
             user_id:sessionStorage.getItem('user_id'),
             result:'',
-            stock: ''
+            stock: '',
+            rented: '',
+            suspen: '',
+            book_genre: '',
+            randData: [],
           }
         },         
         mounted:function(){
           this.getData();
           this.rentRule(); 
-          this.rentRule2();        
+          this.rentRule2(); 
+          this.duplicateBook();  
+          this.bookRandData();    
+          this.suspensionUser(); 
         },
         methods:{
             getData:function(props){           
-           this.$axios.get('http://localhost:8080/detail_ok',{params:{book_no:this.book_no}})
+           this.$axios.get('http://localhost:8080/detail_ok',{params:{book_no: this.$route.query.book_no}})
             .then(response =>{
                 console.log(response.data);
                 this.Book=response.data;
             })
             },
             rentData:function(props){
-              this.$axios.post('http://localhost:8080/rent_info',null,{params:{book_no:this.book_no ,user_id:this.user_id, branch_code: this.branch_code }})
+              this.$axios.post('http://localhost:8080/rent_info',null,{params:{book_no:this.$route.query.book_no ,user_id:this.user_id, branch_code: this.$route.query.branch_code }})
               .then(response => {
               console.log(response)              
                 alert('대여가 완료 되었습니다!!') 
@@ -179,6 +188,14 @@
                 alert('도서 재고가 없습니다!!')                
           } 
         },
+        rentData4:function(){
+          if(this.user_id==null){
+            alert('로그인 이후 이용이 가능합니다!')
+            window.location.href="/login"
+          }else{
+                alert('이미 대여하신 도서입니다!!')                
+          } 
+        },
         rentRule:function(){
               this.$axios.post('http://localhost:8080/rent_rule',null,{params:{user_id:this.user_id }})
               .then(response =>{
@@ -189,13 +206,42 @@
         rentRule2:function (props) {
             this.$axios.post('http://localhost:8080/bookStock', null, {
               params: {
-                  book_no: this.book_no, branch_code: this.branch_code
+                  book_no: this.$route.query.book_no, branch_code: this.$route.query.branch_code
               }
             }).then(response => {
               console.log(response.data)
               this.stock=response.data
             })
-        }
+        },
+        duplicateBook:function (props) {
+            this.$axios.post('http://localhost:8080/duplicateBook', null, {
+              params: {
+                  book_no: this.$route.query.book_no, branch_code: this.$route.query.branch_code, user_id: this.user_id
+              }
+            }).then(response => {
+              console.log(response.data)
+              this.rented=response.data
+            })
+        },
+        bookRandData:function(props) {          
+          this.$axios.post('http://localhost:8080/book/selectRandData', null, {
+            params: {
+                branch_code: this.$route.query.branch_code, book_genre: this.$route.query.book_genre
+            }
+          }).then(response => {
+             console.log(response.data)
+             this.randData=response.data
+          })
+        },
     }
   }
 </script>
+<style>
+  .txt_line {
+   width: 180px;
+   padding: 0 5px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
+</style>

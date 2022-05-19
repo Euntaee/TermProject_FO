@@ -16,7 +16,7 @@
 		    user_pwd
 		  , user_name		     
 		FROM user
-		WHERE user_id= #{user_id}
+		WHERE user_id = #{user_id}
     </select>
     
     <!-- 회원가입 -->
@@ -29,6 +29,7 @@
          , user_addr1
          , user_email
          , user_phone
+         , user_answer
          )
        VALUES (
            #{userId}
@@ -38,6 +39,7 @@
          , #{userAddr1}
          , #{userEmail}
          , #{userPhone}
+         , #{userAnswer}
          )
     </insert>
     
@@ -50,21 +52,22 @@
          , user_addr1
          , user_email
          , user_phone
+         , actv_yn
        FROM user
        WHERE user_id=#{user_id}
     </select>
     
     <!-- 비밀번호 변경 -->
     <update id="changPwd" parameterType="java.util.Map">
-        <![CDATA[
+        
         UPDATE user       
-        SET 
-            user_pwd = #{user_pwd}
-          , user_email= #{user_email}
+         SET  
+            user_email= #{user_email}
           , user_phone= #{user_phone}
           , user_addr1= #{user_addr1}
+          , user_pwd = #{user_pwd}
         WHERE user_id = #{user_id}
-        ]]>
+         
     </update>    
     
     <delete id="deleteUser" parameterType="java.util.Map">
@@ -73,8 +76,31 @@
     </delete>
     
     <select id="rentCount" resultType="int" parameterType="java.util.Map">
-        SELECT DISTINCT rent_check
-        FROM rent
-        WHERE user_id = #{user_id}
+        SELECT DISTINCT user_rentcount
+        FROM user
+        WHERE user_id = #{user_id} 
     </select>
+    
+    <select id="pwdFindCount" resultType="int" parameterType="com.project.demo.vo.UserVO">
+        SELECT COUNT(*)
+        FROM user
+        WHERE 1=1
+        AND   user_id = #{userId}
+        AND   user_answer = #{userAnswer}
+    </select>
+    
+    <update id="pwdFindChange" parameterType="com.project.demo.vo.UserVO">
+        UPDATE user
+        SET    user_pwd = #{userPwd}
+        WHERE user_id = #{userId}
+    </update>
+    
+    <select id="suspensionUser" resultType="int" parameterType="java.util.Map">
+	  <![CDATA[
+	    SELECT COUNT(*)
+	    FROM user
+	    WHERE  user_id= #{user_id}
+	      AND  user_end_suspensionday < curdate()
+	  ]]> 
+	</select>
 </mapper>      

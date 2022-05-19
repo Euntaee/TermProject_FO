@@ -7,39 +7,49 @@
       color="primary"
       dark
     >
-<!--      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />-->
-
       <v-toolbar-title
         style="width: 350px"
       >
          <router-link to="/" class="white--text" style="text-decoration: none"><v-icon>mdi-truck</v-icon>&nbsp;서울 도서대여 사이트</router-link>
       </v-toolbar-title>
-        <v-form class="row" style="margin: 0px auto">       
+        <v-form class="row" style="margin: 0px auto">    
+         
+        <v-select
+          v-model="bt"
+          :items="branchType"
+          selected="종로도서관"
+          item-text="name"          
+          item-value="value"
+          style="margin-top: 50px; width:50px;"
+        ></v-select>
+    
+
          <v-select
           v-model="st"
           style="margin-top: 30px; width:1px;"
+          selected="TA"
           :items="searchType"
           item-text="name"          
           item-value="value"          
           solo
         ></v-select>
-       
-
+               
         &nbsp;&nbsp;
         
       <v-text-field        
-        v-model="searchtext"
+        v-model.trim="searchtext"
         flat
         style="margin-top: 30px;"
         solo-inverted
-        hide-details
+        hide-details      
         prepend-inner-icon="mdi-magnify"
         label="도서검색"        
+        focusable
+        @keyup.enter.prevent="findBtn"
       />            
       &nbsp;&nbsp;
-      <v-btn id="findBtn"               
-      router-link :to="'/find'"
-      @click="findBtn"
+      <v-btn id="findBtn"                    
+      @click="findBtn"      
       style="margin-top: 35px;">
         검색
       </v-btn>
@@ -60,28 +70,11 @@
        router-link to="/mypage" icon
       >
       <v-icon>mdi-account-circle</v-icon>
-      </v-btn>              
-      <v-btn icon>
-        <v-badge
-          content="2"
-          value="2"
-          color="green"
-          overlap
-        >
-          <v-icon>mdi-bell</v-icon>
-        </v-badge>
-      </v-btn>
+      </v-btn>                   
       <v-btn 
        icon
-       router-link to="/rent">
-        <v-badge
-          content="2"
-          value="2"
-          color="green"
-          overlap
-        >
+       router-link to="/rent">        
           <v-icon>mdi-cart</v-icon>
-        </v-badge>
       </v-btn>
     </v-app-bar>
     <v-main>
@@ -108,7 +101,7 @@
               <v-list-item
                 v-for="(item, index) in branchData"
                 :key="index"               
-                router-link :to="{name:'Book', params:{branch_code: item.branch_code}}"               
+                router-link :to="{name:'Book', query:{branch_code: item.branch_code, branch_name: item.branch_name, branch_addr: item.branch_addr}}"               
               >
                 <v-list-item-title>{{ item.branch_name }}</v-list-item-title>                       
               </v-list-item>  
@@ -132,9 +125,9 @@
         class="secondary white--text text-center"
       >  
         <v-card-text class="white--text pt-0">
-         <p>NAME: 김은태</p>
-         <p>PHONE:000-6685-9812</p>
-         <p>E-MAIL: Euntae.Kim@ta9.co.kr</p>
+         <p>NAME: </p>
+         <p>PHONE:000-6666-6666</p>
+         <p>E-MAIL: ket@naver.co</p>
          
         </v-card-text>
 
@@ -153,14 +146,22 @@
 
 export default {
           data () {
-            return {                                               
+            return {        
+                branchType: [
+                     {name: '종로도서관', value:'종로도서관'} ,
+                     {name: '정독도서관', value:'정독도서관'} ,
+                     {name: '강남도서관', value:'강남도서관'} ,
+                     {name: '강서도서관', value:'강서도서관'} ,
+                     {name: '강동도서관', value:'강동도서관'} ,
+                ],                                     
                 searchType: [
                      {name: '전체', value:'TA'} ,
                      {name: '도서명', value:'T'} ,
                      {name: '저자', value:'A'} ,
                 ],        
-                st: 'TA',       
-                searchtext: this.searchtext,
+                st: 'TA',
+                bt: '종로도서관' ,
+                searchtext: '',
                 Book:[],
                 user_id:sessionStorage.getItem('user_id'),
                 branchData: [],
@@ -171,15 +172,18 @@ export default {
           this.getBranchData();
         },
         methods:{          
-          findBtn:function(){                                      
-            this.$axios.post("http://localhost:8080/find_ok", null, {params: {st:this.st, searchtext:this.searchtext}}              
+          findBtn:function(){  
+            this.$router.push({name:'find', params:{searchtext:this.searchtext}}  )
+            this.$axios.post("http://localhost:8080/find_ok", null, {params: {bt:this.bt, st:this.st, searchtext:this.searchtext }}              
             ).then(response =>{
               console.log(response.data)
               this.Book=response.data;
               this.$EventBus.$emit('sentBook',this.Book)
-            }).catch(function(ex){
-              throw new Error(ex)
-            })                  
+              this.st=this.st
+              this.bt=this.bt
+              this.searchtext=this.searchtext
+            }).catch(function(ex){                    
+            })                        
           },
           logout:function(){
             sessionStorage.removeItem('user_id')

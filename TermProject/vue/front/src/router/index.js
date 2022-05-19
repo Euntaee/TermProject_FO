@@ -31,7 +31,7 @@ export default new Router({
                     props: true
                 },
                 {
-                    path: '/detail:book_no?:branch_code?',
+                    path: '/detail',
                     component: Detail,
                     name: 'Detail',
                     props: true
@@ -56,10 +56,11 @@ export default new Router({
 
                     path: '/find',
                     component: find,
-                    name: 'find'
+                    name: 'find',
+                    props: true
                 },
                 {
-                    path: '/rent:branch_code?',
+                    path: '/rent:branch_code?:book_no?',
                     component: BookRent,
                     name: 'BookRent',
                     props: true

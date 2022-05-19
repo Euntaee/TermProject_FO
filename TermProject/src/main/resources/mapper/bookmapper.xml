@@ -7,16 +7,18 @@
 
 	<!-- 책 리스트 출력 -->
 	<select id="selectBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
-		SELECT
+	    SELECT
 		    b.book_no
 		  , b.book_title
 		  , b.book_img
 		  , b.book_author
 		  , b.book_publish
+		  , b.book_genre
 		  , brch.branch_code
+		  , brch.branch_addr
 		FROM stock stk
-		   , branch brch
-		   , book b
+		  , branch brch
+		  , book b
 		WHERE b.book_genre LIKE CONCAT('%',#{cate},'%')
 		AND b.book_no = stk.book_no
 		AND brch.branch_code = stk.branch_code
@@ -38,6 +40,8 @@
 		 , book_img
 		 , book_author
 		 , book_publish
+		 , book_hit
+		 , book_regdate
 		FROM book
 		<if test='sort=="1"'>
 			ORDER BY book_regdate ASC
@@ -51,33 +55,51 @@
 	<!-- 총 페이지 -->
 	<select id="selectTotalPage" resultType="int" parameterType="java.util.Map">
 		SELECT CEIL(COUNT(*)/12.0)
-		FROM book
-		WHERE book_genre LIKE CONCAT('%',#{cate},'%')
+		FROM book b, branch brch, stock stk
+		WHERE 1=1
+		      AND b.book_no = stk.book_no
+		      AND brch.branch_code = stk.branch_code
+		      AND b.book_genre LIKE CONCAT('%',#{cate},'%')
+		      AND brch.branch_code LIKE CONCAT('%',#{branchCode},'%')
 	</select>
 
 	<!-- 책 검색 리스트 출력 -->
 	<select id="findBookList" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
 		SELECT
-		    book_no
-		  , book_title
-		  , book_img
-		  , book_author
-		  , book_publish
-		FROM book
-		WHERE
-		<if test='st=="T"'>
-			book_title LIKE CONCAT('%',#{searchtext},'%')
-		</if>
-		<if test='st=="A"'>
-			book_author LIKE CONCAT('%',#{searchtext},'%')
-		</if>
-		<if test='st=="TA"'>
-			book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%')
-		</if>
+		    bk.book_no
+		  , bk.book_title
+		  , bk.book_img
+		  , bk.book_author
+		  , bk.book_publish
+		  , brch.branch_code
+		FROM book bk, branch brch, stock s	
+		WHERE bk.book_no = s.book_no
+		AND brch.branch_code = s.branch_code
+		AND brch.branch_name =#{bt}
+	    <choose>
+		<when test='st=="T"'>
+		AND bk.book_title LIKE CONCAT('%',#{searchtext},'%') 
+		</when>
+    	<when test='st=="A"'>
+    	AND bk.book_author LIKE CONCAT('%',#{searchtext},'%') 
+    	</when>
+    	<when test='st=="TA"'>
+    	AND (bk.book_title LIKE CONCAT('%',#{searchtext},'%') OR bk.book_author LIKE CONCAT('%',#{searchtext},'%'))
+    	</when>    
+    	</choose>	
 	</select>
-
+<!-- <if test='st=="T"'> -->
+<!-- 			AND bk.book_title LIKE CONCAT('%',#{searchtext},'%')   -->
+<!-- 		</if> -->
+<!-- 		<if test='st=="A"'> -->
+<!-- 			AND bk.book_author LIKE CONCAT('%',#{searchtext},'%') -->
+<!-- 	    </if> -->
+<!-- 		<if test='st=="TA"'> -->
+<!-- 			AND bk.book_author LIKE CONCAT('%',#{searchtext},'%') OR book_title LIKE CONCAT('%',#{searchtext},'%') -->
+<!-- 	    </if>	 -->
 	<!-- 상세보기. -->
 	<select id="detailBook" resultType="com.project.demo.vo.BookVO" parameterType="String">
+	<![CDATA[
 		SELECT
 		    book_no
 		  , book_title
@@ -91,6 +113,7 @@
 		  ,  book_regdate
 		FROM book
 		WHERE book_no=#{book_no}
+		]]>
 	</select>
 
 	<!-- 책 장르만 출력 -->
@@ -100,11 +123,33 @@
 		FROM book
 	</select>
 
+	<!-- 지점 출력 -->
 	<select id="selectBranchData" resultType="com.project.demo.vo.BranchVO">
 		SELECT 
 		    branch_name
 		  , branch_code
 		  , branch_addr
 		FROM branch
-	</select>			
+	</select>	
+	
+	<!-- 상세보기 비슷한 책 추천 -->
+	<select id="selectDetailRand" resultType="com.project.demo.vo.BookVO" parameterType="java.util.Map">
+	    SELECT 
+            b.book_no 
+          , b.book_title 
+          , b.book_img 
+          , b.book_author 
+          , b.book_publish
+          , b.book_genre 
+          , brch.branch_code 
+          , brch.branch_name
+          , stk.stock_count
+        FROM book b, branch brch, stock stk 
+        WHERE 1=1
+        AND b.book_no = stk.book_no 
+        AND brch.branch_code = stk.branch_code 
+        AND brch.branch_code LIKE CONCAT('%',#{branch_code},'%')
+        AND b.book_genre = #{book_genre}
+        ORDER BY RAND() LIMIT 6 ;
+	</select>		
 </mapper>

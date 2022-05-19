@@ -32,7 +32,7 @@
 
           <v-row dense>
             <v-col cols="12" sm="8" class="pl-6 pt-6">
-              <small>Showing 1-12 of 200 products</small>
+              <medium style="font-weight:bold">지점명: {{$route.query.branch_name}} &nbsp;&nbsp; 주소: {{$route.query.branch_addr}} </medium> <br><br>
             </v-col>
             <v-col cols="12" sm="4">
               <v-select 
@@ -56,13 +56,15 @@
                 <v-card
                   class="mx"
                   color="grey lighten-4"
-                  max-width="200"
+                  width="200px"
+                  height="330px"
                 >
+               
                   <v-img
                     class="white--text align-end"
-                    :aspect-ratio="16/9"
-                    height="200px"
-                    :src="pro.book_img"
+                    height="250px"
+                    width="200px"
+                    v-bind:src="pro.book_img"
                   >
                     <!-- <v-card-title>{{pro.type}} </v-card-title> -->
                     <v-expand-transition>
@@ -71,12 +73,12 @@
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%;"
                       >
-                        <v-btn v-if="hover" router-link :to="{name:'Detail',params:{book_no: pro.book_no, branch_code: pro.branch_code}}"  outlined>대여하러 가기</v-btn>
-                 </div>
-                         </v-expand-transition>
+                        <v-btn v-if="hover" router-link :to="{name:'Detail',query:{book_no: pro.book_no, branch_code: pro.branch_code, book_genre: pro.book_genre}}"  outlined>대여하러 가기</v-btn>
+                      </div>
+                   </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div class="txt_line"><router-link :to="{name:'Detail',params:{book_no: pro.book_no, branch_code: pro.branch_code}}" style="text-decoration: none">{{pro.book_title}}</router-link></div>
+                    <div class="txt_line"><router-link :to="{name:'Detail',query:{book_no: pro.book_no, branch_code: pro.branch_code, book_genre: pro.book_genre}}" style="text-decoration: none">{{pro.book_title}}</router-link></div>
                     <div class="txt_line">{{pro.book_author}}</div>
                   </v-card-text>
                 </v-card>
@@ -102,7 +104,9 @@
 export default {         
         props:{
             mainsort: Object,
-            branch_code: Object
+            branch_code: Object,
+            branch_name: Object,
+            branch_addr: Object
           },   
         data () {
           return {
@@ -134,7 +138,7 @@ export default {
                   page:this.pagination.curpage,  
                   sort:this.sort,
                   cate:this.cate,
-                  branchCode:this.branch_code           
+                  branchCode: this.$route.query.branch_code           
               }
             })      
             .then(response =>{
@@ -145,11 +149,12 @@ export default {
               throw new Error(ex)
             })       
             },
-            getTotalPage:function(){
+            getTotalPage:function(branch_code){
               this.$axios.post("http://localhost:8080/totalpage",null,{
                 params: {
                   sort:this.sort,
-                  cate:this.cate 
+                  cate:this.cate, 
+                  branchCode:this.$route.query.branch_code
                 }
               }).then(response =>{
                 console.log(response.data);
@@ -157,7 +162,7 @@ export default {
               })
             },
             getGenre:function(){
-              this.$axios.get("http://localhost:8080/genre")              
+              this.$axios.get("http://localhost:8080/genre")
             .then(response =>{
                 console.log(response.data);
                 this.genre=response.data;
@@ -168,12 +173,12 @@ export default {
                 sort:this.sort,
                 page:this.pagination.curpage,
                 cate:this.cate,
-                branchCode:this.branch_code                  
+                branchCode: this.$route.query.branch_code
                 }
               }).then(response =>{
                 console.log(response.data);
                 this.Book=response.data;
-                sort=this.sort                          
+                sort=this.sort      
             })              
             },
              genredata:function(event){    
@@ -183,7 +188,7 @@ export default {
                 sort:this.sort,
                 page:this.pagination.curpage,
                 cate: cate2,
-                branchCode:this.branch_code                
+                branchCode:this.$route.query.branch_code
                 }
               }).then(response =>{
                 console.log(response.data);

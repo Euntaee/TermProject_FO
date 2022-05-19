@@ -24,5 +24,7 @@ public interface BookDAO {
 	List<BookVO> selectBookLimit(Map<String, String> map);
 	
 	List<BranchVO> selectBranchData();
+	
+	List<BookVO> selectDetailRand(Map<String, Object> map);
 		
 }

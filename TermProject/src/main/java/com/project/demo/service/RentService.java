@@ -13,24 +13,25 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class RentService {
-	private final RentDAO rentdao;
+
 	private static final String MSG_OK = "true";
 	private static final String MSG_NO = "false";
+	private final RentDAO rentdao;
 
 	public void rentInsert(Map<String, String> map) {
-		rentdao.bookIncreaseHit(map);
+//		rentdao.bookIncreaseHit(map);
 		rentdao.rentInsert(map);
-		rentdao.rentState(map);
+//		rentdao.rentState(map);
 		rentdao.decreaseBookStock(map);
-		rentdao.IncreaseUserRent(map);
+//		rentdao.IncreaseUserRent(map);
 	}
 
-	public UserVO rentRestrict(Map<String, String> map) {		
+	public UserVO rentRestrict(Map<String, String> map) {
 		UserVO vo = new UserVO();
 		int count = rentdao.userRentCount(map);
 		if (count < 3) {
-			vo.setMsg(MSG_OK);			
-		} else if(count > 2) {
+			vo.setMsg(MSG_OK);
+		} else if (count > 2) {
 			vo.setMsg(MSG_NO);
 		}
 		return vo;
@@ -41,22 +42,33 @@ public class RentService {
 	}
 
 	public void rentState(Map<String, String> map) {
-		rentdao.rentState(map);
-		rentdao.decreaseUserRent(map);
+
 		rentdao.returnDay(map);
 		rentdao.increaseBookStock(map);
 	}
-	
+
 	public StockVO bookStockCount(Map<String, String> map) {
-		StockVO vo = rentdao.bookStockCount(map);		
+		StockVO vo = rentdao.bookStockCount(map);
 		String stock = vo.getStockCount();
 		int count = Integer.parseInt(stock);
-		System.out.println("카운트"+count);
-		if(count == 0) {
+		System.out.println("카운트" + count);
+		if (count == 0) {
 			vo.setMsg(MSG_NO);
 		} else {
 			vo.setMsg(MSG_OK);
 		}
 		return vo;
 	}
+
+	public StockVO duplicateBook(Map<String, String> map) {
+		int count = rentdao.duplicateBook(map);
+		StockVO vo = new StockVO();
+		if (count == 0) {
+			vo.setMsg(MSG_OK);
+		} else {
+			vo.setMsg(MSG_NO);
+		}
+		return vo;
+	}
+
 }

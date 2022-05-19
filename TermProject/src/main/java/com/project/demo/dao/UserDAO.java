@@ -27,4 +27,10 @@ public interface UserDAO {
 	void deleteUser(Map<String, String> map);
 	
 	int rentCount(Map<String, String> map);
+	
+	int pwdFindCount(UserVO vo);
+	
+	void pwdFindChange(UserVO vo);
+	
+	int suspensionUser(Map<String, String> map);
 }

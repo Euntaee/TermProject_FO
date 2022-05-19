@@ -20,6 +20,7 @@
         "sass": "^1.50.0",
         "url-search-params-polyfill": "^8.1.1",
         "vue": "^2.5.2",
+        "vue-infinite-loading": "^2.4.5",
         "vue-router": "^3.0.1",
         "vue-session": "^1.0.0",
         "vuetify": "^2.6.4",

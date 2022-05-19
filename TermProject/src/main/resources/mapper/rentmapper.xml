@@ -8,21 +8,17 @@
 	<insert id="rentInsert" useGeneratedKeys="true" keyProperty="rent_no">
 	    <![CDATA[
 		INSERT INTO rent (
-		      rent_no
-            , rent_startdate
-            , rent_enddate
+		      rent_no          
             , book_no
             , user_id
             , rent_check
             , branch_code
         )	
 		VALUES (
-		      0
-            , DATE(NOW()) 
-            , date_add(date_format(now(),'%y-%m-%d'),INTERVAL 7 DAY)
+		      0       
 		    , #{book_no}
 		    , #{user_id}
-		    , 0
+		    , 1
 		    , #{branch_code})
 		]]>
 	</insert>
@@ -36,26 +32,29 @@
 		     , b.book_no 
 		     , a.rent_startdate 
 		     , a.rent_enddate
+		     , a.rent_check
 		     , a.branch_code	     
 		     , c.branch_name		     
 	    FROM rent a, book b, branch c
 	    WHERE b.book_no = a.book_no
 	    AND   a.branch_code= c.branch_code
-	    AND   a.user_id = #{user_id} AND a.rent_check=1
+	    AND   a.user_id = #{user_id} 
+	    AND   (a.rent_check=1
+	    OR   a.rent_check=0)
     ]]> 
 	</select>
 	
 	<!-- 대여 상태 업데이트 -->
-	<update id="rentState" parameterType="java.util.Map">			
-	    UPDATE rent	    
-	    SET    rent_check = NOT rent_check	       
-	    WHERE  user_id = #{user_id} AND book_no = #{book_no}	     
-	</update>	
-	
+<!-- 	<update id="rentState" parameterType="java.util.Map">			 -->
+<!-- 	    UPDATE rent	     -->
+<!-- 	    SET    rent_check = NOT rent_check	        -->
+<!-- 	    WHERE  user_id = #{user_id} AND book_no = #{book_no}	      -->
+<!-- 	</update>	 -->
+		
 	<update id="returnDay" parameterType="java.util.Map">			
 	    UPDATE rent	    
 	    SET    rent_returnday = curdate(),
-	           rent_check = null     
+	           rent_check = 3
 	    WHERE  user_id = #{user_id} AND book_no = #{book_no}	     
 	</update>	
 	
@@ -118,5 +117,19 @@
 	    WHERE book_no = #{book_no}
 	    AND   branch_code = #{branch_code}
 	</select>
+	
+	<select id="duplicateBook" resultType="int">
+	    SELECT 
+	        count(*)
+	    FROM
+	        rent
+	    WHERE 1=1
+	    AND book_no = #{book_no}
+	    AND branch_code= #{branch_code}
+	    AND user_id = #{user_id}
+	    AND (rent_check = 1	
+	    OR rent_check =0)	   
+	</select>
+	
 </mapper>
 

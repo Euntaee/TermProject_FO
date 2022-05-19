@@ -99,14 +99,9 @@
                   </v-card-text>
 
                   <div class="text-center">
-                    <v-btn
-                      router-link :to="{name:'Detail',params:{book_no: h.book_no}}"
-                      class="ma-2"
-                      outlined
-                      color="info"
-                    >
-                      Book NOW
-                    </v-btn>
+                    <div>
+                      총대여된 횟수: {{h.book_hit}}
+                    </div>                   
                   </div>
                 </v-card>
                 </v-hover>
@@ -154,14 +149,17 @@
                   </v-card-text>
 
                   <div class="text-center">
-                    <v-btn              
+                    <div>
+                      등록일: {{n.book_regdate}}
+                    </div>
+                    <!-- <v-btn              
                       router-link :to="{name:'Detail',params:{book_no: n.book_no}}"        
                       class="ma-2"
                       outlined
                       color="info"
                     >
                       Book NOW
-                    </v-btn>
+                    </v-btn> -->
                   </div>
                 </v-card>
                 </v-hover>
@@ -218,7 +216,7 @@
 
 <style scoped>
 .txt_line {
-   width: 180px;
+   width: 210px;
    padding: 0 5px;
    overflow: hidden;
    text-overflow: ellipsis;

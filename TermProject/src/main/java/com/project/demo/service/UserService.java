@@ -57,6 +57,10 @@ public class UserService {
 	}
 
 	public void changPwd(Map<String, String> map) {
+
+		
+		
+		
 		userdao.changPwd(map);
 	}
 
@@ -70,20 +74,41 @@ public class UserService {
 		}
 		return vo;
 	}
-	
+
 	public void deleteUser(Map<String, String> map) {
 		userdao.deleteUser(map);
 	}
-	
 
-	public UserVO UserDeleteRule(Map<String, String> map) {
+	public UserVO userDeleteRules(Map<String, String> map) {
 		int count = userdao.rentCount(map);
 		UserVO vo = new UserVO();
-		if(count==0) {			
-			vo.setMsg(MSG_TRUE);			
-		}else {
+		if (count == 0) {
+			vo.setMsg(MSG_TRUE);
+		} else {
 			vo.setMsg(MSG_FALSE);
 		}
 		return vo;
+	}
+
+	public UserVO userfind(UserVO vo) {
+		int count = userdao.pwdFindCount(vo);
+		if (count == 0) {
+			vo.setMsg(MSG_FALSE);
+		} else {
+			vo.setMsg(MSG_TRUE);
+			userdao.pwdFindChange(vo);
+		}
+		return vo;
+	}
+	
+	public UserVO suspensionUser(Map<String, String> map) {
+		int count= userdao.suspensionUser(map);		
+		UserVO vo = new UserVO();
+		if(count == 0) {
+			vo.setMsg(MSG_FALSE);
+		} else if(count == 1){
+			vo.setMsg(MSG_TRUE);
+		}
+		return vo;	
 	}
 }
